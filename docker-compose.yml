@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  front:
+  # chmod +x node_modules/.bin/react-scripts
+  # node node_modules/react-scripts/scripts/start.js 
+  # docker-compose run front /bin/sh
+  # docker-compose run --rm front yarn start
+
+    build: ./palletmaster
+    command: yarn start
+    volumes:
+      - ./palletmaster:/app
+    ports:
+      - 8000:3000
