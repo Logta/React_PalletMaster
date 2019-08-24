@@ -8,7 +8,6 @@ const mapStateToProps = (state: RootState) => {
     return {
         discordUrl: state.setting.discordUrl,
         diceUrl: state.setting.diceUrl,
-        
     };
 };
 
