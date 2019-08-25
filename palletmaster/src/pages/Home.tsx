@@ -6,7 +6,7 @@ import Drawer from '@material-ui/core/Drawer';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 
 import Skill from './Skill';
-import Character from './Character';
+import Character from '../containers/Character';
 import Abillity from './Abillity';
 import SAN from './SAN';
 import Battle from './Battle';

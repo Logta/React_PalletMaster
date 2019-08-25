@@ -19,18 +19,18 @@ const init = (): State => {
 
 export const reducer = (state: State = init(), action: Actions) => {
     switch (action.type) {
-    case 'SET_DISCORD_URL_SETTING':
-        return {
-            ...state,
-            discordUrl: action.payload.url,
-        };
-    case 'SET_DICE_URL_SETTING':
-        return{
-            ...state,
-            diceUrl: action.payload.url,
-        }
-    default:
-        return state;
+        case 'SET_DISCORD_URL_SETTING':
+            return {
+                ...state,
+                discordUrl: action.payload.url,
+            };
+        case 'SET_DICE_URL_SETTING':
+            return{
+                ...state,
+                diceUrl: action.payload.url,
+            }
+        default:
+            return state;
     }
 };
 

@@ -7,7 +7,6 @@ import { setHP, SetHPAction } from './SetHP';
 import { setMP, SetMPAction } from './SetMP';
 import { setSAN, SetSANAction } from './SetSAN';
 import { setCharacterBackground, SetCharacterBackgroundAction } from './SetCharacterBackground';
-import { Reducer } from 'redux';
 
 type Actions
     = SetCharacterAction | 
@@ -55,13 +54,15 @@ type characterInfo = {
     origin: string
 };
 
+type character = {
+    skills: skill[];
+    characterBackground: string | undefined;
+    abilityValues: abilityValue;
+    characterInfos: characterInfo;
+}
+
 export type State = {    // ページ全体で保持しとくべき情報はTodoの配列くらい
-    character: {
-        skills: skill[],
-        characterBackground: string | undefined,
-        abilityValues: abilityValue,
-        characterInfos: characterInfo,
-    };
+    character: character;
 };
 
 const init = (): State => {
@@ -91,79 +92,87 @@ const init = (): State => {
                 height: 0,
                 weight: 0,
                 origin: ""
-            }
-        }
+            },
+        },
     };
 };
 
-export const reducer: Reducer<any, Actions> = (state = init(), action) => {
+export const reducer = (state: State = init(), action: Actions) => {
     switch (action.type) {
         case 'SET_CHARACTER':
             return{
+                ...state,
                 character: action.payload.character,
-            }
+            };
         case 'SET_SKILLS':
             return{
-                character:
-                {
-                    ...state,
+                ...state,
+                character:{
+                    ...state.character,
                     skills: action.payload.skills,
                 }
-            }
+            };
         case 'SET_ABILITY_VALUES':
             return{
+                ...state,
                 character:
                 {
-                    ...state,
+                    ...state.character,
                     abilityValues: action.payload.abilityValues,
                 }
             };
         case 'SET_CHARACTER_INFOS':
             return{
+                ...state,
                 character:
                 {
-                    ...state,
+                    ...state.character,
                     characterInfos: action.payload.characterInfos,
                 }
             };
         case 'SET_CHARACTER_NAME':
             return{
+                ...state,
                 character:
                 {
-                    ...state,
+                    ...state.character,
                     characterInfos: {
+                        ...state.character.characterInfos,
                         characterName: action.payload.characterName,
                     }
                 }
             };
         case 'SET_HP':
             return{
+                ...state,
                 character:
                 {
-                    ...state,
+                    ...state.character,
                     characterInfos: {
+                        ...state.character.characterInfos,
                         HP: action.payload.hp,
                     }
                 }
             };
         case 'SET_MP':
             return{
+                ...state,
                 character:
                 {
-                    ...state,
+                    ...state.character,
                     characterInfos: {
+                        ...state.character.characterInfos,
                         MP: action.payload.mp,
                     }
                 }
             };
         case 'SET_CHARACTER_BACKGROUND':
             return{
+                ...state,
                 character:
                 {
-                    ...state,
-                    characterInfos: {
-                        characterBackground: action.payload.background,
-                    }
+                    ...state.character,
+                    characterBackground: action.payload.background,
                 }
             };
         default:

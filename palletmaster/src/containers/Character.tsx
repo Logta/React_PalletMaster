@@ -31,8 +31,11 @@ type characterInfo = {
 };
   
 const mapStateToProps = (state: RootState) => {
+    console.log(state.character);
     return {
-        character: state.character,
+        characterInfos: state.character.character.characterInfos,
+        abilityValues: state.character.character.abilityValues,
+        characterBackground: state.character.character.characterBackground,
     };
 };
 

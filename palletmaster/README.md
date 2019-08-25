@@ -42,3 +42,63 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Redux の書き方
+
+### states
+statesフォルダ内に保存するデータ名のファイルを作る(ex: setting->設定データ)
+
+#### データ名ファイル内
+index.tsを記述
+→他データフォルダのindex.tsを参照
+setterの分だけSetﾃﾞｰﾀ.tsファイルを作成
+
+### データ名フォルダ外
+index.tsに追記
+他を参照して書く
+
+*要注意点
+　Stateに書かれてるデータ型とReducerで返り値になっているデータ型が完全に一致していないとエラーを吐く
+　データ型の一部が欠落していると返り値のデータ型が増殖してしまう
+　例：正常　const reducer: (state: データ名.State | undefined, action: Actions) => データ名.State
+　　　異常　const reducer: (state: データ名.State | undefined, action: Actions) => データ名.State|
+                 データ名{------------------}
+　　　上記はデータ名{------------------}の形の欠落データ型がreturnされてしまっている
+　...stateは扱いに注意 → Characterのファイルを参照
+　　　
+
+### containers
+./containersフォルダにreduxを関連付けるcomponents、pageのファイルと同名のtsxファイルを作成する
+
+#### containers中
+```
+const mapStateToProps = (state: RootState) => {
+    return {
+        Propsに渡すデータ名(components、pageのPropsに書かれているものと同名): state.state名.データ名,
+    };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+    return {
+        Propsに渡すメソッド名(components、pageのPropsに書かれているものと同名): (引数: ﾃﾞｰﾀ型) => {
+            dispatch(actionCreator.state名.メソッド名(*));
+        },
+        *→は{url}と記述したりurlと記述したり…クラスだと{}つかないことが多い
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(コンポーネント名);
+```
+(コンポーネント名)でエラーが出ている場合、./states/データ名直下のindex.tsの
+Stateに書かれてるデータ型とReducerで返り値になっているデータ型が完全に一致していない可能性あり
+
+### containersにリンクを張り替える
+pages内ycomponents内のファイルをリンクしてしまっている場合、
+Reduxが紐づいていないコンポーネントが呼び出されてしまう
+
+そのため、リンクの張り替えをを行ってcontainers内の
+コンポーネントを参照するようにする必要がある
+**./App.tsx内か./pages/Home.tsxのimportを書き換える**
