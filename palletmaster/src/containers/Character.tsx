@@ -3,7 +3,6 @@ import { Action, Dispatch } from 'redux';
 
 import { actionCreator, RootState  } from '../states';
 import Character from '../pages/Character';
-import { statement } from '@babel/template';
 
 type abilityValue = {
     STR: number,

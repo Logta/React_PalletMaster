@@ -6,6 +6,7 @@ import firebase from '../modules/firebase'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
     menu: {
       width: 200,
     },
+    paper: {
+      margin:'auto',
+      width:450,
+      padding: theme.spacing(3, 2),
+    }
   }),
 );
 
@@ -69,6 +75,7 @@ const Login: React.SFC<Props> = (props: Props) => {
         }
         return <div>
         <h2>Login</h2>
+        <Paper className = {classes.paper}>
         <TextField
           id="userName"
           label="User Name"
@@ -91,6 +98,7 @@ const Login: React.SFC<Props> = (props: Props) => {
         onClick = {():void =>{login(userName, password)}}>
           Login
         </Button>
+        </Paper>
         </div>;
     })()}
 
