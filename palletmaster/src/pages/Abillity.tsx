@@ -1,100 +1,107 @@
 import React from 'react';
 
-import clsx from 'clsx';
-import firebase from '../modules/firebase'
-
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+
+import STRIcon from '@material-ui/icons/FlashOn';
+import CONIcon from '@material-ui/icons/Favorite';
+import POWIcon from '@material-ui/icons/Visibility';
+import DEXIcon from '@material-ui/icons/DirectionsRun';
+import APPIcon from '@material-ui/icons/Face';
+import SIZIcon from '@material-ui/icons/AccessibilityNewOutlined';
+import INTIcon from '@material-ui/icons/WbIncandescentOutlined';
+import EDUIcon from '@material-ui/icons/LocalLibrary';
 import TextField from '@material-ui/core/TextField';
+import clsx from 'clsx';
+import Button from '@material-ui/core/Button';
+import { Paper } from '@material-ui/core/';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    button: {
-      margin: theme.spacing(1),
-    },
-    input: {
-      display: 'none',
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
+    root: {
+      width: 500,
+      margin: "auto"
     },
     dense: {
       marginTop: 19,
     },
-    menu: {
-      width: 200,
+    numberAbilityField: {
+      marginLeft: 0,
+      marginRight: 6,
+      width: 78,
     },
+    button: {
+      margin: theme.spacing(1),
+    },
+    paper: {
+      margin:'auto',
+      width:600,
+      padding: theme.spacing(3, 2),
+    }
   }),
 );
 
 type Props = {
-  discordUrl: string;
-  diceUrl: string;
-  setUserName: (url: string) => void;
-  setPassword: (url: string) => void;
 };
 
-const Skills: React.SFC<Props> = (props: Props) => {
+const Ability: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
-  const [userName, setUserName] = React.useState(props.discordUrl);
-  const [password, setPassword] = React.useState(props.diceUrl);
-  const [value, setValue] = React.useState('recents');
-
-  const login = (email: string, password: string) => {
-    firebase.auth().signInWithEmailAndPassword(email, password).then(
-      ()=>{setValue('login');}
-    );
-  }
-
-  const logout = ():void =>{
-    firebase.auth().signOut().then(
-      ()=>{setValue('logout');
-    });
-  }
-
+  const [value, setValue] = React.useState(0);
+  const [power, setPower] = React.useState(5);
+  
   return (
-    <div id='login'>
-    {(() => {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            return <div>
-              { value }
-              <Button variant="contained" color="primary" className={classes.button}
-              onClick = {():void =>{logout()}}>
-                Logout
-              </Button>
-            </div>;
-        }
-        return <div>
-        <h2>Login</h2>
-        <TextField
-          id="userName"
-          label="User Name"
-          defaultValue={props.diceUrl}
-          className={clsx(classes.textField, classes.dense)}
-          onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {setUserName(event.target.value);}}
-          margin="dense"
-        /><br />
-        <TextField
-          id="password"
-          label="Password"
-          type="password"
-          defaultValue={props.discordUrl}
-          className={clsx(classes.textField, classes.dense)}
-          onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value);}}
-          margin="dense"
+    <div>
+      <h2>Ability Role</h2>
+
+      <Paper className = {classes.paper}>
+      ability
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={classes.root}
+      >
+        <BottomNavigationAction label="STR" icon={<STRIcon />} />
+        <BottomNavigationAction label="CON" icon={<CONIcon />} />
+        <BottomNavigationAction label="POW" icon={<POWIcon />} />
+        <BottomNavigationAction label="DEX" icon={<DEXIcon />} />
+      </BottomNavigation>
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={classes.root}
+      >
+        <BottomNavigationAction value={4} label="APP" icon={<APPIcon />} />
+        <BottomNavigationAction value={5} label="SIZ" icon={<SIZIcon />} />
+        <BottomNavigationAction value={6} label="INT" icon={<INTIcon />} />
+        <BottomNavigationAction value={7} label="EDU" icon={<EDUIcon />} />
+      </BottomNavigation>
+
+      <TextField
+        id="power"
+        label="Power"
+        type="number"
+        defaultValue={power}
+        className={clsx(classes.numberAbilityField, classes.dense)}
+        onChange={
+          (event: React.ChangeEvent<HTMLInputElement>) => {setPower(+event.target.value);}}
+        placeholder="Power"
+        margin="normal"
         />
+        </Paper>
+
         <br />
         <Button variant="contained" color="primary" className={classes.button}
-        onClick = {():void =>{login(userName, password)}}>
-          Login
+        onClick = {():void =>{console.log(value * power)}}>
+          Send
         </Button>
-        </div>;
-    })()}
-
     </div>
   );
 }
-export default Skills;
+export default Ability;
