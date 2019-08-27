@@ -16,6 +16,18 @@ import TextField from '@material-ui/core/TextField';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import { Paper } from '@material-ui/core/';
+import getAbilityValue from '../modules/getAbilityValue';
+
+type abilityValue = {
+  STR: number,
+  CON: number,
+  POW: number,
+  DEX: number,
+  APP: number,
+  SIZ: number,
+  INT: number,
+  EDU: number
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,11 +55,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
+  abilityValues: abilityValue;
 };
 
 const Ability: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState("STR");
   const [power, setPower] = React.useState(5);
   
   return (
@@ -64,10 +77,10 @@ const Ability: React.SFC<Props> = (props: Props) => {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction label="STR" icon={<STRIcon />} />
-        <BottomNavigationAction label="CON" icon={<CONIcon />} />
-        <BottomNavigationAction label="POW" icon={<POWIcon />} />
-        <BottomNavigationAction label="DEX" icon={<DEXIcon />} />
+        <BottomNavigationAction value={"STR"} label="STR" icon={<STRIcon />} />
+        <BottomNavigationAction value={"CON"} label="CON" icon={<CONIcon />} />
+        <BottomNavigationAction value={"POW"} label="POW" icon={<POWIcon />} />
+        <BottomNavigationAction value={"DEX"} label="DEX" icon={<DEXIcon />} />
       </BottomNavigation>
       <BottomNavigation
         value={value}
@@ -77,10 +90,10 @@ const Ability: React.SFC<Props> = (props: Props) => {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction value={4} label="APP" icon={<APPIcon />} />
-        <BottomNavigationAction value={5} label="SIZ" icon={<SIZIcon />} />
-        <BottomNavigationAction value={6} label="INT" icon={<INTIcon />} />
-        <BottomNavigationAction value={7} label="EDU" icon={<EDUIcon />} />
+        <BottomNavigationAction value={"APP"} label="APP" icon={<APPIcon />} />
+        <BottomNavigationAction value={"SIZ"} label="SIZ" icon={<SIZIcon />} />
+        <BottomNavigationAction value={"INT"} label="INT" icon={<INTIcon />} />
+        <BottomNavigationAction value={"EDU"} label="EDU" icon={<EDUIcon />} />
       </BottomNavigation>
 
       <TextField
@@ -98,7 +111,7 @@ const Ability: React.SFC<Props> = (props: Props) => {
 
         <br />
         <Button variant="contained" color="primary" className={classes.button}
-        onClick = {():void =>{console.log(value * power)}}>
+        onClick = {():void =>{console.log(getAbilityValue(value, props.abilityValues) * power)}}>
           Send
         </Button>
     </div>

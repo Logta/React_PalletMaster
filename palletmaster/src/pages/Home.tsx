@@ -7,7 +7,7 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 
 import Skill from './Skill';
 import Character from '../containers/Character';
-import Abillity from './Abillity';
+import Abillity from '../containers/Ability';
 import SAN from './SAN';
 import Battle from './Battle';
 import SideBar from '../components/SideBar';
