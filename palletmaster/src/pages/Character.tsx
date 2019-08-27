@@ -147,10 +147,12 @@ const Character: React.SFC<Props> = (props: Props) => {
         placeholder="SAN"
         margin="normal"
         />
+        <br />
       </Card>
       <br />
 
       <Card className = {classes.card}>
+        <br />
         ability value
         <br />
         <TextField
@@ -262,6 +264,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         placeholder="EDU"
         margin="normal"
         />
+        <br />
       </Card>
 
       <br />

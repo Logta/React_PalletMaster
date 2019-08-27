@@ -10,8 +10,30 @@ interface Result {
   result: string;
 }
 
-export function sendDiscord(item: Item) {
+export function sendBCDice(item: Item) 
+{
   sendDice(sendDiscordText, item);
+}
+
+function ShakeDice(item: Item): Result
+{
+  let result: Result = {
+    ok :"",
+    result : "",
+  };
+  let _1d100Value: number = Math.round(Math.random() * 100) + 1;
+  if(_1d100Value <= 5){
+    result.ok = "クリティカル"
+  }else if(_1d100Value <= +item.value){
+    result.ok = "成功"
+  }else{
+    result.ok = "失敗"
+  }
+
+  result.result = "技能:" + item.name + " " + _1d100Value
+   + " <= " + item.value;
+
+   return result;
 }
 
 function sendDiscordText(result: Result, item: Item) {
@@ -23,7 +45,7 @@ function sendDiscordText(result: Result, item: Item) {
   }
 }
 
-async function sendDice(sendingDiscord: (json: Result, item: Item) => void, item: Item) {
+async function sendDice(func: (json: Result, item: Item) => void, item: Item) {
   const url =
     "https://www.taruki.com/bcdice-api" +
     "/v1/diceroll?system=Cthulhu&command=" +
@@ -35,9 +57,8 @@ async function sendDice(sendingDiscord: (json: Result, item: Item) => void, item
     .then(response => {
       let json = response;
       const jsonLog = JSON.stringify(json);
-      console.log('Success:', jsonLog);
       if (response.ok) {
-        return sendingDiscord(json, item);
+        return func(json, item);
       }
     })
     .catch(error => console.log(error));
@@ -46,3 +67,5 @@ async function sendDice(sendingDiscord: (json: Result, item: Item) => void, item
 export function goodbye(name: string) {
   return `Goodbye ${name}`;
 }
+
+export default ShakeDice;

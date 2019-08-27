@@ -16,7 +16,9 @@ import TextField from '@material-ui/core/TextField';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import { Paper } from '@material-ui/core/';
+
 import getAbilityValue from '../modules/getAbilityValue';
+import DiceDialog from '../components/DiceDialog';
 
 type abilityValue = {
   STR: number,
@@ -27,6 +29,13 @@ type abilityValue = {
   SIZ: number,
   INT: number,
   EDU: number
+};
+
+interface Item {
+  name: string;
+  url: string;
+  user: string;
+  value: string;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,7 +71,25 @@ const Ability: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState("STR");
   const [power, setPower] = React.useState(5);
+  const [open, setOpen] = React.useState(false);
   
+  const [item, setItem] = React.useState({
+    name: "",
+    url: "",
+    user: "",
+    value: "",
+  });
+
+  const setItems = (ability: string, value: string): void =>
+  {
+    setItem({
+      name: ability,
+      url: "",
+      user: "",
+      value: value,
+    });
+  }
+
   return (
     <div>
       <h2>Ability Role</h2>
@@ -111,9 +138,14 @@ const Ability: React.SFC<Props> = (props: Props) => {
 
         <br />
         <Button variant="contained" color="primary" className={classes.button}
-        onClick = {():void =>{console.log(getAbilityValue(value, props.abilityValues) * power)}}>
+        onClick = {():void =>{
+          setItems(value, getAbilityValue(value, props.abilityValues, power));
+          setOpen(true);
+          }}>
           Send
         </Button>
+
+        <DiceDialog open={open} setOpen={setOpen} item={item} />
     </div>
   );
 }

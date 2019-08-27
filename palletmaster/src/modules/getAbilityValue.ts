@@ -8,8 +8,13 @@ type abilityValue = {
     INT: number,
     EDU: number
   };
-  
-function getAbilityValue(item: string, abilityValue: abilityValue) : number{
+
+function getAbilityValue(item: string, abilityValue: abilityValue, power: number) : string{
+
+    return String(getAbility(item, abilityValue) * power);
+};
+
+function getAbility(item: string, abilityValue: abilityValue) : number{
     const eq = <T>(val1: T) => (val2: T) => val1 === val2;
         
     const result = when(item)
