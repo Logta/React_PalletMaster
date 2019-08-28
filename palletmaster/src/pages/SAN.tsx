@@ -1,100 +1,167 @@
 import React from 'react';
 
-import clsx from 'clsx';
-import firebase from '../modules/firebase'
-
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
+
+import DiceDialog from '../components/DiceDialog';
+import DiceNDNDialog from '../components/DiceNDNDialog';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    button: {
-      margin: theme.spacing(1),
-    },
-    input: {
-      display: 'none',
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
+    paper: {
+      margin:'auto',
+      padding: theme.spacing(3, 2),
+      width: 600,
     },
     dense: {
       marginTop: 19,
     },
-    menu: {
-      width: 200,
+    numberInfoField: {
+      marginLeft: theme.spacing(10),
+      marginRight: 'auto',
+      width: 120,
+    },
+    fab: {
+      marginLeft: theme.spacing(5),
+      margin: theme.spacing(1),
+    },
+    button: {
+      margin: theme.spacing(1),
     },
   }),
 );
 
 type Props = {
-  discordUrl: string;
-  diceUrl: string;
-  setUserName: (url: string) => void;
-  setPassword: (url: string) => void;
+  SAN: number,
+  characterName: string,
+  setSAN: (san: number) => void,
 };
 
-const Skills: React.SFC<Props> = (props: Props) => {
+const SANValue: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
-  const [userName, setUserName] = React.useState(props.discordUrl);
-  const [password, setPassword] = React.useState(props.diceUrl);
-  const [value, setValue] = React.useState('recents');
+  const [diffSAN, setDiffSAN] = React.useState(1);
+  const [open, setOpen] = React.useState(false);
+  
+  const [item, setItem] = React.useState({
+    name: "",
+    url: "",
+    user: "",
+    value: "",
+  });
 
-  const login = (email: string, password: string) => {
-    firebase.auth().signInWithEmailAndPassword(email, password).then(
-      ()=>{setValue('login');}
-    );
-  }
-
-  const logout = ():void =>{
-    firebase.auth().signOut().then(
-      ()=>{setValue('logout');
+  const setItems = (ability: string, value: string): void =>
+  {
+    setItem({
+      name: ability,
+      url: "",
+      user: "",
+      value: value,
     });
   }
 
   return (
-    <div id='login'>
-    {(() => {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            return <div>
-              { value }
-              <Button variant="contained" color="primary" className={classes.button}
-              onClick = {():void =>{logout()}}>
-                Logout
-              </Button>
-            </div>;
-        }
-        return <div>
-        <h2>Login</h2>
-        <TextField
-          id="userName"
-          label="User Name"
-          defaultValue={props.diceUrl}
-          className={clsx(classes.textField, classes.dense)}
-          onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {setUserName(event.target.value);}}
-          margin="dense"
-        /><br />
-        <TextField
-          id="password"
-          label="Password"
-          type="password"
-          defaultValue={props.discordUrl}
-          className={clsx(classes.textField, classes.dense)}
-          onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value);}}
-          margin="dense"
+    <Paper className = {classes.paper}>
+      <Chip color="primary" label="SAN" /> {props.SAN}        
+      <TextField
+        id="san"
+        label="SAN"
+        type="number"
+        defaultValue={diffSAN}
+        className={classes.numberInfoField}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setDiffSAN(+event.target.value)}}
+        placeholder="SAN"
+        margin="normal"
         />
+        <Fab color="primary" aria-label="add" className={classes.fab}>
+          <AddIcon onClick={() => {props.setSAN(props.SAN + diffSAN)}}/>
+        </Fab>
+
         <br />
         <Button variant="contained" color="primary" className={classes.button}
-        onClick = {():void =>{login(userName, password)}}>
-          Login
+        onClick = {():void =>{
+          setItems("SANチェック", String(props.SAN));
+          setOpen(true);
+          }}>
+          SAN Check
         </Button>
-        </div>;
-    })()}
 
+        <DiceDialog open={open} setOpen={setOpen} item={item} />
+    </Paper>
+  );
+}
+
+const SANFunc: React.SFC<Props> = (props: Props) => {
+  const classes = useStyles();
+  const [countDice, setCountDice] = React.useState(1);
+  const [numberDice, setNumberDice] = React.useState(2);
+  const [open, setOpen] = React.useState(false);
+  
+  const [item, setItem] = React.useState({
+    count: 0,
+    number: 0,
+  });
+
+  const setItems = (cou: number, num: number): void =>
+  {
+    setItem({
+      count: cou,
+      number: num,
+    });
+  }
+
+  return (
+    <Paper className = {clsx(classes.paper, classes.dense)}>       
+    <TextField
+      id="san"
+      label="Count"
+      type="number"
+      defaultValue={countDice}
+      className={classes.numberInfoField}
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setCountDice(+event.target.value)}}
+      placeholder="SAN"
+      margin="normal"
+    />       
+    <TextField
+      id="san"
+      label="Number"
+      type="number"
+      defaultValue={numberDice}
+      className={classes.numberInfoField}
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setNumberDice(+event.target.value)}}
+      placeholder="SAN"
+      margin="normal"
+    />
+
+<br />
+      <Button variant="contained" color="primary" className={classes.button}
+      onClick = {():void =>{
+        setItems(countDice, numberDice);
+        setOpen(true);
+        }}>
+        Judge
+      </Button>
+
+    <DiceNDNDialog open={open} setOpen={setOpen} item={item} />
+    </Paper>
+  );
+}
+
+const SAN: React.SFC<Props> = (props: Props) => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      <SANValue SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN}/>
+      <SANFunc SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} />
     </div>
   );
 }
-export default Skills;
+
+
+export default SAN;
