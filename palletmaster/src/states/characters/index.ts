@@ -154,6 +154,18 @@ export const reducer = (state: State = init(), action: Actions) => {
                     }
                 }
             };
+        case 'SET_MP':
+            return{
+                ...state,
+                character:
+                {
+                    ...state.character,
+                    characterInfos: {
+                        ...state.character.characterInfos,
+                        MP: action.payload.mp,
+                    }
+                }
+            };
         case 'SET_SAN':
             return{
                 ...state,

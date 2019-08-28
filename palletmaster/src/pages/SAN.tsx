@@ -43,6 +43,11 @@ type Props = {
   setSAN: (san: number) => void,
 };
 
+type PropsIdea = {
+  skills: number,
+  setSAN: (san: number) => void,
+};
+
 const SANValue: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
   const [diffSAN, setDiffSAN] = React.useState(1);
