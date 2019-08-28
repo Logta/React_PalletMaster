@@ -37,18 +37,34 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+type skill = {
+  skillName: string,
+  skillValue: number,
+  skillType: string,
+  skillUnique: boolean,
+  skillWorkValue: number,
+  skillInterestValue: number,
+  defaultValue: number
+};
+
 type Props = {
+  skills: skill[],
+  SAN: number,
+  characterName: string,
+  setSAN: (san: number) => void,
+};
+
+type PropsSAN = {
   SAN: number,
   characterName: string,
   setSAN: (san: number) => void,
 };
 
 type PropsIdea = {
-  skills: number,
-  setSAN: (san: number) => void,
+  skills: skill[],
 };
 
-const SANValue: React.SFC<Props> = (props: Props) => {
+const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
   const classes = useStyles();
   const [diffSAN, setDiffSAN] = React.useState(1);
   const [open, setOpen] = React.useState(false);
@@ -101,7 +117,7 @@ const SANValue: React.SFC<Props> = (props: Props) => {
   );
 }
 
-const SANFunc: React.SFC<Props> = (props: Props) => {
+const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
   const classes = useStyles();
   const [countDice, setCountDice] = React.useState(1);
   const [numberDice, setNumberDice] = React.useState(2);
@@ -157,6 +173,47 @@ const SANFunc: React.SFC<Props> = (props: Props) => {
   );
 }
 
+const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  
+  const [item, setItem] = React.useState({
+    name: "",
+    url: "",
+    user: "",
+    value: "",
+  });
+
+  const setItems = (ability: string, value: string): void =>
+  {
+    setItem({
+      name: ability,
+      url: "",
+      user: "",
+      value: value,
+    });
+  }
+
+  return (
+    <Paper className = {clsx(classes.paper, classes.dense)}>      
+
+    <br />
+    <Button variant="contained" color="primary" className={classes.button}
+    onClick = {():void =>{
+      let idea: skill | undefined = props.skills.find(s => s.skillName === 'アイデア');
+      if(idea == null) return;
+
+      setItems("アイデア", String(idea.skillValue));
+      setOpen(true);
+      }}>
+      SAN Check
+    </Button>
+
+    <DiceDialog open={open} setOpen={setOpen} item={item} />
+    </Paper>
+  );
+}
+
 const SAN: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
 
@@ -164,6 +221,7 @@ const SAN: React.SFC<Props> = (props: Props) => {
     <div>
       <SANValue SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN}/>
       <SANFunc SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} />
+      <SANIdea skills={props.skills}/>
     </div>
   );
 }
