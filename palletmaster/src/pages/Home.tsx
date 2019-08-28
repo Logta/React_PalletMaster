@@ -10,7 +10,7 @@ import Character from '../containers/Character';
 import Abillity from '../containers/Ability';
 import SAN from '../containers/SAN';
 import Battle from './Battle';
-import SideBar from '../components/SideBar';
+import SideBar from '../containers/SideBar';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>

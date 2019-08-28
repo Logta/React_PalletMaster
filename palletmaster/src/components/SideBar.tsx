@@ -11,6 +11,14 @@ import CharacterIcon from '@material-ui/icons/Info';
 import AbillityIcon from '@material-ui/icons/Face';
 import SANIcon from '@material-ui/icons/OfflineBolt';
 import BattleIcon from '@material-ui/icons/Security';
+import ImportIcon from '@material-ui/icons/AssignmentReturnedRounded';
+
+import ImportPMJ from './ImportPMJDialog';
+import Divider from '@material-ui/core/Divider';
+
+type Props = {
+  setCharacter: (character: any) => void,
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,8 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function SimpleList() {
+export default function SimpleList(props: Props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
   return (
     <div className={classes.root}>
@@ -68,7 +77,21 @@ export default function SimpleList() {
           </ListItemIcon>
           <ListItemText primary="Battle" />
         </ListItem>
+
+        <Divider />
+
+        <ListItem button
+          onClick={()=>{
+            setOpen(true);
+          }}>
+          <ListItemIcon>
+            <ImportIcon />
+          </ListItemIcon>
+          <ListItemText primary="Import" />
+        </ListItem>
       </List>
+
+      <ImportPMJ open={open} setOpen={setOpen} setCharacter={props.setCharacter}/>
     </div>
   );
 }

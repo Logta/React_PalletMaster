@@ -102,7 +102,7 @@ export const reducer = (state: State = init(), action: Actions) => {
         case 'SET_CHARACTER':
             return{
                 ...state,
-                character: action.payload.character,
+                character: action.payload.chara,
             };
         case 'SET_SKILLS':
             return{

@@ -1,4 +1,8 @@
-import { Action } from 'redux';
+import { connect } from 'react-redux';
+import { Action, Dispatch } from 'redux';
+
+import { actionCreator, RootState  } from '../states';
+import SideBar from '../components/SideBar';
 
 type skill = {
     skillName: string,
@@ -42,19 +46,21 @@ type character = {
     characterInfos: characterInfo;
 }
 
-
-export type SetCharacterPayload = {    // todoを追加する時に必要なのはtodoの内容くらい
-    chara: character
-};
-
-export interface SetCharacterAction extends Action {
-    type: 'SET_CHARACTER';
-    payload: SetCharacterPayload;
+//空でも良いので、mapStateToPropsを記述
+const mapStateToProps = (state: RootState) => {
+  return {
+  }
 }
 
-export const setCharacter = (payload: SetCharacterPayload): SetCharacterAction => {
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
     return {
-        payload,
-        type: 'SET_CHARACTER',
-    };
+        setCharacter: (chara: character) => {
+            dispatch(actionCreator.character.setCharacter({chara}));
+        },
+    }
 };
+
+export default connect(
+    mapStateToProps, //ここでconnectするのも忘れない
+    mapDispatchToProps
+)(SideBar);

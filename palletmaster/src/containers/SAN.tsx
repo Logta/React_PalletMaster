@@ -5,7 +5,6 @@ import { actionCreator, RootState  } from '../states';
 import SAN from '../pages/SAN';
   
 const mapStateToProps = (state: RootState) => {
-    console.log(state.character);
     return {
         SAN: state.character.character.characterInfos.SAN,
         characterName: state.character.character.characterInfos.characterName, 
