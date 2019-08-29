@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 
-import Skill from './Skill';
+import Skill from '../containers/Skill';
 import Character from '../containers/Character';
 import Abillity from '../containers/Ability';
 import SAN from '../containers/SAN';

@@ -100,10 +100,9 @@ const init = (): State => {
 export const reducer = (state: State = init(), action: Actions) => {
     switch (action.type) {
         case 'SET_CHARACTER':
-            return{
-                ...state,
+            return Object.assign({}, state, {
                 character: action.payload.chara,
-            };
+              });
         case 'SET_SKILLS':
             return{
                 ...state,

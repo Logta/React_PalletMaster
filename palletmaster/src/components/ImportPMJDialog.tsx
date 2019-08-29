@@ -102,7 +102,6 @@ export default function FormDialog(props: Props) {
             <button onClick={() => {
                 onSubmit(setChara, file);
                 handleClose();
-                return( <Redirect to="/" /> );
                 }}>set</button>
         </DialogContent>
         <DialogActions>
