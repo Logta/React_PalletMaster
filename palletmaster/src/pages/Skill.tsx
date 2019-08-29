@@ -17,7 +17,6 @@ import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import { setSkills } from '../states/characters/SetSkills';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,10 +54,6 @@ type skill = {
     skillInterestValue: number,
     defaultValue: number
 };
-  
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-  return { name, calories, fat, carbs, protein };
-}
 
 type Props = {
     skills: skill[];
@@ -131,7 +126,6 @@ export default function SimpleTable(props: Props) {
       addSkill.skillValue = value;
       props.setSkills([...props.skills, addSkill]);
     }else{
-      console.log("UPDATE");
       cSkill.skillValue = value;
       props.setSkills(newSkills);
     }

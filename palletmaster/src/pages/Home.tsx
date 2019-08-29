@@ -9,7 +9,7 @@ import Skill from '../containers/Skill';
 import Character from '../containers/Character';
 import Abillity from '../containers/Ability';
 import SAN from '../containers/SAN';
-import Battle from './Battle';
+import Battle from '../containers/Battle';
 import SideBar from '../containers/SideBar';
 
 const drawerWidth = 240;
