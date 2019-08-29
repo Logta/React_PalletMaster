@@ -22,7 +22,8 @@ import { setSkills } from '../states/characters/SetSkills';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
+      width: '75%',
+      margin: 'auto',
       marginTop: theme.spacing(3),
       overflowX: 'auto',
     },
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: 500,
     },
     numberInfoField: {
-      marginLeft: theme.spacing(10),
+      marginLeft: theme.spacing(5),
       marginRight: 'auto',
       width: 120,
     },
@@ -38,6 +39,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(5),
       margin: theme.spacing(1),
     },
+    chip: {
+      marginLeft: theme.spacing(5),
+      marginRight: 'auto',
+    }
   }),
 );
 
@@ -147,7 +152,7 @@ export default function SimpleTable(props: Props) {
         placeholder="Skill"
         margin="normal"
         />      
-        <Chip color="primary" label="Value" />    
+        <Chip color="primary" label="Value" className={classes.chip}　/>    
         <TextField
           id="san"
           label="Value"
@@ -162,6 +167,8 @@ export default function SimpleTable(props: Props) {
         <Fab color="primary" aria-label="add" className={classes.fab}>
           <AddIcon onClick={() => {setSkills(skill, value)}}/>
         </Fab>
+      <br />
+      <br />
 
       <InputLabel htmlFor="demo-controlled-open-select">Category</InputLabel>
       <Select
