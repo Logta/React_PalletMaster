@@ -96,7 +96,7 @@ const Character: React.SFC<Props> = (props: Props) => {
       <TextField
         id="characterName"
         label="Character Name"
-        defaultValue={props.characterInfos.characterName}
+        value={props.characterInfos.characterName}
         className={clsx(classes.textField, classes.dense)}
         onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {props.setCharacterName(event.target.value);}}
         margin="dense"
@@ -107,7 +107,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         label="Background"
         multiline
         rowsMax="4"
-        defaultValue={props.characterBackground}
+        value={props.characterBackground}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {props.setCharacterBackground(event.target.value)}}
         className={classes.textField}
         margin="normal"
@@ -121,7 +121,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="hp"
         label="HP"
         type="number"
-        defaultValue={props.characterInfos.HP}
+        value={props.characterInfos.HP}
         className={clsx(classes.numberInfoField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {props.setHP(+event.target.value)}}
         placeholder="HP"
@@ -131,7 +131,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="mp"
         label="MP"
         type="number"
-        defaultValue={props.characterInfos.MP}
+        value={props.characterInfos.MP}
         className={clsx(classes.numberInfoField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {props.setMP(+event.target.value)}}
         placeholder="MP"
@@ -141,7 +141,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="san"
         label="SAN"
         type="number"
-        defaultValue={props.characterInfos.SAN}
+        value={props.characterInfos.SAN}
         className={clsx(classes.numberInfoField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {props.setSAN(+event.target.value)}}
         placeholder="SAN"
@@ -159,7 +159,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="str"
         label="STR"
         type="number"
-        defaultValue={props.abilityValues.STR}
+        value={props.abilityValues.STR}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={
           (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,7 +174,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="con"
         label="CON"
         type="number"
-        defaultValue={props.abilityValues.CON}
+        value={props.abilityValues.CON}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={
           (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,7 +188,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="pow"
         label="POW"
         type="number"
-        defaultValue={props.abilityValues.POW}
+        value={props.abilityValues.POW}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           let newAbilityValues : abilityValue = props.abilityValues;
@@ -201,7 +201,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="dex"
         label="DEX"
         type="number"
-        defaultValue={props.abilityValues.DEX}
+        value={props.abilityValues.DEX}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           let newAbilityValues : abilityValue = props.abilityValues;
@@ -216,7 +216,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="app"
         label="APP"
         type="number"
-        defaultValue={props.abilityValues.APP}
+        value={props.abilityValues.APP}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           let newAbilityValues : abilityValue = props.abilityValues;
@@ -229,7 +229,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="siz"
         label="SIZ"
         type="number"
-        defaultValue={props.abilityValues.SIZ}
+        value={props.abilityValues.SIZ}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           let newAbilityValues : abilityValue = props.abilityValues;
@@ -242,7 +242,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="int"
         label="INT"
         type="number"
-        defaultValue={props.abilityValues.INT}
+        value={props.abilityValues.INT}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           let newAbilityValues : abilityValue = props.abilityValues;
@@ -255,7 +255,7 @@ const Character: React.SFC<Props> = (props: Props) => {
         id="edu"
         label="EDU"
         type="number"
-        defaultValue={props.abilityValues.EDU}
+        value={props.abilityValues.EDU}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           let newAbilityValues : abilityValue = props.abilityValues;

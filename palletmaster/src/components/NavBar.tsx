@@ -73,7 +73,7 @@ const NavBar: React.FC = () => {
           to="/setting" label="Setting" value="setting" icon={<SettingIcon />} />
         <BottomNavigationAction
           component={Link}
-          to="/create" label="Create" value="create" icon={<CreateIcon />} />
+          to="/making" label="Create" value="create" icon={<CreateIcon />} />
       </BottomNavigation>
       
       <Button color="inherit" className={classes.login}>Login</Button>

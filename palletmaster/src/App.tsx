@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Main from './pages/Main';
 import Setting from './containers/Setting';
+import Making from './pages/Making';
 import './App.css';
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Route path='/home' component={Home} container={document.getElementById("app-main")}/>
           <Route exact path='/login' component={Login} />
           <Route exact path='/setting' component={Setting} />
+          <Route exact path='/making' component={Making} />
         </div>
       </BrowserRouter>
     </div>
