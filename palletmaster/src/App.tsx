@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Main from './pages/Main';
 import Setting from './containers/Setting';
-import Making from './pages/Making';
+import Making from './containers/Making';
 import './App.css';
 
 const App: React.FC = () => {

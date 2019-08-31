@@ -80,7 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SimpleList(props: Props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
 
   return (
     <div className={classes.root}>

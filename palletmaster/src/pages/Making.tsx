@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -83,7 +83,7 @@ const init = (): character => {
         skillName: s.skillName,
         skillValue: s.skillValue,
         skillType: s.skillType,
-        skillUnique: true,
+        skillUnique: false,
         skillWorkValue: 0,
         skillInterestValue: 0,
         defaultValue: s.skillValue
@@ -133,23 +133,31 @@ function getStepContent(step: number) {
       return 'Unknown step';
   }
 }
+type Props = {
+  setCharacter: (character: character) => void;
+};
 
-export default function <HorizontalLinearStepper>() {
+const Making: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
   const [character, setCharacter] = React.useState(init());
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const steps = getSteps();
 
-  function isStepOptional(step: number) {
-    return step === 1;
-  }
-
   function isStepSkipped(step: number) {
     return skipped.has(step);
   }
 
   function handleNext() {
+    setSkill({
+      skillName: "回避",
+      skillValue: character.abilityValues.DEX * 2,
+      skillType: "戦闘",
+      skillUnique: true,
+      skillWorkValue: 0,
+      skillInterestValue: 0,
+      defaultValue: character.abilityValues.DEX * 2
+    })
 
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -164,24 +172,40 @@ export default function <HorizontalLinearStepper>() {
   function handleBack() {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   }
-
-  function handleSkip() {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(prevSkipped => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
+  
+  const setSkills = (skill: skill[]): void =>
+  {
+    setCharacter(
+    {
+      ...character,
+      skills: skill,
     });
   }
+  
+  const setSkill = (skill: skill): void =>
+  {
+    const newSkills = JSON.parse(JSON.stringify(character.skills));
+    
+    const cSkill = (newSkills.length == null || newSkills.length === 0) ? 
+      undefined : 
+      newSkills.find((s: { skillName: string; }) => s.skillName === skill.skillName);
 
-  function handleReset() {
-    setActiveStep(0);
+    //if(cSkill.skillValue !== 0) return;
+    if(cSkill == null){
+      setCharacter(
+      {
+        ...character,
+        skills: [...character.skills, skill]
+      });
+    }else{
+      cSkill.skillValue = skill.skillValue;
+      cSkill.defaultValue = skill.defaultValue;
+      setCharacter(
+      {
+        ...character,
+        skills: newSkills
+      });
+    }
   }
 
   return (
@@ -210,8 +234,11 @@ export default function <HorizontalLinearStepper>() {
         )}
 
       <div>
-        {activeStep === steps.length ? (
+        {
+          activeStep === steps.length ? (
           <div>
+            {character.skills.filter(e=> e.skillWorkValue !== 0 || e.skillInterestValue !== 0 ).forEach(e=> e.skillUnique = true)}
+            {props.setCharacter(character)}
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished
             </Typography>
@@ -238,3 +265,5 @@ export default function <HorizontalLinearStepper>() {
     </Paper>
   );
 }
+
+export default Making;

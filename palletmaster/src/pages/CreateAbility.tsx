@@ -128,32 +128,6 @@ type Props = {
 
 const Making: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
-  const [count, setCount]= React.useState(0);
-  
-  const setSkills = (skill: skill): void =>
-  {
-    const newSkills = JSON.parse(JSON.stringify(props.character.skills));
-
-    const cSkill = (newSkills.length == null || newSkills.length === 0) ? 
-      undefined : 
-      newSkills.find((s: { skillName: string; }) => s.skillName === skill.skillName);
-
-    if(cSkill == null){
-      props.setCharacter(
-      {
-        ...props.character,
-        skills: [...props.character.skills, skill]
-      });
-    }else{
-      cSkill.skillValue = skill.skillValue;
-      cSkill.defaultValue = skill.defaultValue;
-      props.setCharacter(
-      {
-        ...props.character,
-        skills: newSkills
-      });
-    }
-  }
 
   return (
     <Paper className = {classes.paper}>
@@ -163,16 +137,6 @@ const Making: React.SFC<Props> = (props: Props) => {
         onClick = {
             ():void => {
             props.setCharacter(setAbilityToDice(props.character));
-            setCount(count + 1);
-            // setSkills({
-            //   skillName: "回避",
-            //   skillValue: props.character.abilityValues.DEX * 2,
-            //   skillType: "戦闘",
-            //   skillUnique: true,
-            //   skillWorkValue: 0,
-            //   skillInterestValue: 0,
-            //   defaultValue: props.character.abilityValues.DEX * 2
-            //   });
             }
             }>
         Dice</Button>
@@ -306,22 +270,15 @@ const Making: React.SFC<Props> = (props: Props) => {
         value={props.character.abilityValues.DEX}
         className={clsx(classes.numberAbilityField, classes.dense)}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-          {props.setCharacter({
-            ...props.character,
-            abilityValues : {
-              ...props.character.abilityValues,
-              DEX: +event.target.value,
-            }
-          });
-          setSkills({
-            skillName: "回避",
-            skillValue: props.character.abilityValues.DEX * 2,
-            skillType: "戦闘",
-            skillUnique: true,
-            skillWorkValue: 0,
-            skillInterestValue: 0,
-            defaultValue: props.character.abilityValues.DEX * 2
-            })}
+          {
+            props.setCharacter({
+              ...props.character,
+              abilityValues : {
+                ...props.character.abilityValues,
+                DEX: +event.target.value,
+              }
+            })
+          ;}
         }
         placeholder="DEX"
         margin="normal"
