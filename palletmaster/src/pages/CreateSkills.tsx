@@ -8,8 +8,7 @@ import Card from '@material-ui/core/Card';
 
 import SkillList from '../components/SkillList'
 import Chip from '@material-ui/core/Chip';
-import { setCharacter } from '../states/characters/SetCharacter';
-import { element } from 'prop-types';
+import { Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,17 +21,12 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: 'auto',
-      width: 360,
-    },
-    numberAbilityField: {
-      marginLeft: 0,
-      marginRight: 6,
-      width: 78,
+      width: '90%',
     },
     numberInfoField: {
       marginLeft: theme.spacing(1),
       marginRight: 'auto',
-      width: 120,
+      width: '90%',
     },
     dense: {
       marginTop: 19,
@@ -43,16 +37,18 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       margin:'auto',
       padding: theme.spacing(3, 2),
-      width: 600,
+      width: '90%',
     },
     card: {
       margin:'auto',
-      width: 500,
+      width: '90%',
     },
     margin: {
       margin: theme.spacing(2),
     },
     chip: {
+      marginTop: '10px',
+      marginBottom: '10px',
       marginLeft: theme.spacing(5),
       marginRight: 'auto',
     }

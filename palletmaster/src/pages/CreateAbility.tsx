@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
     numberAbilityField: {
       marginLeft: 0,
       marginRight: 6,
-      width: 78,
+      width: '20%',
     },
     numberInfoField: {
       marginLeft: theme.spacing(1),
       marginRight: 'auto',
-      width: 120,
+      width: '30%',
     },
     dense: {
       marginTop: 19,
@@ -42,11 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       margin:'auto',
       padding: theme.spacing(3, 2),
-      width: 600,
+      width: '90%',
     },
     card: {
       margin:'auto',
-      width: 500,
+      width: '80%',
     },
     margin: {
       margin: theme.spacing(2),

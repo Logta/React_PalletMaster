@@ -6,6 +6,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,18 +19,30 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
-      width: 360,
+      width:'80%',
+      [theme.breakpoints.up('sm')]: {
+        width: 360,
+      },
     },
     dense: {
       marginTop: 19,
     },
     menu: {
+      width:'80%',
+      [theme.breakpoints.up('sm')]: {
       width: 360,
+    },
     },
     paper: {
       margin:'auto',
-      width:450,
+      width:'90%',
+      [theme.breakpoints.up('sm')]: {
+        width:450,
+      },
       padding: theme.spacing(3, 2),
+    },
+    mobile:{
+      paddingTop: '100'
     }
   }),
 );
@@ -54,6 +67,9 @@ const Setting: React.SFC<Props> = (props: Props) => {
 
   return (
     <div>
+      <Hidden smUp implementation="css">
+        <br className={classes.mobile}/>
+      </Hidden>
       <h2>Setting</h2>
       <Paper className = {classes.paper}>
         <TextField

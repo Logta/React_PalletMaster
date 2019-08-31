@@ -10,7 +10,7 @@ import Making from './containers/Making';
 import './App.css';
 
 const App: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   return (
     <div className="App">

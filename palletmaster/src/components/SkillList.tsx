@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import clsx from 'clsx';
+import Hidden from '@material-ui/core/Hidden';
 
 type skill = {
   skillName: string,
@@ -65,15 +66,21 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
     },
     table: {
-      width: '100%',
+      width: '90%',
     },
     numberInfoField: {
       marginLeft: theme.spacing(5),
       marginRight: 'auto',
-      width: 40,
+      width: '30%',
     },
-    dense: {
-      marginTop: 19,
+    name: {
+      width: '30%',
+    },
+    head: {
+      width: '100%',
+    },
+    body: {
+      width: '100%',
     },
   }),
 );
@@ -84,33 +91,38 @@ export default function SimpleList(props: Props) {
   return (
     <div className={classes.root}>
   <Table className={classes.table} size="small">
-        <TableHead>
+        <TableHead className={classes.head}><div>
           <TableRow>
-            <TableCell>Skill</TableCell>
-            <TableCell align="right">Value</TableCell>
-            <TableCell align="right">Type</TableCell>
-            <TableCell align="right">Work</TableCell>
-            <TableCell align="right">Interest</TableCell>
+            <TableCell className={classes.name} rowSpan={2}>Skill</TableCell>
+            <TableCell className={classes.name} align="right">Value</TableCell>
+            <TableCell className={classes.name} align="right">Type</TableCell>
           </TableRow>
+
+          <TableRow>
+            <TableCell className={classes.name} align="right">Work</TableCell>
+            <TableCell className={classes.name} align="right">Interest</TableCell>
+          </TableRow></div>
         </TableHead>
-        <TableBody>
+        <TableBody className={classes.body}>
           {props.skills.map(row => {
             if(row == null) return;
 
-            return (
-            <TableRow key={row.skillName}>
-              <TableCell component="th" scope="row">
+            return (<div>
+            <TableRow>
+              <TableCell className={classes.name} rowSpan={2} component="th" scope="row">
                 {row.skillName}
               </TableCell>
-              <TableCell align="right">{row.skillValue}</TableCell>
-              <TableCell align="right">{row.skillType}</TableCell>
-              <TableCell align="right">       
+              <TableCell className={classes.name} align="right">{row.skillValue}</TableCell>
+              <TableCell className={classes.name} align="right">{row.skillType}</TableCell>
+              </TableRow>
+              <TableRow>
+              <TableCell className={classes.name} align="right">       
                 <TextField
                   id="work"
                   label="Work"
                   type="number"
                   defaultValue={row.skillWorkValue}
-                  className={clsx(classes.numberInfoField, classes.dense)}
+                  className={classes.numberInfoField}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
                     {props.setSkillWorkValue(row.skillName, +event.target.value);}
                   }
@@ -118,13 +130,13 @@ export default function SimpleList(props: Props) {
                   margin="normal"
                   />
                 </TableCell>
-              <TableCell align="right">       
+              <TableCell className={classes.name} align="right">       
                 <TextField
                   id="interest"
                   label="Interest"
                   type="number"
                   defaultValue={row.skillWorkValue}
-                  className={clsx(classes.numberInfoField, classes.dense)}
+                  className={classes.numberInfoField}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
                     {props.setSkillInterestValue(row.skillName, +event.target.value);}
                   }
@@ -132,7 +144,7 @@ export default function SimpleList(props: Props) {
                   margin="normal"
                   />
                 </TableCell>
-            </TableRow>
+            </TableRow></div>
             )
           })}
         </TableBody>

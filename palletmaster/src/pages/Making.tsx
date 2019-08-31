@@ -18,15 +18,21 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       margin:'auto',
       padding: theme.spacing(3, 2),
-      width: 600,
+      width:'90%',
+      [theme.breakpoints.up('sm')]: {
+        width: 600,
+      },
     },
     root: {
-      width: '90%',
+      margin:'auto',
+      width: '80%',
     },
     button: {
+      margin:'auto',
       marginRight: theme.spacing(1),
     },
     instructions: {
+      margin:'auto',
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
     },
