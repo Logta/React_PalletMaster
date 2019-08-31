@@ -206,7 +206,7 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
       setItems("アイデア", String(idea.skillValue));
       setOpen(true);
       }}>
-      SAN Check
+      Idea
     </Button>
 
     <DiceDialog open={open} setOpen={setOpen} item={item} />

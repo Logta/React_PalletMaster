@@ -19,9 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       display: 'flex',
       zIndex: 0,
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: '100px'
+      }
     },
     drawer: {
       [theme.breakpoints.up('sm')]: {
+        paddingTop: '100px',
         width: drawerWidth,
         flexShrink: 0,
       },
@@ -44,11 +48,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface ResponsiveDrawerProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   container?: Element;
+  open: boolean;
 }
 
 export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
@@ -57,6 +58,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  console.log(props.open);
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen);
   }
@@ -74,8 +76,8 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       <CssBaseline />
       <nav className={classes.drawer} aria-label="mailbox folders">
         
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Drawer
+        {props.open &&/* The implementation can be swapped with js to avoid SEO duplication of links. */
+          (<Drawer
             container={container}
             variant="permanent"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -89,7 +91,8 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             }}
           >
             {drawer}
-          </Drawer>
+          </Drawer>)
+        }
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />   

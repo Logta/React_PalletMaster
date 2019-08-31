@@ -10,17 +10,23 @@ import Making from './containers/Making';
 import './App.css';
 
 const App: React.FC = () => {
+  const [open, setOpen] = React.useState(false);
+
   return (
     <div className="App">
       <BrowserRouter>
         <header className="App-header">
-          <NavBar />
+          <NavBar 
+          //mobile={navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i) == null}
+          open={open}
+          setOpen={setOpen}
+          />
         </header>
 
         <div className='App-main' id='app-main'>
           <Route exact path='/' component={Main}/>
           
-          <Route path='/home' component={Home} container={document.getElementById("app-main")}/>
+          <Route path='/home' render={() => <Home open={open} />}/>
           <Route exact path='/login' component={Login} />
           <Route exact path='/setting' component={Setting} />
           <Route exact path='/making' component={Making} />

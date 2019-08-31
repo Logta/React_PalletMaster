@@ -15,6 +15,7 @@ import ImportIcon from '@material-ui/icons/AssignmentReturnedRounded';
 
 import ImportPMJ from './ImportPMJDialog';
 import Divider from '@material-ui/core/Divider';
+import Hidden from '@material-ui/core/Hidden';
 
 type Props = {
   setCharacter: (character: any) => void,
@@ -37,6 +38,14 @@ export default function SimpleList(props: Props) {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
+        <Hidden smUp implementation="css">
+          <ListItem>
+            <ListItemText primary="" />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="" />
+          </ListItem>
+        </Hidden>
         <ListItem button 
           component={Link}
           to="/home/skill">
