@@ -17,17 +17,24 @@ import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '75%',
+      width: '90%',
+      [theme.breakpoints.up('sm')]: {
+        width: '75%',
+      },
       margin: 'auto',
       marginTop: theme.spacing(3),
       overflowX: 'auto',
     },
     table: {
+      width: '90%',
+      [theme.breakpoints.up('sm')]: {
       minWidth: 500,
+      }
     },
     numberInfoField: {
       marginLeft: theme.spacing(5),
@@ -35,12 +42,20 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 120,
     },
     fab: {
-      marginLeft: theme.spacing(5),
-      margin: theme.spacing(1),
+      marginLeft: "5px",
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(5),
+        margin: theme.spacing(1),
+      }
     },
     chip: {
-      marginLeft: theme.spacing(5),
-      marginRight: 'auto',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(5),
+        margin: theme.spacing(1),
+      },
+      [theme.breakpoints.down('xs')]: {
+        textAlign: 'left',
+      }
     }
   }),
 );
@@ -135,10 +150,44 @@ export default function SimpleTable(props: Props) {
   <div>
     <Paper className={clsx(classes.root)}>
       <br />
-      <Chip color="primary" label="Skill" />        
-      <TextField
-        id="san"
-        label="Skill"
+      {/* タブレット以上なら隠す -- モバイル画面で表示 */}
+      <Hidden smUp implementation="css">
+        <Chip color="primary" label="Skill" />        
+        <TextField
+          id="san"
+          label="Skill"
+          type="text"
+          defaultValue={skill}
+          className={classes.numberInfoField}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setSkill(event.target.value)}}
+          placeholder="Skill"
+          margin="normal"
+          />      
+          <br />
+          <Chip color="primary" label="Value" className={classes.chip}　/>    
+          <TextField
+            id="san"
+            label="Value"
+            type="number"
+            defaultValue={value}
+            className={classes.numberInfoField}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setValue(+event.target.value)}}
+            placeholder="Value"
+            margin="normal"
+            />
+
+          <br />
+          <Fab color="primary" aria-label="add" className={classes.fab}>
+            <AddIcon onClick={() => {setSkills(skill, value)}}/>
+          </Fab>
+        </Hidden>
+
+      {/* モバイル以下なら隠す -- モバイル画面以外で表示 */}
+      <Hidden xsDown implementation="css">
+        <Chip color="primary" label="Skill" />        
+        <TextField
+          id="san"
+          label="Skill"
         type="text"
         defaultValue={skill}
         className={classes.numberInfoField}
@@ -157,10 +206,11 @@ export default function SimpleTable(props: Props) {
           placeholder="Value"
           margin="normal"
           />
-
         <Fab color="primary" aria-label="add" className={classes.fab}>
           <AddIcon onClick={() => {setSkills(skill, value)}}/>
         </Fab>
+      </Hidden>
+      
       <br />
       <br />
 

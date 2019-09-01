@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
     },
     chip: {
-      marginLeft: theme.spacing(5),
+      marginLeft: theme.spacing(2),
       marginRight: 'auto',
     }
   }),

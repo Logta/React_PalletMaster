@@ -41,7 +41,10 @@ interface Item {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: 500,
+      width: '90%',
+      [theme.breakpoints.up('sm')]: {
+        width: 500,
+      },
       margin: "auto"
     },
     dense: {
@@ -57,7 +60,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       margin:'auto',
-      width:600,
+      width: '90%',
+      [theme.breakpoints.up('sm')]: {
+        width: 600,
+      },
       padding: theme.spacing(3, 2),
     }
   }),

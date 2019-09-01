@@ -18,32 +18,44 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: 'auto',
-      width: 360,
+      width: '80%',
+      [theme.breakpoints.up('sm')]: {
+        width: 360,
+      },
     },
     numberAbilityField: {
       marginLeft: 0,
       marginRight: 6,
-      width: 78,
+      width: '20%',
+      [theme.breakpoints.up('sm')]: {
+        width: 78,
+      },
     },
     numberInfoField: {
       marginLeft: theme.spacing(1),
       marginRight: 'auto',
-      width: 120,
+      width: '30%',
+      [theme.breakpoints.up('sm')]: {
+        width: 120,
+      },
     },
     dense: {
       marginTop: 19,
     },
-    menu: {
-      width: 200,
-    },
     paper: {
       margin:'auto',
       padding: theme.spacing(3, 2),
-      width: 600,
+      width: '90%',
+      [theme.breakpoints.up('sm')]: {
+        width: 600,
+      },
     },
     card: {
       margin:'auto',
-      width: 500,
+      width: '90%',
+      [theme.breakpoints.up('sm')]: {
+        width: 500,
+      },
     }
   }),
 );

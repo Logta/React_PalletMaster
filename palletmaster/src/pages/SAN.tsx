@@ -17,18 +17,28 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       margin:'auto',
       padding: theme.spacing(3, 2),
-      width: 600,
+      width: '90%',
+      [theme.breakpoints.up('sm')]: {
+        width: 600,
+      },
     },
     dense: {
       marginTop: 19,
     },
     numberInfoField: {
-      marginLeft: theme.spacing(10),
+      marginLeft: theme.spacing(3),
       marginRight: 'auto',
-      width: 120,
+      width: '20%',
+      [theme.breakpoints.up('sm')]: {
+        width: 120,
+        marginLeft: theme.spacing(10),
+      },
     },
     fab: {
       marginLeft: theme.spacing(5),
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+      },
       margin: theme.spacing(1),
     },
     button: {

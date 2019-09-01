@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       width:'50%',
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         width: 200,
       }
     },
@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menu: {
       width:'50%',
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         width: 200,
       }
     },
     paper: {
       margin:'auto',
       width:'90%',
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         width:450,
       },
       padding: theme.spacing(3, 2),

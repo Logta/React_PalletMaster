@@ -29,12 +29,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       zIndex: 2,
     },
-    menuButton: {
-      marginRight: theme.spacing(1),
-    },
     title: {
       //flexGrow: 1,
-    }
+    },
+    navBarAction:{
+      width: '20%',
+    },
   })
 );
 
@@ -55,7 +55,7 @@ const NavBar: React.SFC<Props> = (props: Props) => {
     <AppBar
     className={classes.root}>
     <Toolbar> 
-      <Button className={classes.title} onClick={()=>{props.setOpen(!props.open)}}>
+      <Button onClick={()=>{props.setOpen(!props.open)}}>
         <DehazeIcon />
       </Button>
       <Typography variant="h6" className={classes.title}>
@@ -66,16 +66,16 @@ const NavBar: React.SFC<Props> = (props: Props) => {
 
       <BottomNavigation value={value} onChange={handleChange} 
         className={classes.navBar}>
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/home" label="Pallet" value="pallet" icon={<PalletIcon />} />
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/login" label="Login" value="login" icon={<FavoriteIcon />} />
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/setting" label="Setting" value="setting" icon={<SettingIcon />} />
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/making" label="Create" value="create" icon={<CreateIcon />} />
       </BottomNavigation>
