@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       left: 0,
       right: 0,
       margin: 'auto',
-      width: '30%',
+      width: '50%',
       zIndex: 2,
     },
     menuButton: {
@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       //flexGrow: 1,
-    }
+    },
+    navBarAction:{
+      width: '25%',
+    },
   })
 );
 
@@ -55,16 +58,16 @@ const NavBar: React.SFC = () => {
 
       <BottomNavigation value={value} onChange={handleChange} 
         className={classes.navBar}>
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/home" label="Pallet" value="pallet" icon={<PalletIcon />} />
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/login" label="Login" value="login" icon={<FavoriteIcon />} />
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/setting" label="Setting" value="setting" icon={<SettingIcon />} />
-        <BottomNavigationAction
+        <BottomNavigationAction className={classes.navBarAction}
           component={Link}
           to="/making" label="Create" value="create" icon={<CreateIcon />} />
       </BottomNavigation>
