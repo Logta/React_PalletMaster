@@ -20,6 +20,8 @@ import { Paper } from '@material-ui/core/';
 import getAbilityValue from '../modules/getAbilityValue';
 import DiceDialog from '../components/DiceDialog';
 
+import sendBCDice from '../modules/sendDiscord';
+
 type abilityValue = {
   STR: number,
   CON: number,
@@ -71,6 +73,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   abilityValues: abilityValue;
+  discordUrl: string;
+  characterName: string;
 };
 
 const Ability: React.SFC<Props> = (props: Props) => {
@@ -86,12 +90,18 @@ const Ability: React.SFC<Props> = (props: Props) => {
     value: "",
   });
 
+  function handleOpen() {
+    (props.discordUrl !== "") ?
+    sendBCDice(item):
+    setOpen(true);
+  }
+
   const setItems = (ability: string, value: string): void =>
   {
     setItem({
       name: ability,
-      url: "",
-      user: "",
+      url: props.discordUrl,
+      user: props.characterName,
       value: value,
     });
   }
@@ -146,7 +156,7 @@ const Ability: React.SFC<Props> = (props: Props) => {
         <Button variant="contained" color="primary" className={classes.button}
         onClick = {():void =>{
           setItems(value, getAbilityValue(value, props.abilityValues, power));
-          setOpen(true);
+          handleOpen();
           }}>
           Send
         </Button>

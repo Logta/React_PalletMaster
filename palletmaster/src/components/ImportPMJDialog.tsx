@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import onSubmit from '../modules/importPMJ.js';
-import { Redirect } from 'react-router';
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
 type skill = {
     skillName: string,
@@ -58,8 +58,25 @@ type Props = {
     setCharacter(character: character) : void;
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '75%',
+      margin: 'auto',
+      marginTop: theme.spacing(3),
+      overflowX: 'auto',
+    },
+    nputFileBtnHide: {
+      opacity:0,
+      appearance: 'none',
+      position: 'absolute',
+    },
+  })
+)
 export default function FormDialog(props: Props) {
-  const [file, setFile] = React.useState(new File([],""));
+  const classes = useStyles();
+  const [file, setFile] = React.useState<File>(new File([],""));
+  const [fileName, setFileName] = React.useState<string>("No Select");
 
   function handleChangeFile(e: any) {
     const target: HTMLInputElement = e.target as HTMLInputElement;
@@ -69,6 +86,7 @@ export default function FormDialog(props: Props) {
     const file: File| null = target.files.item(0);
     if(file == null) return;
     setFile(file);
+    setFileName(file.name);
   }
 
   function setChara(character: any){
@@ -93,16 +111,27 @@ export default function FormDialog(props: Props) {
         <DialogTitle id="form-dialog-title">Import Character</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Import .pmj file
+          Please select and set .pmj file
           </DialogContentText>
-            <input type="file" onChange={(e) => 
-            {handleChangeFile(e)}
-        }/>
-
-            <button onClick={() => {
-                onSubmit(setChara, file);
-                handleClose();
-                }}>set</button>
+            <Button color="primary"
+              component="label"
+            >
+              Select
+              <input
+                type="file"
+                className={classes.nputFileBtnHide}
+                onChange={(e) => 
+                  {handleChangeFile(e)}
+              }/>
+            </Button>
+            {fileName}
+            <br />
+            <br />
+            <Button color="primary" variant="contained" onClick={() => {
+              onSubmit(setChara, file);
+              handleClose();
+              }}>set
+            </Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

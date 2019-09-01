@@ -19,6 +19,8 @@ const mapStateToProps = (state: RootState) => {
         skills: state.character.character.skills,
         damageBonus: state.character.character.characterInfos.damageBonus,
         hp: state.character.character.characterInfos.HP,
+        discordUrl: state.setting.discordUrl,
+        characterName: state.character.character.characterInfos.characterName,
     };
 };
 

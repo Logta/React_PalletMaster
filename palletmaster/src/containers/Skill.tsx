@@ -17,6 +17,8 @@ type skill = {
 const mapStateToProps = (state: RootState) => {
     return { 
         skills: state.character.character.skills,
+        discordUrl: state.setting.discordUrl,
+        characterName: state.character.character.characterInfos.characterName,
     };
 };
 

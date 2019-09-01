@@ -19,6 +19,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Hidden from '@material-ui/core/Hidden';
 
+import sendBCDice from '../modules/sendDiscord';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -72,7 +74,9 @@ type skill = {
 
 type Props = {
     skills: skill[];
+    characterName: string;
     setSkills(skills: skill[]) : void;
+    discordUrl: string;
 };
 
 export default function SimpleTable(props: Props) {
@@ -101,6 +105,14 @@ export default function SimpleTable(props: Props) {
     setOpen(true);
   }
 
+  function handleDialogOpen(){
+    console.log(props.discordUrl );
+    console.log();
+    (props.discordUrl !== "") ?
+    sendBCDice(item):
+    setOpenDialog(true);
+  }
+
   const [item, setItem] = React.useState({
     name: "",
     url: "",
@@ -112,8 +124,8 @@ export default function SimpleTable(props: Props) {
   {
     setItem({
       name: ability,
-      url: "",
-      user: "",
+      url: props.discordUrl,
+      user: props.characterName,
       value: value,
     });
   }
@@ -260,7 +272,7 @@ export default function SimpleTable(props: Props) {
               onClick={_ => {
                 console.log("onclick");
                 handleClick(row.skillName)
-                setOpenDialog(true);}
+                handleDialogOpen();}
               }>
               <TableCell component="th" scope="row">
                 {row.skillName}

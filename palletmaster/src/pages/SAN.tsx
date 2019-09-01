@@ -12,6 +12,8 @@ import DiceDialog from '../components/DiceDialog';
 import DiceNDNDialog from '../components/DiceNDNDialog';
 import clsx from 'clsx';
 
+import sendBCDice from '../modules/sendDiscord';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -62,16 +64,20 @@ type Props = {
   SAN: number,
   characterName: string,
   setSAN: (san: number) => void,
+  discordUrl: string;
 };
 
 type PropsSAN = {
   SAN: number,
   characterName: string,
   setSAN: (san: number) => void,
+  discordUrl: string;
 };
 
 type PropsIdea = {
   skills: skill[],
+  discordUrl: string;
+  characterName: string,
 };
 
 const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
@@ -90,10 +96,16 @@ const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
   {
     setItem({
       name: ability,
-      url: "",
-      user: "",
+      url: props.discordUrl,
+      user: props.characterName,
       value: value,
     });
+  }
+
+  function handleOpen() {
+    (props.discordUrl !== "") ?
+    sendBCDice(item):
+    setOpen(true);
   }
 
   return (
@@ -117,7 +129,7 @@ const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
         <Button variant="contained" color="primary" className={classes.button}
         onClick = {():void =>{
           setItems("SANチェック", String(props.SAN));
-          setOpen(true);
+          handleOpen();
           }}>
           SAN Check
         </Button>
@@ -144,6 +156,10 @@ const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
       count: cou,
       number: num,
     });
+  }
+
+  function handleOpen() {
+    setOpen(true);
   }
 
   return (
@@ -173,7 +189,7 @@ const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
       <Button variant="contained" color="primary" className={classes.button}
       onClick = {():void =>{
         setItems(countDice, numberDice);
-        setOpen(true);
+        handleOpen();
         }}>
         Judge
       </Button>
@@ -198,10 +214,16 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
   {
     setItem({
       name: ability,
-      url: "",
-      user: "",
+      url: props.discordUrl,
+      user: props.characterName,
       value: value,
     });
+  }
+
+  function handleOpen() {
+    (props.discordUrl !== "") ?
+    sendBCDice(item):
+    setOpen(true);
   }
 
   return (
@@ -214,7 +236,7 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
       if(idea == null) return;
 
       setItems("アイデア", String(idea.skillValue));
-      setOpen(true);
+      handleOpen();
       }}>
       Idea
     </Button>
@@ -229,9 +251,9 @@ const SAN: React.SFC<Props> = (props: Props) => {
 
   return (
     <div>
-      <SANValue SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN}/>
-      <SANFunc SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} />
-      <SANIdea skills={props.skills}/>
+      <SANValue SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} discordUrl={props.discordUrl}/>
+      <SANFunc SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} discordUrl={props.discordUrl} />
+      <SANIdea skills={props.skills} discordUrl={props.discordUrl} characterName={props.characterName}/>
     </div>
   );
 }

@@ -17,6 +17,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Hidden from '@material-ui/core/Hidden';
 
+import sendBCDice from '../modules/sendDiscord';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -74,6 +76,8 @@ type Props = {
     damageBonus: string;
     setSkills(skills: skill[]) : void;
     setHP(hp: number) : void;
+    discordUrl: string;
+    characterName: string;
 };
 
 export default function SimpleTable(props: Props) {
@@ -81,7 +85,7 @@ export default function SimpleTable(props: Props) {
   const [skill, setSkill] = React.useState<string>("");
   const [value, setValue] = React.useState<number>(0);
   const [HPDiff, setHPDiff] = React.useState<number>(0);
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState<boolean>(false);
 
   const handleClick = (skillName: string ): void =>
   {
@@ -101,11 +105,18 @@ export default function SimpleTable(props: Props) {
   {
     setItem({
       name: ability,
-      url: "",
-      user: "",
+      url: props.discordUrl,
+      user: props.characterName,
       value: value,
     });
   }
+
+  function handleOpen() {
+    (props.discordUrl !== "") ?
+    sendBCDice(item):
+    setOpenDialog(true);
+  }
+
 
   const setSkills = (skill: string, value: number): void =>
   {
@@ -239,7 +250,7 @@ export default function SimpleTable(props: Props) {
               onClick={_ => {
                 console.log("onclick");
                 handleClick(row.skillName)
-                setOpenDialog(true);}
+                handleOpen();}
               }>
               <TableCell component="th" scope="row">
                 {row.skillName}

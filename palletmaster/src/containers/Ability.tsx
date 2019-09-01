@@ -7,6 +7,8 @@ const mapStateToProps = (state: RootState) => {
     console.log(state.character);
     return {
         abilityValues: state.character.character.abilityValues,
+        discordUrl: state.setting.discordUrl,
+        characterName: state.character.character.characterInfos.characterName,
     };
 };
 
