@@ -118,6 +118,10 @@ const setAbilityToDice = (character: character):character =>{
   itemNDN.count = 2;
   newCharacter.abilityValues.SIZ = +ShakeNDNDice(itemNDN).result + 6 - 1;
   newCharacter.abilityValues.INT = +ShakeNDNDice(itemNDN).result + 6 - 1;
+    
+  newCharacter.characterInfos.HP = (character.abilityValues.CON + character.abilityValues.SIZ) / 2;
+  newCharacter.characterInfos.MP = character.abilityValues.POW;
+  newCharacter.characterInfos.SAN = character.abilityValues.POW * 5;
   return newCharacter;
 }
 

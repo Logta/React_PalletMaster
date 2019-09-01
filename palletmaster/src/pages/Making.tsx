@@ -163,7 +163,18 @@ const Making: React.SFC<Props> = (props: Props) => {
       skillWorkValue: 0,
       skillInterestValue: 0,
       defaultValue: character.abilityValues.DEX * 2
-    })
+    });
+    
+    setCharacter(
+      {
+        ...character,
+        characterInfos: {
+          ...character.characterInfos,
+          HP: (character.abilityValues.CON + character.abilityValues.SIZ)/2,
+          MP: (character.abilityValues.POW),
+          SAN: character.abilityValues.POW * 5,
+        }
+      });
 
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -214,6 +225,37 @@ const Making: React.SFC<Props> = (props: Props) => {
     }
   }
 
+  const  setLastCharacter = () => {
+    character.skills.filter(e=> e.skillWorkValue !== 0 || e.skillInterestValue !== 0 ).forEach(e=> e.skillUnique = true);
+    // setSkill({
+    //   skillName: "幸運",
+    //   skillValue: character.abilityValues.POW * 5,
+    //   skillType: "探索",
+    //   skillUnique: true,
+    //   skillWorkValue: 0,
+    //   skillInterestValue: 0,
+    //   defaultValue: character.abilityValues.POW * 5
+    // });
+    // setSkill({
+    //   skillName: "アイデア",
+    //   skillValue: character.abilityValues.INT * 5,
+    //   skillType: "探索",
+    //   skillUnique: true,
+    //   skillWorkValue: 0,
+    //   skillInterestValue: 0,
+    //   defaultValue: character.abilityValues.INT * 5
+    // });
+    // setSkill({
+    //   skillName: "知識",
+    //   skillValue: character.abilityValues.EDU * 5,
+    //   skillType: "探索",
+    //   skillUnique: true,
+    //   skillWorkValue: 0,
+    //   skillInterestValue: 0,
+    //   defaultValue: character.abilityValues.EDU * 5
+    // });
+  }
+
   return (
     <Paper className={classes.paper}>
       <Stepper activeStep={activeStep}>
@@ -243,7 +285,7 @@ const Making: React.SFC<Props> = (props: Props) => {
         {
           activeStep === steps.length ? (
           <div>
-            {character.skills.filter(e=> e.skillWorkValue !== 0 || e.skillInterestValue !== 0 ).forEach(e=> e.skillUnique = true)}
+            {setLastCharacter()}
             {props.setCharacter(character)}
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished
