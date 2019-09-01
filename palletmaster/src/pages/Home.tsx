@@ -12,6 +12,49 @@ import SAN from '../containers/SAN';
 import Battle from '../containers/Battle';
 import SideBar from '../containers/SideBar';
 
+
+type skill = {
+  skillName: string,
+  skillValue: number,
+  skillType: string,
+  skillUnique: boolean,
+  skillWorkValue: number,
+  skillInterestValue: number,
+  defaultValue: number
+};
+
+type abilityValue = {
+  STR: number,
+  CON: number,
+  POW: number,
+  DEX: number,
+  APP: number,
+  SIZ: number,
+  INT: number,
+  EDU: number
+};
+
+type characterInfo = {
+  characterName: string,
+  HP: number,
+  MP: number,
+  SAN: number,
+  damageBonus: string,
+  job: string,
+  age: number,
+  sex: string,
+  height: number,
+  weight: number,
+  origin: string
+};
+
+type character = {
+  skills: skill[];
+  characterBackground: string | undefined;
+  abilityValues: abilityValue;
+  characterInfos: characterInfo;
+}
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,6 +93,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface ResponsiveDrawerProps {
   container?: Element;
   open: boolean;
+  character: character;
 }
 
 export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
@@ -67,7 +111,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     <div>
       <div className={classes.toolbar} />
       {/* <Divider /> */}
-      <SideBar />
+      <SideBar character={props.character}/>
     </div>
   );
 

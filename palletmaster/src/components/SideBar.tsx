@@ -11,14 +11,58 @@ import CharacterIcon from '@material-ui/icons/Info';
 import AbillityIcon from '@material-ui/icons/Face';
 import SANIcon from '@material-ui/icons/OfflineBolt';
 import BattleIcon from '@material-ui/icons/Security';
-import ImportIcon from '@material-ui/icons/AssignmentReturnedRounded';
+import ImportIcon from '@material-ui/icons/CloudDownload';
+import ExportIcon from '@material-ui/icons/CloudUpload';
 
 import ImportPMJ from './ImportPMJDialog';
 import Divider from '@material-ui/core/Divider';
 import Hidden from '@material-ui/core/Hidden';
 
+type skill = {
+  skillName: string,
+  skillValue: number,
+  skillType: string,
+  skillUnique: boolean,
+  skillWorkValue: number,
+  skillInterestValue: number,
+  defaultValue: number
+};
+
+type abilityValue = {
+  STR: number,
+  CON: number,
+  POW: number,
+  DEX: number,
+  APP: number,
+  SIZ: number,
+  INT: number,
+  EDU: number
+};
+
+type characterInfo = {
+  characterName: string,
+  HP: number,
+  MP: number,
+  SAN: number,
+  damageBonus: string,
+  job: string,
+  age: number,
+  sex: string,
+  height: number,
+  weight: number,
+  origin: string
+};
+
+type character = {
+  skills: skill[];
+  characterBackground: string | undefined;
+  abilityValues: abilityValue;
+  characterInfos: characterInfo;
+}
+
 type Props = {
   setCharacter: (character: any) => void,
+  character: character,
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,6 +74,30 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
+const charaDownload = (character: character) => {
+  let data = character;
+
+  if(data.characterInfos.characterName != ""){
+    console.log("download start");
+    const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+    let url = window.URL.createObjectURL(blob);
+    let link = document.createElement('a');
+
+    if(url == null) return;
+
+    link.download = data.characterInfos.characterName + '.pmj';
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }else{
+    alert({
+      message: 'Warning, can\'t download.',
+      type: 'warning'
+    });
+  }
+}    
 
 export default function SimpleList(props: Props) {
   const classes = useStyles();
@@ -97,6 +165,16 @@ export default function SimpleList(props: Props) {
             <ImportIcon />
           </ListItemIcon>
           <ListItemText primary="Import" />
+        </ListItem>
+
+        <ListItem button
+          onClick={()=>{
+            charaDownload(props.character);
+          }}>
+          <ListItemIcon>
+            <ExportIcon />
+          </ListItemIcon>
+          <ListItemText primary="Export" />
         </ListItem>
       </List>
 
