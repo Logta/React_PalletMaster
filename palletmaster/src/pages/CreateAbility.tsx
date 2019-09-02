@@ -109,15 +109,23 @@ const setAbilityToDice = (character: character):character =>{
   const newCharacter = JSON.parse(JSON.stringify(character));
 
   newCharacter.abilityValues.STR = +ShakeNDNDice(itemNDN).result - 1;
-  newCharacter.abilityValues.CON = +ShakeNDNDice(itemNDN).result - 1;
-  newCharacter.abilityValues.POW = +ShakeNDNDice(itemNDN).result - 1;
+  const CON = +ShakeNDNDice(itemNDN).result - 1;
+  newCharacter.abilityValues.CON = CON;
+  const POW = +ShakeNDNDice(itemNDN).result - 1;
+  newCharacter.abilityValues.POW = POW;
   newCharacter.abilityValues.DEX = +ShakeNDNDice(itemNDN).result - 1;
   newCharacter.abilityValues.APP = +ShakeNDNDice(itemNDN).result - 1;
   newCharacter.abilityValues.EDU = +ShakeNDNDice(itemNDN).result + 3 - 1;
   
   itemNDN.count = 2;
-  newCharacter.abilityValues.SIZ = +ShakeNDNDice(itemNDN).result + 6 - 1;
+  const SIZ = +ShakeNDNDice(itemNDN).result + 6 - 1;
+  newCharacter.abilityValues.SIZ = SIZ;
   newCharacter.abilityValues.INT = +ShakeNDNDice(itemNDN).result + 6 - 1;
+
+  newCharacter.characterInfos.HP = (CON + SIZ) / 2;
+  newCharacter.characterInfos.MP = POW;
+  newCharacter.characterInfos.SAN = POW * 5;
+
   return newCharacter;
 }
 
