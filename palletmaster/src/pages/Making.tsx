@@ -126,6 +126,17 @@ const init = (): character => {
 function getSteps() {
   return ['Select character abilitys', 'Setting skills', 'Create character infomation'];
 }
+  
+const setSkill = (skill: skill, character: character): character =>
+{
+  const newSkills = character.skills.filter(s => s.skillName !== skill.skillName);
+  console.log(newSkills.find(e => e.skillName === skill.skillName))
+  return(
+  {
+    ...character,
+    skills: [...newSkills, skill]
+  });
+}
 
 function getStepContent(step: number) {
   switch (step) {
@@ -155,15 +166,19 @@ const Making: React.SFC<Props> = (props: Props) => {
   }
 
   function handleNext() {
-    setSkill({
-      skillName: "回避",
-      skillValue: character.abilityValues.DEX * 2,
-      skillType: "戦闘",
-      skillUnique: true,
-      skillWorkValue: 0,
-      skillInterestValue: 0,
-      defaultValue: character.abilityValues.DEX * 2
-    });
+    const DEX = character.abilityValues.DEX;
+    const newCharacter = 
+      setSkill({
+        skillName: "回避",
+        skillValue: DEX * 2,
+        skillType: "戦闘",
+        skillUnique: true,
+        skillWorkValue: 0,
+        skillInterestValue: 0,
+        defaultValue: DEX * 2
+      }, character);
+
+    setCharacter(newCharacter );
     
     setCharacter(
       {
@@ -198,62 +213,45 @@ const Making: React.SFC<Props> = (props: Props) => {
       skills: skill,
     });
   }
-  
-  const setSkill = (skill: skill): void =>
-  {
-    const newSkills = JSON.parse(JSON.stringify(character.skills));
-    
-    const cSkill = (newSkills.length == null || newSkills.length === 0) ? 
-      undefined : 
-      newSkills.find((s: { skillName: string; }) => s.skillName === skill.skillName);
-
-    //if(cSkill.skillValue !== 0) return;
-    if(cSkill == null){
-      setCharacter(
-      {
-        ...character,
-        skills: [...character.skills, skill]
-      });
-    }else{
-      cSkill.skillValue = skill.skillValue;
-      cSkill.defaultValue = skill.defaultValue;
-      setCharacter(
-      {
-        ...character,
-        skills: newSkills
-      });
-    }
-  }
 
   const  setLastCharacter = () => {
     character.skills.filter(e=> e.skillWorkValue !== 0 || e.skillInterestValue !== 0 ).forEach(e=> e.skillUnique = true);
-    // setSkill({
-    //   skillName: "幸運",
-    //   skillValue: character.abilityValues.POW * 5,
-    //   skillType: "探索",
-    //   skillUnique: true,
-    //   skillWorkValue: 0,
-    //   skillInterestValue: 0,
-    //   defaultValue: character.abilityValues.POW * 5
-    // });
-    // setSkill({
-    //   skillName: "アイデア",
-    //   skillValue: character.abilityValues.INT * 5,
-    //   skillType: "探索",
-    //   skillUnique: true,
-    //   skillWorkValue: 0,
-    //   skillInterestValue: 0,
-    //   defaultValue: character.abilityValues.INT * 5
-    // });
-    // setSkill({
-    //   skillName: "知識",
-    //   skillValue: character.abilityValues.EDU * 5,
-    //   skillType: "探索",
-    //   skillUnique: true,
-    //   skillWorkValue: 0,
-    //   skillInterestValue: 0,
-    //   defaultValue: character.abilityValues.EDU * 5
-    // });
+    const POW = character.abilityValues.POW;
+    const INT = character.abilityValues.INT;
+    const EDU = character.abilityValues.EDU;
+    
+    setCharacter(setSkill({
+        skillName: "幸運",
+        skillValue: POW * 5,
+        skillType: "探索",
+        skillUnique: true,
+        skillWorkValue: 0,
+        skillInterestValue: 0,
+        defaultValue: POW * 5
+      }, character)
+    );
+    
+    setCharacter(setSkill({
+      skillName: "アイデア",
+      skillValue: INT * 5,
+      skillType: "探索",
+      skillUnique: true,
+      skillWorkValue: 0,
+      skillInterestValue: 0,
+      defaultValue: INT * 5
+    }, character));
+    
+    setCharacter(setSkill({
+      skillName: "知識",
+      skillValue: EDU * 5,
+      skillType: "探索",
+      skillUnique: true,
+      skillWorkValue: 0,
+      skillInterestValue: 0,
+      defaultValue: EDU * 5
+    }, character));
+
+    console.log(character)
   }
 
   return (

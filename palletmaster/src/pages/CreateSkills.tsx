@@ -123,6 +123,26 @@ const skillTypes = [
   ['知識','Wisdom'],
 ];
 
+const setSkillValue = (name: string, value: number, remainPoint: number, 
+  character: character, interest:boolean, setCharacter:(character: character) => void) => {
+  if(value < 0 || remainPoint <= 0) return;
+  const newSkills = JSON.parse(JSON.stringify(character.skills));
+
+  const cSkill = (newSkills.length == null || newSkills.length === 0) ? 
+    undefined : 
+    newSkills.find((s: { skillName: string; }) => s.skillName === name);
+
+  if(cSkill == null) return;
+    if(interest) cSkill.skillInterestValue = value;
+    else cSkill.skillWorkValue = value;
+  cSkill.skillValue = cSkill.defaultValue + cSkill.skillInterestValue + cSkill.skillWorkValue;
+  setCharacter({
+    ...character,
+    skills: newSkills
+    }
+  );
+} 
+
 const Making: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
 
@@ -174,41 +194,12 @@ const Making: React.SFC<Props> = (props: Props) => {
                 setCharacter={props.setCharacter} 
                 setSkillInterestValue={
                   (name: string, value: number)=>{
-                    if(value < 0 || getRemainingInterestPoint() - value < 0) return;
-                  const newSkills = JSON.parse(JSON.stringify(props.character.skills));
-
-                  const cSkill = (newSkills.length == null || newSkills.length === 0) ? 
-                    undefined : 
-                    newSkills.find((s: { skillName: string; }) => s.skillName === name);
-
-                  if(cSkill == null) return;
-                    cSkill.skillInterestValue = value;
-                    cSkill.skillValue = cSkill.defaultValue + value;
-                    props.setCharacter({
-                      ...props.character,
-                      skills: newSkills
-                      }
-                    );
+                    setSkillValue(name ,value, getRemainingInterestPoint(),props.character, true, props.setCharacter);
                   }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
                 } 
                 setSkillWorkValue={
                   (name: string, value: number)=>{
-                    console.log( getWorkPoint() )
-                    if(value < 0 || getRemainingWorkPoint() - value < 0) return;
-                  const newSkills = JSON.parse(JSON.stringify(props.character.skills));
-
-                  const cSkill = (newSkills.length == null || newSkills.length === 0) ? 
-                    undefined : 
-                    newSkills.find((s: { skillName: string; }) => s.skillName === name);
-
-                  if(cSkill == null) return;
-                    cSkill.skillWorkValue = value;
-                    cSkill.skillValue = cSkill.defaultValue + value;
-                    props.setCharacter({
-                      ...props.character,
-                      skills: newSkills
-                      }
-                    );
+                    setSkillValue(name ,value, getRemainingWorkPoint(),props.character, false, props.setCharacter);
                   }      
                 }
                 />

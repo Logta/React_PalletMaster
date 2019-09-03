@@ -121,10 +121,12 @@ export default function SimpleList(props: Props) {
                   id="work"
                   label="Work"
                   type="number"
-                  defaultValue={row.skillWorkValue}
+                  value={row.skillWorkValue}
                   className={classes.numberInfoField}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-                    {props.setSkillWorkValue(row.skillName, +event.target.value);}
+                    {if(row.skillValue < 100) 
+                      {props.setSkillWorkValue(row.skillName, +event.target.value);}
+                    }
                   }
                   placeholder="Work"
                   margin="normal"
@@ -135,10 +137,12 @@ export default function SimpleList(props: Props) {
                   id="interest"
                   label="Interest"
                   type="number"
-                  defaultValue={row.skillWorkValue}
+                  value={row.skillInterestValue}
                   className={classes.numberInfoField}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-                    {props.setSkillInterestValue(row.skillName, +event.target.value);}
+                    {if(row.skillValue < 100)
+                      {props.setSkillInterestValue(row.skillName, +event.target.value);}
+                    }
                   }
                   placeholder="Interest"
                   margin="normal"
