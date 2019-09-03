@@ -183,7 +183,7 @@ const Making: React.SFC<Props> = (props: Props) => {
 
       {skillTypes.map(element => {
         return(
-          <div>
+          <div key={element[1]}>
             <br />
             <br />
             {element[1]}

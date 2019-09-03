@@ -130,7 +130,6 @@ function getSteps() {
 const setSkill = (skill: skill, character: character): character =>
 {
   const newSkills = character.skills.filter(s => s.skillName !== skill.skillName);
-  console.log(newSkills.find(e => e.skillName === skill.skillName))
   return(
   {
     ...character,
@@ -178,16 +177,16 @@ const Making: React.SFC<Props> = (props: Props) => {
         defaultValue: DEX * 2
       }, character);
 
-    setCharacter(newCharacter );
+    setCharacter(newCharacter);
     
     setCharacter(
       {
-        ...character,
+        ...newCharacter,
         characterInfos: {
-          ...character.characterInfos,
-          HP: (character.abilityValues.CON + character.abilityValues.SIZ)/2,
-          MP: (character.abilityValues.POW),
-          SAN: character.abilityValues.POW * 5,
+          ...newCharacter.characterInfos,
+          HP: (newCharacter.abilityValues.CON + newCharacter.abilityValues.SIZ)/2,
+          MP: (newCharacter.abilityValues.POW),
+          SAN: newCharacter.abilityValues.POW * 5,
         }
       });
 
@@ -204,23 +203,19 @@ const Making: React.SFC<Props> = (props: Props) => {
   function handleBack() {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   }
-  
-  const setSkills = (skill: skill[]): void =>
-  {
-    setCharacter(
-    {
-      ...character,
-      skills: skill,
-    });
-  }
 
-  const  setLastCharacter = () => {
+  const setUniqueSkills = (setCharacter: (character: character) => void) =>{
     character.skills.filter(e=> e.skillWorkValue !== 0 || e.skillInterestValue !== 0 ).forEach(e=> e.skillUnique = true);
+    setCharacter({...character});
+  } 
+
+  const setLastCharacter = (setCharacter: (character: character) => void) => {
+    setUniqueSkills(setCharacter);
     const POW = character.abilityValues.POW;
     const INT = character.abilityValues.INT;
     const EDU = character.abilityValues.EDU;
     
-    setCharacter(setSkill({
+    let newCharacter = setSkill({
         skillName: "幸運",
         skillValue: POW * 5,
         skillType: "探索",
@@ -228,10 +223,8 @@ const Making: React.SFC<Props> = (props: Props) => {
         skillWorkValue: 0,
         skillInterestValue: 0,
         defaultValue: POW * 5
-      }, character)
-    );
-    
-    setCharacter(setSkill({
+      }, 
+    setSkill({
       skillName: "アイデア",
       skillValue: INT * 5,
       skillType: "探索",
@@ -239,9 +232,8 @@ const Making: React.SFC<Props> = (props: Props) => {
       skillWorkValue: 0,
       skillInterestValue: 0,
       defaultValue: INT * 5
-    }, character));
-    
-    setCharacter(setSkill({
+    }, 
+    setSkill({
       skillName: "知識",
       skillValue: EDU * 5,
       skillType: "探索",
@@ -249,9 +241,11 @@ const Making: React.SFC<Props> = (props: Props) => {
       skillWorkValue: 0,
       skillInterestValue: 0,
       defaultValue: EDU * 5
-    }, character));
+    }, character)));
 
-    console.log(character)
+    setCharacter({...character,
+      skills: newCharacter.skills
+      });
   }
 
   return (
@@ -283,8 +277,7 @@ const Making: React.SFC<Props> = (props: Props) => {
         {
           activeStep === steps.length ? (
           <div>
-            {setLastCharacter()}
-            {props.setCharacter(character)}
+            {setLastCharacter(props.setCharacter)}
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished
             </Typography>

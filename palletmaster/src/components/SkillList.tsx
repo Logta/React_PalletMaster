@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
     numberInfoField: {
       marginLeft: theme.spacing(5),
       marginRight: 'auto',
-      width: '30%',
+      width: '50px',
     },
     name: {
       width: '30%',
@@ -90,68 +90,64 @@ export default function SimpleList(props: Props) {
 
   return (
     <div className={classes.root}>
-  <Table className={classes.table} size="small">
-        <TableHead className={classes.head}><div>
-          <TableRow>
+      <Table className={classes.table} size="small">
+        <TableHead className={classes.head}>
+            <TableRow>
             <TableCell className={classes.name} rowSpan={2}>Skill</TableCell>
             <TableCell className={classes.name} align="right">Value</TableCell>
             <TableCell className={classes.name} align="right">Type</TableCell>
-          </TableRow>
-
-          <TableRow>
             <TableCell className={classes.name} align="right">Work</TableCell>
             <TableCell className={classes.name} align="right">Interest</TableCell>
-          </TableRow></div>
+          </TableRow>
         </TableHead>
-        <TableBody className={classes.body}>
+
           {props.skills.map(row => {
             if(row == null) return;
 
-            return (<div>
-            <TableRow>
-              <TableCell className={classes.name} rowSpan={2} component="th" scope="row">
-                {row.skillName}
-              </TableCell>
-              <TableCell className={classes.name} align="right">{row.skillValue}</TableCell>
-              <TableCell className={classes.name} align="right">{row.skillType}</TableCell>
-              </TableRow>
+            return (
+              <TableBody className={classes.body} key={row.skillName}>
               <TableRow>
-              <TableCell className={classes.name} align="right">       
-                <TextField
-                  id="work"
-                  label="Work"
-                  type="number"
-                  value={row.skillWorkValue}
-                  className={classes.numberInfoField}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-                    {if(row.skillValue < 100) 
-                      {props.setSkillWorkValue(row.skillName, +event.target.value);}
-                    }
-                  }
-                  placeholder="Work"
-                  margin="normal"
-                  />
+                <TableCell className={classes.name} rowSpan={2} component="th" scope="row">
+                  {row.skillName}
                 </TableCell>
-              <TableCell className={classes.name} align="right">       
-                <TextField
-                  id="interest"
-                  label="Interest"
-                  type="number"
-                  value={row.skillInterestValue}
-                  className={classes.numberInfoField}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-                    {if(row.skillValue < 100)
-                      {props.setSkillInterestValue(row.skillName, +event.target.value);}
+                <TableCell className={classes.name} align="right">{row.skillValue}</TableCell>
+                <TableCell className={classes.name} align="right">{row.skillType}</TableCell>
+                <TableCell className={classes.name} align="right">       
+                  <TextField
+                    id="work"
+                    label="Work"
+                    type="number"
+                    value={row.skillWorkValue}
+                    className={classes.numberInfoField}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
+                      {if(row.skillValue < 100) 
+                        {props.setSkillWorkValue(row.skillName, +event.target.value);}
+                      }
                     }
-                  }
-                  placeholder="Interest"
-                  margin="normal"
-                  />
+                    placeholder="Work"
+                    margin="normal"
+                    />
                 </TableCell>
-            </TableRow></div>
+                <TableCell className={classes.name} align="right">       
+                  <TextField
+                    id="interest"
+                    label="Interest"
+                    type="number"
+                    value={row.skillInterestValue}
+                    className={classes.numberInfoField}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
+                      {if(row.skillValue < 100)
+                        {props.setSkillInterestValue(row.skillName, +event.target.value);}
+                      }
+                    }
+                    placeholder="Interest"
+                    margin="normal"
+                    />
+                </TableCell>
+            </TableRow>
+        </TableBody>
             )
           })}
-        </TableBody>
       </Table>
     </div>
   );
