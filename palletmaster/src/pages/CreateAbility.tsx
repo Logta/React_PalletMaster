@@ -9,6 +9,8 @@ import Card from '@material-ui/core/Card';
 
 import ShakeNDNDice from '../modules/shakeNDNDice';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,6 +52,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     margin: {
       margin: theme.spacing(2),
+    },
+    chip: {
+      marginLeft: theme.spacing(2),
+      marginRight: 'auto',
     },
   }),
 );
@@ -122,7 +128,7 @@ const setAbilityToDice = (character: character):character =>{
   newCharacter.abilityValues.SIZ = SIZ;
   newCharacter.abilityValues.INT = +ShakeNDNDice(itemNDN).result + 6 - 1;
 
-  newCharacter.characterInfos.HP = (CON + SIZ) / 2;
+  newCharacter.characterInfos.HP = Math.ceil((CON + SIZ) / 2);
   newCharacter.characterInfos.MP = POW;
   newCharacter.characterInfos.SAN = POW * 5;
 
@@ -149,66 +155,23 @@ const Making: React.SFC<Props> = (props: Props) => {
             }>
         Dice</Button>
       <br />
+      <br />
       
       <Card className = {classes.card}>
         <br />
         physical value
         <br />
         
-        <TextField
-        id="hp"
-        label="HP"
-        type="number"
-        value={props.character.characterInfos.HP}
-        className={clsx(classes.numberInfoField, classes.dense)}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-          {props.setCharacter({
-            ...props.character,
-            characterInfos:{
-              ...props.character.characterInfos,
-              HP: +event.target.value,
-            }
-          });}
-        }
-        placeholder="HP"
-        margin="normal"
-        />
-        <TextField
-        id="mp"
-        label="MP"
-        type="number"
-        value={props.character.characterInfos.MP}
-        className={clsx(classes.numberInfoField, classes.dense)}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-          {props.setCharacter({
-            ...props.character,
-            characterInfos:{
-              ...props.character.characterInfos,
-              MP: +event.target.value,
-            }
-          });}
-        }
-        placeholder="MP"
-        margin="normal"
-        />
-        <TextField
-        id="san"
-        label="SAN"
-        type="number"
-        value={props.character.characterInfos.SAN}
-        className={clsx(classes.numberInfoField, classes.dense)}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => 
-          {props.setCharacter({
-            ...props.character,
-            characterInfos:{
-              ...props.character.characterInfos,
-              SAN: +event.target.value,
-            }
-          });}
-        }
-        placeholder="SAN"
-        margin="normal"
-        />
+        <Chip color="primary" label="HP" className={classes.chip}　/> {props.character.characterInfos.HP}
+        <Chip color="primary" label="MP" className={classes.chip}　/> {props.character.characterInfos.MP}
+        
+        <Hidden smUp implementation="css">
+          <br />
+        </Hidden>
+        
+        <Chip color="primary" label="SAN" className={classes.chip}　/> {props.character.characterInfos.SAN}
+
+        <br />
         <br />
       </Card>
       <br />
@@ -229,7 +192,7 @@ const Making: React.SFC<Props> = (props: Props) => {
             abilityValues : {
               ...props.character.abilityValues,
               STR: +event.target.value,
-            }
+            },
           });}
         }
         placeholder="STR"
@@ -247,6 +210,10 @@ const Making: React.SFC<Props> = (props: Props) => {
             abilityValues : {
               ...props.character.abilityValues,
               CON: +event.target.value,
+            },
+            characterInfos:{
+              ...props.character.characterInfos,
+              HP: Math.ceil((+event.target.value + props.character.abilityValues.SIZ) /2),
             }
           });}
         }
@@ -265,6 +232,11 @@ const Making: React.SFC<Props> = (props: Props) => {
             abilityValues : {
               ...props.character.abilityValues,
               POW: +event.target.value,
+            }, 
+            characterInfos:{
+              ...props.character.characterInfos,
+              MP: +event.target.value,
+              SAN: +event.target.value * 5,
             }
           });}
         }
@@ -323,6 +295,10 @@ const Making: React.SFC<Props> = (props: Props) => {
             abilityValues : {
               ...props.character.abilityValues,
               SIZ: +event.target.value,
+            },
+            characterInfos:{
+              ...props.character.characterInfos,
+              HP: Math.ceil((+event.target.value + props.character.abilityValues.CON) /2),
             }
           });}
         }
@@ -368,6 +344,27 @@ const Making: React.SFC<Props> = (props: Props) => {
         <br />
       </Card>
 
+      <br />
+      <br />
+      
+      <Card className = {classes.card}>
+        <br />
+        role value
+        <br />
+        
+        <Chip color="primary" label="回避" className={classes.chip}　/> {props.character.abilityValues.DEX * 2}
+        <Chip color="primary" label="アイデア" className={classes.chip}　/> {props.character.abilityValues.INT * 5}
+                
+        <Hidden smUp implementation="css">
+          <br />
+        </Hidden>
+        
+        <Chip color="primary" label="知識" className={classes.chip}　/> {props.character.abilityValues.EDU * 5}
+        <Chip color="primary" label="幸運" className={classes.chip}　/> {props.character.abilityValues.POW * 5}
+
+        <br />
+        <br />
+      </Card>
       <br />
     </Paper>
   );
