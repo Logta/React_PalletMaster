@@ -8,7 +8,7 @@ import Card from '@material-ui/core/Card';
 
 import SkillList from '../components/SkillList'
 import Chip from '@material-ui/core/Chip';
-import { Hidden } from '@material-ui/core';
+import { Hidden, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -123,6 +123,15 @@ const skillTypes = [
   ['知識','Wisdom'],
 ];
 
+const getSkillIndex = (type: string): number => {
+  if(type === '戦闘') return 0;
+  if(type === '探索') return 1;
+  if(type === '行動') return 2;
+  if(type === '交渉') return 3;
+  if(type === '知識') return 4;
+  return -1;
+}
+
 const setSkillValue = (name: string, value: number, remainPoint: number, 
   character: character, interest:boolean, setCharacter:(character: character) => void) => {
   if(value < 0 || remainPoint <= 0) return;
@@ -145,6 +154,8 @@ const setSkillValue = (name: string, value: number, remainPoint: number,
 
 const Making: React.SFC<Props> = (props: Props) => {
   const classes = useStyles();
+  const [openTable, setOpenTable] = React.useState<boolean[]>
+    (skillTypes.map(s => {return false}));
 
   const getWorkPoint = () => {
     if(props.character.skills.length === 0) return 0;
@@ -177,6 +188,9 @@ const Making: React.SFC<Props> = (props: Props) => {
       <h2>Character Create</h2>
       <Card>
         <Chip color="primary" label="Work Point" className={classes.chip}　/> {getRemainingWorkPoint()}
+          <Hidden xsDown implementation="css">
+            <br />
+          </Hidden>
         <Chip color="primary" label="Interest Point" className={classes.chip}　/> {getRemainingInterestPoint()}
         <br />
       </Card>
@@ -185,11 +199,20 @@ const Making: React.SFC<Props> = (props: Props) => {
         return(
           <div key={element[1]}>
             <br />
-            <br />
-            {element[1]}
+
+            <Button variant="contained"
+            onClick={() => {
+              const newOpen: boolean[] = {...openTable};
+              newOpen[getSkillIndex(element[0])] = !newOpen[getSkillIndex(element[0])];
+              console.log(newOpen);
+              setOpenTable(newOpen);
+            }}
+            >{element[1]}</Button>
+
             <br />
             <Card>
-              <SkillList 
+              {(openTable[getSkillIndex(element[0])]) &&
+              (<SkillList 
                 skills={getSkills(element[0])} 
                 setCharacter={props.setCharacter} 
                 setSkillInterestValue={
@@ -202,7 +225,8 @@ const Making: React.SFC<Props> = (props: Props) => {
                     setSkillValue(name ,value, getRemainingWorkPoint(),props.character, false, props.setCharacter);
                   }      
                 }
-                />
+                />)
+              }
             </Card>
           </div>
           );
