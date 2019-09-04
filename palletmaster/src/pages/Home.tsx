@@ -11,6 +11,7 @@ import Abillity from '../containers/Ability';
 import SAN from '../containers/SAN';
 import Battle from '../containers/Battle';
 import SideBar from '../containers/SideBar';
+import Hidden from '@material-ui/core/Hidden';
 
 
 type skill = {
@@ -93,6 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface ResponsiveDrawerProps {
   container?: Element;
   open: boolean;
+  setOpen:(open: boolean) => void;
   character: character;
 }
 
@@ -104,7 +106,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   console.log(props.open);
   function handleDrawerToggle() {
-    setMobileOpen(!mobileOpen);
+    props.setOpen(!props.open);
   }
 
   const drawer = (
@@ -120,12 +122,12 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       <CssBaseline />
       <nav className={classes.drawer} aria-label="mailbox folders">
         
-        {props.open &&/* The implementation can be swapped with js to avoid SEO duplication of links. */
-          (<Drawer
+        <Hidden smUp implementation="css">
+          <Drawer
             container={container}
-            variant="permanent"
+            variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
+            open={props.open}
             onClose={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
@@ -135,8 +137,19 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             }}
           >
             {drawer}
-          </Drawer>)
-        }
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />   

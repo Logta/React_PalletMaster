@@ -26,7 +26,7 @@ const App: React.FC = () => {
         <div className='App-main' id='app-main'>
           <Route exact path='/' component={Main}/>
           
-          <Route path='/home' render={() => <Home open={open} />}/>
+          <Route path='/home' render={() => <Home open={open} setOpen={setOpen}/>}/>
           <Route exact path='/login' component={Login} />
           <Route exact path='/setting' component={Setting} />
           <Route exact path='/making' component={Making} />
