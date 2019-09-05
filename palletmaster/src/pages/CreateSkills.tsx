@@ -10,6 +10,8 @@ import SkillList from '../components/SkillList'
 import Chip from '@material-ui/core/Chip';
 import { Hidden, Button } from '@material-ui/core';
 
+import SkillPoint from '../components/SkillPoint';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
@@ -186,14 +188,7 @@ const Making: React.SFC<Props> = (props: Props) => {
   return (
     <Paper className = {classes.paper}>
       <h2>Character Create</h2>
-      <Card>
-        <Chip color="primary" label="Work Point" className={classes.chip}　/> {getRemainingWorkPoint()}
-          <Hidden xsDown implementation="css">
-            <br />
-          </Hidden>
-        <Chip color="primary" label="Interest Point" className={classes.chip}　/> {getRemainingInterestPoint()}
-        <br />
-      </Card>
+      <SkillPoint workPoint={getRemainingWorkPoint()} interestPoint={getRemainingInterestPoint()} />
 
       {skillTypes.map(element => {
         return(
@@ -204,7 +199,6 @@ const Making: React.SFC<Props> = (props: Props) => {
             onClick={() => {
               const newOpen: boolean[] = {...openTable};
               newOpen[getSkillIndex(element[0])] = !newOpen[getSkillIndex(element[0])];
-              console.log(newOpen);
               setOpenTable(newOpen);
             }}
             >{element[1]}</Button>

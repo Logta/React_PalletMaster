@@ -69,10 +69,13 @@ const useStyles = makeStyles((theme: Theme) =>
     numberInfoField: {
       marginLeft: theme.spacing(5),
       marginRight: 'auto',
-      width: '30%',
+      width: '100%',
     },
     name: {
-      width: '30%',
+      width: '40%',
+    },
+    number: {
+      width: '25%',
     },
     head: {
       width: '100%',
@@ -92,12 +95,12 @@ export default function SimpleList(props: Props) {
         <TableHead className={classes.head}>
           <TableRow>
             <TableCell className={classes.name} rowSpan={2}>Skill</TableCell>
-            <TableCell className={classes.name} align="right">Value</TableCell>
-            <TableCell className={classes.name} align="right">Type</TableCell>
+            <TableCell className={classes.number} align="right">Value</TableCell>
+            <TableCell className={classes.number} align="right">Type</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className={classes.name} align="right">Work</TableCell>
-            <TableCell className={classes.name} align="right">Interest</TableCell>
+            <TableCell className={classes.number} align="right">Work</TableCell>
+            <TableCell className={classes.number} align="right">Interest</TableCell>
           </TableRow>
         </TableHead>
 
@@ -110,11 +113,11 @@ export default function SimpleList(props: Props) {
                 <TableCell className={classes.name} rowSpan={2} component="th" scope="row">
                   {row.skillName}
                 </TableCell>
-                <TableCell className={classes.name} align="right">{row.skillValue}</TableCell>
-                <TableCell className={classes.name} align="right">{row.skillType}</TableCell>
+                <TableCell className={classes.number} align="right">{row.skillValue}</TableCell>
+                <TableCell className={classes.number} align="right">{row.skillType}</TableCell>
           </TableRow>
           <TableRow>
-                <TableCell className={classes.name} align="right">      
+                <TableCell className={classes.number} align="right">      
                   <TextField
                     id="work"
                     label="Work"
@@ -130,7 +133,7 @@ export default function SimpleList(props: Props) {
                     margin="normal"
                     />
                 </TableCell>
-                <TableCell className={classes.name} align="right">       
+                <TableCell className={classes.number} align="right">       
                   <TextField
                     id="interest"
                     label="Interest"

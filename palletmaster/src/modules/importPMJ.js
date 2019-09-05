@@ -15,7 +15,7 @@ export default function onSubmit(func, item) {
         alert('ファイル読み取りに失敗しました')
     }
         //読み込んだファイルの中身を取得する
-    reader.readAsText( item , 'Shift_JIS');
+    reader.readAsText( item , 'UTF-8');
 
     // PMJファイル以外は処理を止める
     if(!item.name.match(".json$") && !item.name.match(".pmj$")) {

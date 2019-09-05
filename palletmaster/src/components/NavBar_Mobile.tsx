@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
     navBarAction:{
       width: '20%',
     },
+    icon:{
+      color:'white',
+    }
   })
 );
 
@@ -56,7 +59,7 @@ const NavBar: React.SFC<Props> = (props: Props) => {
     className={classes.root}>
     <Toolbar> 
       <Button onClick={()=>{props.setOpen(!props.open)}}>
-        <DehazeIcon />
+        <DehazeIcon className={classes.icon}/>
       </Button>
       <Typography variant="h6" className={classes.title}>
         Palletmaster
