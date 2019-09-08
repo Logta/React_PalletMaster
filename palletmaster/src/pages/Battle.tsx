@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
 import Table from '@material-ui/core/Table';
@@ -8,15 +9,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import DiceDialog from '../components/DiceDialog';
 import Button from '@material-ui/core/Button';
-import clsx from 'clsx';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Hidden from '@material-ui/core/Hidden';
 
+import DiceDialog from '../components/DiceDialog';
+import SnackBar from '../components/SnackBar';
 import sendBCDice from '../modules/sendDiscord';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -76,6 +77,7 @@ export default function SimpleTable(props: Props) {
   const [value, setValue] = React.useState<number>(0);
   const [HPDiff, setHPDiff] = React.useState<number>(0);
   const [openDialog, setOpenDialog] = React.useState<boolean>(false);
+  const [openSnack, setOpenSnack] = React.useState<boolean>(false);
 
   const handleClick = (skillName: string ): void =>
   {
@@ -101,12 +103,16 @@ export default function SimpleTable(props: Props) {
     });
   }
 
-  function handleOpen() {
+  const handleOpenDialog = () => {
     (props.discordUrl !== "") ?
     sendBCDice(item):
     setOpenDialog(true);
   }
 
+  const handleOpenSnack = () => {
+    props.setHP(props.hp + HPDiff);
+    if(HPDiff / props.hp <= -0.50) setOpenSnack(true);
+  }
 
   const setSkills = (skill: string, value: number): void =>
   {
@@ -144,7 +150,7 @@ export default function SimpleTable(props: Props) {
       <Hidden smUp implementation="css">
         <Chip color="primary" label="Skill" />        
         <TextField
-          id="san"
+          id="skill"
           label="Skill"
           type="text"
           defaultValue={skill}
@@ -156,7 +162,7 @@ export default function SimpleTable(props: Props) {
           <br />
           <Chip color="primary" label="Value" className={classes.chip}　/>    
           <TextField
-            id="san"
+            id="value"
             label="Value"
             type="number"
             defaultValue={value}
@@ -176,7 +182,7 @@ export default function SimpleTable(props: Props) {
       <Hidden xsDown implementation="css">
         <Chip color="primary" label="Skill" />        
         <TextField
-          id="san"
+          id="skill"
           label="Skill"
         type="text"
         defaultValue={skill}
@@ -187,7 +193,7 @@ export default function SimpleTable(props: Props) {
         />      
         <Chip color="primary" label="Value" className={classes.chip}　/>    
         <TextField
-          id="san"
+          id="value"
           label="Value"
           type="number"
           defaultValue={value}
@@ -215,7 +221,7 @@ export default function SimpleTable(props: Props) {
           margin="normal"
           />
           <Button variant="contained" color="primary" //className={classes.button}
-          onClick = {():void =>{props.setHP(props.hp + HPDiff)}}>
+          onClick = {handleOpenSnack}>
         +/-</Button>
 
       <br />
@@ -240,7 +246,7 @@ export default function SimpleTable(props: Props) {
               onClick={_ => {
                 console.log("onclick");
                 handleClick(row.skillName)
-                handleOpen();}
+                handleOpenDialog();}
               }>
               <TableCell component="th" scope="row">
                 {row.skillName}
@@ -253,6 +259,7 @@ export default function SimpleTable(props: Props) {
       </Table>
 
       <DiceDialog open={openDialog} setOpen={setOpenDialog} item={item} />
+      <SnackBar open={openSnack} setOpen={setOpenSnack} message={'ショックロールをしてください'} />
     </Paper>
     </div>
   );
