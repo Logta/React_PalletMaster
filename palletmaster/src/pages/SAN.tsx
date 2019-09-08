@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
@@ -10,7 +11,7 @@ import Button from '@material-ui/core/Button';
 
 import DiceDialog from '../components/DiceDialog';
 import DiceNDNDialog from '../components/DiceNDNDialog';
-import clsx from 'clsx';
+import SnackBar from '../components/SnackBar';
 
 import sendBCDice from '../modules/sendDiscord';
 
@@ -73,7 +74,10 @@ type PropsIdea = {
 const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
   const classes = useStyles();
   const [diffSAN, setDiffSAN] = React.useState(1);
-  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openSnack, setOpenSnack] = React.useState(false);
   
   const [item, setItem] = React.useState({
     name: "",
@@ -92,10 +96,22 @@ const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
     });
   }
 
-  function handleOpen() {
+  const handleOpenDialog = () => {
     (props.discordUrl !== "") ?
     sendBCDice(item):
-    setOpen(true);
+    setOpenDialog(true);
+  }
+
+  const handleOpenSnack = (str :string) => {
+    setMessage(str);
+    setOpenSnack(true);
+  }
+  
+  const changeSANValue = () => {
+    props.setSAN(props.SAN + diffSAN);
+    if (diffSAN / props.SAN <= -0.20) handleOpenSnack('不定の狂気です');
+    else if (diffSAN <= -5) handleOpenSnack('アイデアロールをしてください');
+
   }
 
   return (
@@ -112,19 +128,20 @@ const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
         margin="normal"
         />
         <Fab color="primary" aria-label="add" className={classes.fab}>
-          <AddIcon onClick={() => {props.setSAN(props.SAN + diffSAN)}}/>
+          <AddIcon onClick={changeSANValue}/>
         </Fab>
 
         <br />
         <Button variant="contained" color="primary" className={classes.button}
         onClick = {():void =>{
           setItems("SANチェック", String(props.SAN));
-          handleOpen();
+          handleOpenDialog();
           }}>
           SAN Check
         </Button>
 
-        <DiceDialog open={open} setOpen={setOpen} item={item} />
+        <DiceDialog open={openDialog} setOpen={setOpenDialog} item={item} />
+        <SnackBar open={openSnack} setOpen={setOpenSnack} message={message} />
     </Paper>
   );
 }
@@ -175,7 +192,7 @@ const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
       margin="normal"
     />
 
-<br />
+    <br />
       <Button variant="contained" color="primary" className={classes.button}
       onClick = {():void =>{
         setItems(countDice, numberDice);
@@ -237,8 +254,6 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
 }
 
 const SAN: React.SFC<Props> = (props: Props) => {
-  const classes = useStyles();
-
   return (
     <div>
       <SANValue SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} discordUrl={props.discordUrl}/>
@@ -247,6 +262,5 @@ const SAN: React.SFC<Props> = (props: Props) => {
     </div>
   );
 }
-
 
 export default SAN;
