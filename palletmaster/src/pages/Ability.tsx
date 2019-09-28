@@ -22,17 +22,6 @@ import DiceDialog from '../components/DiceDialog';
 
 import sendBCDice from '../modules/sendDiscord';
 
-type abilityValue = {
-  STR: number,
-  CON: number,
-  POW: number,
-  DEX: number,
-  APP: number,
-  SIZ: number,
-  INT: number,
-  EDU: number
-};
-
 interface Item {
   name: string;
   url: string;

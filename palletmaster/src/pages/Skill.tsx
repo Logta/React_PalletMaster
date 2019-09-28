@@ -62,16 +62,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-type skill = {
-    skillName: string,
-    skillValue: number,
-    skillType: string,
-    skillUnique: boolean,
-    skillWorkValue: number,
-    skillInterestValue: number,
-    defaultValue: number
-};
-
 type Props = {
     skills: skill[];
     characterName: string;

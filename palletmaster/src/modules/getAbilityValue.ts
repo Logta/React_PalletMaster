@@ -1,14 +1,3 @@
-type abilityValue = {
-    STR: number,
-    CON: number,
-    POW: number,
-    DEX: number,
-    APP: number,
-    SIZ: number,
-    INT: number,
-    EDU: number
-  };
-
 function getAbilityValue(item: string, abilityValue: abilityValue, power: number) : string{
 
     return String(getAbility(item, abilityValue) * power);

@@ -60,31 +60,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-type abilityValue = {
-  STR: number,
-  CON: number,
-  POW: number,
-  DEX: number,
-  APP: number,
-  SIZ: number,
-  INT: number,
-  EDU: number
-};
-
-type characterInfo = {
-  characterName: string,
-  HP: number,
-  MP: number,
-  SAN: number,
-  damageBonus: string,
-  job: string,
-  age: number,
-  sex: string,
-  height: number,
-  weight: number,
-  origin: string
-};
-
 type Props = {
   characterInfos: characterInfo;
   abilityValues: abilityValue;
