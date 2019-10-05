@@ -3,7 +3,7 @@
 クトゥルフの呼び声TRPGセッションを補助するWEBアプリです。
 オフラインもしくはDiscord上でセッションを行う際に、プレイヤー(PL)のキャラクター情報を管理、技能ロールを補助し、よりロールプレイに集中することができるようにすることを目的にしています。
 
-![ロゴ](images/pm_logo.png)
+<img src="images/pm_logo.png" width="250px">
 
 ## Description
 
