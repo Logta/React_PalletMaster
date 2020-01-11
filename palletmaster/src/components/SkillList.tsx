@@ -50,6 +50,7 @@ type Props = {
   setCharacter: (character: character) => void;
   setSkillWorkValue: (name: string, work: number) => void;
   setSkillInterestValue: (name: string, interest: number) => void;
+  checkSetSkillValue: (value: number, isWork:boolean) => boolean;
 };
 
 export default function SimpleList(props: Props) {
@@ -62,6 +63,7 @@ export default function SimpleList(props: Props) {
           setCharacter={props.setCharacter} 
           setSkillInterestValue={props.setSkillInterestValue}
           setSkillWorkValue={props.setSkillWorkValue}
+          checkSetSkillValue={props.checkSetSkillValue}
         />
       </Hidden>
 
@@ -72,6 +74,7 @@ export default function SimpleList(props: Props) {
           setCharacter={props.setCharacter} 
           setSkillInterestValue={props.setSkillInterestValue}
           setSkillWorkValue={props.setSkillWorkValue}
+          checkSetSkillValue={props.checkSetSkillValue}
         />
       </Hidden>
     </div>
