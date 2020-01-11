@@ -117,6 +117,13 @@ const Making: React.SFC<Props> = (props: Props) => {
   const [openTable, setOpenTable] = React.useState<boolean[]>
     (skillTypes.map(s => {return false}));
 
+  const checkSetSkillValue = (skillValue: number, isWork: boolean) => {
+    if(skillValue < 0 || skillValue > 100) return false;
+    if(isWork && getRemainingWorkPoint() <= 0 ) return false;
+    if(!isWork && getRemainingInterestPoint() <= 0) return false;
+    return true;
+  }
+
   const getWorkPoint = () => {
     if(props.character.skills.length === 0) return 0;
     return props.character.skills.map(s=>s.skillWorkValue).reduce(function(total, data)
@@ -177,6 +184,7 @@ const Making: React.SFC<Props> = (props: Props) => {
                     setSkillValue(name ,value, getRemainingWorkPoint(),props.character, false, props.setCharacter);
                   }      
                 }
+                checkSetSkillValue={checkSetSkillValue}
                 />)
               }
             </Card>
