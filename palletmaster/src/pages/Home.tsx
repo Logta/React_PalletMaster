@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ResponsiveDrawerProps {
   container?: Element;
-  open: boolean;
-  setOpen:(open: boolean) => void;
+  openMobile: boolean;
+  setOpenMobile:(open: boolean) => void;
   character: character;
 }
 
@@ -61,7 +61,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
   const theme = useTheme();
   
   function handleDrawerToggle() {
-    props.setOpen(!props.open);
+    props.setOpenMobile(!props.openMobile);
   }
 
   const drawer = (
@@ -82,8 +82,9 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             container={container}
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={props.open}
+            open={!props.openMobile}
             onClose={handleDrawerToggle}
+            onClick={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
             }}
