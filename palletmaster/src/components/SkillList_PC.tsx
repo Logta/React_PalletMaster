@@ -121,7 +121,7 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
               setSkillWork(+event.target.value);
             }
           }
-          onBlur={(event: React.ChangeEvent<HTMLInputElement>) => {
+          onBlur={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             if(props.checkSetSkillValue(props.row.defaultValue + props.row.skillInterestValue + +event.target.value , true)) 
               props.setSkillWorkValue(props.row.skillName, +event.target.value);
             }
@@ -143,7 +143,7 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
               setSkillInterest(+event.target.value);
             }
           }
-          onBlur={(event: React.ChangeEvent<HTMLInputElement>) => 
+          onBlur={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => 
             {if(props.checkSetSkillValue(props.row.defaultValue + props.row.skillWorkValue + +event.target.value , false) &&
               +event.target.value >= 0) 
               props.setSkillInterestValue(props.row.skillName, +event.target.value);
