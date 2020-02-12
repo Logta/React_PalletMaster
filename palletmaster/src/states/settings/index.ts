@@ -1,19 +1,17 @@
 import { setDiscordUrl, SetDiscordUrlAction } from './SetDiscordUrl';
 import { setDiceUrl, SetDiceUrlAction } from './SetDiceUrl';
 
-type Actions
-    = SetDiscordUrlAction
-    | SetDiceUrlAction;
+type Actions = SetDiscordUrlAction | SetDiceUrlAction;
 
-export type State = {    // ページ全体で保持しとくべき情報はTodoの配列くらい
+export type State = {
     discordUrl: string;
     diceUrl: string;
 };
 
 const init = (): State => {
     return {
-        discordUrl: "",
-        diceUrl: "",
+        discordUrl: '',
+        diceUrl: '',
     };
 };
 
@@ -25,10 +23,10 @@ export const reducer = (state: State = init(), action: Actions) => {
                 discordUrl: action.payload.url,
             };
         case 'SET_DICE_URL_SETTING':
-            return{
+            return {
                 ...state,
                 diceUrl: action.payload.url,
-            }
+            };
         default:
             return state;
     }

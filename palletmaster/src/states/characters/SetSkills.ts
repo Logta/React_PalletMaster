@@ -1,16 +1,16 @@
 import { Action } from 'redux';
 
 type skill = {
-    skillName: string,
-    skillValue: number,
-    skillType: string,
-    skillUnique: boolean,
-    skillWorkValue: number,
-    skillInterestValue: number,
-    defaultValue: number
+    skillName: string;
+    skillValue: number;
+    skillType: string;
+    skillUnique: boolean;
+    skillWorkValue: number;
+    skillInterestValue: number;
+    defaultValue: number;
 };
 
-export type SetSkillsPayload = {    // todoを追加する時に必要なのはtodoの内容くらい
+export type SetSkillsPayload = {
     skills: skill[];
 };
 

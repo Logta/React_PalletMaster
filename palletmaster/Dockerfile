@@ -1,3 +1,2 @@
-FROM "node:10.13-alpine"
-
-WORKDIR /app
+FROM node:12.15.0-alpine  
+WORKDIR /usr/src/app

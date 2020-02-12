@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-export type SetMPPayload = {    // todoを追加する時に必要なのはtodoの内容くらい
+export type SetMPPayload = {
     mp: number;
 };
 
