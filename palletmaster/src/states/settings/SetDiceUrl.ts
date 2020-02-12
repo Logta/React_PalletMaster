@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-export type SetDiceUrlPayload = {    // todoを追加する時に必要なのはtodoの内容くらい
+export type SetDiceUrlPayload = {
     url: string;
 };
 

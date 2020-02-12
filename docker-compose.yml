@@ -1,15 +1,17 @@
-version: '3.5'
+version: "3.5"
 
 services:
   front:
-  # chmod +x node_modules/.bin/react-scripts
-  # node node_modules/react-scripts/scripts/start.js 
-  # docker-compose run front /bin/sh
-  # docker-compose run --rm front yarn start
-
-    build: ./palletmaster
-    command: yarn start
+    build:
+      context: ./palletmaster
+      dockerfile: Dockerfile
     volumes:
-      - ./palletmaster:/app
+      - ./palletmaster:/usr/src/app
+    command: sh -c "yarn start"
     ports:
-      - 8000:3000
+      - "3000:3000"
+      # chmod +x node_modules/.bin/react-scripts
+      # node node_modules/react-scripts/scripts/start.js
+      # docker-compose run front /bin/sh
+      # docker-compose run --rm front yarn start
+      # 0.0.0.0:3000で繋がる
