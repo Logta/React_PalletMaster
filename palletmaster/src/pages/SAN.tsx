@@ -71,81 +71,6 @@ interface PropsIdea extends Props {
 }
 
 const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
-<<<<<<< HEAD
-  const classes = useStyles();
-  const [diffSAN, setDiffSAN] = React.useState(1);
-  const [message, setMessage] = React.useState('');
-
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [openSnack, setOpenSnack] = React.useState(false);
-  
-  const [item, setItem] = React.useState({
-    name: "",
-    url: "",
-    user: "",
-    value: "",
-  });
-
-  const setItems = (ability: string, value: string): void =>
-  {
-    setItem({
-      name: ability,
-      url: props.discordUrl,
-      user: props.characterName,
-      value: value,
-    });
-  }
-
-  const handleOpenDialog = () => {
-    (props.discordUrl !== "") ?
-    sendBCDice(item):
-    setOpenDialog(true);
-  }
-
-  const handleOpenSnack = (str :string) => {
-    setMessage(str);
-    setOpenSnack(true);
-  }
-  
-  const changeSANValue = () => {
-    props.setSAN(props.SAN + diffSAN);
-    if (diffSAN / props.SAN <= -0.20) handleOpenSnack('不定の狂気です');
-    else if (diffSAN <= -5) handleOpenSnack('アイデアロールをしてください');
-
-  }
-
-  return (
-    <Paper className = {classes.paper}>
-      <Chip color="primary" label="SAN" /> {props.SAN}        
-      <TextField
-        id="san"
-        label="SAN"
-        type="number"
-        defaultValue={diffSAN}
-        className={classes.numberInfoField}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setDiffSAN(+event.target.value)}}
-        placeholder="SAN"
-        margin="normal"
-        />
-        <Fab color="primary" aria-label="add" className={classes.fab}>
-          <AddIcon onClick={changeSANValue}/>
-        </Fab>
-
-        <br />
-        <Button variant="contained" color="primary" className={classes.button}
-        onClick = {():void =>{
-          setItems("SANチェック", String(props.SAN));
-          handleOpenDialog();
-          }}>
-          SAN Check
-        </Button>
-
-        <DiceDialog open={openDialog} setOpen={setOpenDialog} item={item} />
-        <SnackBar open={openSnack} setOpen={setOpenSnack} message={message} />
-    </Paper>
-  );
-}
-=======
     const classes = useStyles();
     const [diffSAN, setDiffSAN] = React.useState(1);
     const [open, setOpen] = React.useState(false);
@@ -208,7 +133,6 @@ const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
         </Paper>
     );
 };
->>>>>>> refactoring
 
 const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
     const classes = useStyles();
@@ -220,50 +144,6 @@ const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
         count: 0,
         number: 0,
     });
-<<<<<<< HEAD
-  }
-
-  function handleOpen() {
-    setOpen(true);
-  }
-
-  return (
-    <Paper className = {clsx(classes.paper, classes.dense)}>       
-    <TextField
-      id="san"
-      label="Count"
-      type="number"
-      defaultValue={countDice}
-      className={classes.numberInfoField}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setCountDice(+event.target.value)}}
-      placeholder="SAN"
-      margin="normal"
-    />       
-    <TextField
-      id="san"
-      label="Number"
-      type="number"
-      defaultValue={numberDice}
-      className={classes.numberInfoField}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setNumberDice(+event.target.value)}}
-      placeholder="SAN"
-      margin="normal"
-    />
-
-    <br />
-      <Button variant="contained" color="primary" className={classes.button}
-      onClick = {():void =>{
-        setItems(countDice, numberDice);
-        handleOpen();
-        }}>
-        Judge
-      </Button>
-
-    <DiceNDNDialog open={open} setOpen={setOpen} item={item} />
-    </Paper>
-  );
-}
-=======
 
     const setItems = (cou: number, num: number): void => {
         setItem({
@@ -320,7 +200,6 @@ const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
         </Paper>
     );
 };
->>>>>>> refactoring
 
 const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
     const classes = useStyles();
@@ -333,19 +212,6 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
         value: '',
     });
 
-<<<<<<< HEAD
-const SAN: React.SFC<Props> = (props: Props) => {
-  return (
-    <div>
-      <SANValue SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} discordUrl={props.discordUrl}/>
-      <SANFunc SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} discordUrl={props.discordUrl} />
-      <SANIdea skills={props.skills} discordUrl={props.discordUrl} characterName={props.characterName}/>
-    </div>
-  );
-}
-
-export default SAN;
-=======
     const setItems = (ability: string, value: string): void => {
         setItem({
             name: ability,
@@ -411,4 +277,3 @@ const SAN: React.SFC<PropsMain> = (props: PropsMain) => {
 };
 
 export default SAN;
->>>>>>> refactoring

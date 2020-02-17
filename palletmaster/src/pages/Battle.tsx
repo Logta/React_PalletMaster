@@ -77,15 +77,6 @@ export default function SimpleTable(props: Props) {
     const [value, setValue] = React.useState<number>(0);
     const [HPDiff, setHPDiff] = React.useState<number>(0);
     const [openDialog, setOpenDialog] = React.useState<boolean>(false);
-    const [openSnack, setOpenSnack] = React.useState<boolean>(false);
-
-    const handleClick = (skillName: string): void => {
-        const skill: skill | undefined = props.skills.find(
-            s => s.skillName === skillName
-        );
-        if (skill == null) return;
-        setItems(skillName, String(skill.skillValue));
-    };
 
     const handleClick = (skillName: string): void => {
         const skill: skill | undefined = props.skills.find(
@@ -101,31 +92,49 @@ export default function SimpleTable(props: Props) {
         user: '',
         value: '',
     });
-}
 
-const handleOpenDialog = () => {
-    props.discordUrl !== '' ? sendBCDice(item) : setOpenDialog(true);
-};
-
-const handleOpenSnack = () => {
-    props.setHP(props.hp + HPDiff);
-    if (HPDiff / props.hp <= -0.5) setOpenSnack(true);
-};
-
-const setSkills = (skill: string, value: number): void => {
-    const addSkill: skill = {
-        skillName: '',
-        skillValue: 0,
-        skillType: '戦闘',
-        skillUnique: true,
-        skillWorkValue: 0,
-        skillInterestValue: 0,
-        defaultValue: 0,
+    const setItems = (ability: string, value: string): void => {
+        setItem({
+            name: ability,
+            url: props.discordUrl,
+            user: props.characterName,
+            value: value,
+        });
     };
 
     function handleOpen() {
         props.discordUrl !== '' ? sendBCDice(item) : setOpenDialog(true);
     }
+
+    const setSkills = (skill: string, value: number): void => {
+        const addSkill: skill = {
+            skillName: '',
+            skillValue: 0,
+            skillType: '戦闘',
+            skillUnique: true,
+            skillWorkValue: 0,
+            skillInterestValue: 0,
+            defaultValue: 0,
+        };
+
+        const newSkills = JSON.parse(JSON.stringify(props.skills));
+
+        const cSkill =
+            newSkills.length == null || newSkills.length === 0
+                ? undefined
+                : newSkills.find(
+                      (s: { skillName: string }) => s.skillName === skill
+                  );
+
+        if (cSkill == null) {
+            addSkill.skillName = skill;
+            addSkill.skillValue = value;
+            props.setSkills([...props.skills, addSkill]);
+        } else {
+            cSkill.skillValue = value;
+            props.setSkills(newSkills);
+        }
+    };
 
     return (
         <div>
@@ -135,7 +144,7 @@ const setSkills = (skill: string, value: number): void => {
                 <Hidden smUp implementation="css">
                     <Chip color="primary" label="Skill" />
                     <TextField
-                        id="skill"
+                        id="san"
                         label="Skill"
                         type="text"
                         defaultValue={skill}
@@ -155,7 +164,7 @@ const setSkills = (skill: string, value: number): void => {
                         className={classes.chip}
                     />
                     <TextField
-                        id="value"
+                        id="san"
                         label="Value"
                         type="number"
                         defaultValue={value}
@@ -168,84 +177,7 @@ const setSkills = (skill: string, value: number): void => {
                         placeholder="Value"
                         margin="normal"
                     />
-                    const newSkills = JSON.parse(JSON.stringify(props.skills));
-                    {/* モバイル以下なら隠す -- モバイル画面以外で表示 */}
-                    <Hidden xsDown implementation="css">
-                        <Chip color="primary" label="Skill" />
-                        <TextField
-                            id="skill"
-                            label="Skill"
-                            type="text"
-                            defaultValue={skill}
-                            className={classes.numberInfoField}
-                            onChange={(
-                                event: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                                setSkill(event.target.value);
-                            }}
-                            placeholder="Skill"
-                            margin="normal"
-                        />
-                        <Chip
-                            color="primary"
-                            label="Value"
-                            className={classes.chip}
-                        />
-                        <TextField
-                            id="value"
-                            label="Value"
-                            type="number"
-                            defaultValue={value}
-                            className={classes.numberInfoField}
-                            onChange={(
-                                event: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                                setValue(+event.target.value);
-                            }}
-                            placeholder="Value"
-                            margin="normal"
-                        />
-                        <Fab
-                            color="primary"
-                            aria-label="add"
-                            className={classes.fab}
-                        >
-                            <AddIcon
-                                onClick={() => {
-                                    setSkills(skill, value);
-                                }}
-                            />
-                        </Fab>
-                    </Hidden>
-                    <br />
-                    <br />
-                    <Chip
-                        color="primary"
-                        label="HP"
-                        className={classes.chip}
-                    />{' '}
-                    {props.hp}
-                    <TextField
-                        id="hp"
-                        label="HP"
-                        type="number"
-                        defaultValue={HPDiff}
-                        className={classes.numberInfoField}
-                        onChange={(
-                            event: React.ChangeEvent<HTMLInputElement>
-                        ) => {
-                            setHPDiff(+event.target.value);
-                        }}
-                        placeholder="Value"
-                        margin="normal"
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary" //className={classes.button}
-                        onClick={handleOpenSnack}
-                    >
-                        +/-
-                    </Button>
+
                     <br />
                     <Fab
                         color="primary"
@@ -361,7 +293,7 @@ const setSkills = (skill: string, value: number): void => {
                                     onClick={_ => {
                                         console.log('onclick');
                                         handleClick(row.skillName);
-                                        handleOpenDialog();
+                                        handleOpen();
                                     }}
                                 >
                                     <TableCell component="th" scope="row">
@@ -384,12 +316,7 @@ const setSkills = (skill: string, value: number): void => {
                     setOpen={setOpenDialog}
                     item={item}
                 />
-                <SnackBar
-                    open={openSnack}
-                    setOpen={setOpenSnack}
-                    message={'ショックロールをしてください'}
-                />
             </Paper>
         </div>
     );
-};
+}
