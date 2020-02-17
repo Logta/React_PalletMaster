@@ -16,75 +16,100 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      position: 'fixed',
-      zIndex: 1,
-    },
-    navBar:{
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      margin: 'auto',
-      width: '100%',
-      zIndex: 2,
-    },
-    title: {
-      //flexGrow: 1,
-    },
-    navBarAction:{
-      width: '20%',
-    },
-    icon:{
-      color:'white',
-    }
-  })
+    createStyles({
+        root: {
+            position: 'fixed',
+            zIndex: 1,
+        },
+        navBar: {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            margin: 'auto',
+            width: '100%',
+            zIndex: 2,
+        },
+        title: {
+            //flexGrow: 1,
+        },
+        navBarAction: {
+            width: '20%',
+        },
+        icon: {
+            color: 'white',
+        },
+    })
 );
 
 type Props = {
-  open : boolean;
-  setOpen: (open: boolean) => void;
+    open: boolean;
+    setOpen: (open: boolean) => void;
 };
 
 const NavBar: React.SFC<Props> = (props: Props) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState('recents');
+    const classes = useStyles();
+    const [value, setValue] = React.useState('recents');
 
-  function handleChange(event: React.ChangeEvent<{}>, newValue: string) {
-    setValue(newValue);
-  }
+    function handleChange(event: React.ChangeEvent<{}>, newValue: string) {
+        setValue(newValue);
+    }
 
-  return (
-    <AppBar
-    className={classes.root}>
-    <Toolbar> 
-      <Button onClick={()=>{props.setOpen(!props.open)}}>
-        <DehazeIcon className={classes.icon}/>
-      </Button>
-      <Typography variant="h6" className={classes.title}>
-        Palletmaster
-      </Typography>
-    </Toolbar>
-    <Toolbar>
-
-      <BottomNavigation value={value} onChange={handleChange} 
-        className={classes.navBar}>
-        <BottomNavigationAction className={classes.navBarAction}
-          component={Link}
-          to="/home" label="Pallet" value="pallet" icon={<PalletIcon />} />
-        <BottomNavigationAction className={classes.navBarAction}
-          component={Link}
-          to="/login" label="Login" value="login" icon={<FavoriteIcon />} />
-        <BottomNavigationAction className={classes.navBarAction}
-          component={Link}
-          to="/setting" label="Setting" value="setting" icon={<SettingIcon />} />
-        <BottomNavigationAction className={classes.navBarAction}
-          component={Link}
-          to="/making" label="Create" value="create" icon={<CreateIcon />} />
-      </BottomNavigation>
-    </Toolbar>
-  </AppBar>
-  );
+    return (
+        <AppBar className={classes.root}>
+            <Toolbar>
+                <Button
+                    onClick={() => {
+                        props.setOpen(!props.open);
+                    }}
+                >
+                    <DehazeIcon className={classes.icon} />
+                </Button>
+                <Typography variant="h6" className={classes.title}>
+                    Palletmaster
+                </Typography>
+            </Toolbar>
+            <Toolbar>
+                <BottomNavigation
+                    value={value}
+                    onChange={handleChange}
+                    className={classes.navBar}
+                >
+                    <BottomNavigationAction
+                        className={classes.navBarAction}
+                        component={Link}
+                        to="/home"
+                        label="Pallet"
+                        value="pallet"
+                        icon={<PalletIcon />}
+                    />
+                    <BottomNavigationAction
+                        className={classes.navBarAction}
+                        component={Link}
+                        to="/login"
+                        label="Login"
+                        value="login"
+                        icon={<FavoriteIcon />}
+                    />
+                    <BottomNavigationAction
+                        className={classes.navBarAction}
+                        component={Link}
+                        to="/setting"
+                        label="Setting"
+                        value="setting"
+                        icon={<SettingIcon />}
+                    />
+                    <BottomNavigationAction
+                        className={classes.navBarAction}
+                        component={Link}
+                        to="/making"
+                        label="Create"
+                        value="create"
+                        icon={<CreateIcon />}
+                    />
+                </BottomNavigation>
+            </Toolbar>
+        </AppBar>
+    );
 };
 
 export default NavBar;

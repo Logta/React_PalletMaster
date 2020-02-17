@@ -1,57 +1,63 @@
 import { setCharacter, SetCharacterAction } from './SetCharacter';
 import { setSkills, SetSkillsAction } from './SetSkills';
 import { setAbilityValues, SetAbilityValuesAction } from './SetAbilityValues';
-import { setCharacterInfos, SetCharacterInfosAction } from './SetCharacterInfos';
+import {
+    setCharacterInfos,
+    SetCharacterInfosAction,
+} from './SetCharacterInfos';
 import { setCharacterName, SetCharacterNameAction } from './SetCharacterName';
 import { setHP, SetHPAction } from './SetHP';
 import { setMP, SetMPAction } from './SetMP';
 import { setSAN, SetSANAction } from './SetSAN';
-import { setCharacterBackground, SetCharacterBackgroundAction } from './SetCharacterBackground';
+import {
+    setCharacterBackground,
+    SetCharacterBackgroundAction,
+} from './SetCharacterBackground';
 
-type Actions
-    = SetCharacterAction | 
-    SetSkillsAction| 
-    SetAbilityValuesAction| 
-    SetCharacterInfosAction| 
-    SetCharacterNameAction| 
-    SetHPAction| 
-    SetMPAction|
-    SetSANAction|
-    SetCharacterBackgroundAction ;
+type Actions =
+    | SetCharacterAction
+    | SetSkillsAction
+    | SetAbilityValuesAction
+    | SetCharacterInfosAction
+    | SetCharacterNameAction
+    | SetHPAction
+    | SetMPAction
+    | SetSANAction
+    | SetCharacterBackgroundAction;
 
 type skill = {
-    skillName: string,
-    skillValue: number,
-    skillType: string,
-    skillUnique: boolean,
-    skillWorkValue: number,
-    skillInterestValue: number,
-    defaultValue: number
+    skillName: string;
+    skillValue: number;
+    skillType: string;
+    skillUnique: boolean;
+    skillWorkValue: number;
+    skillInterestValue: number;
+    defaultValue: number;
 };
 
 type abilityValue = {
-    STR: number,
-    CON: number,
-    POW: number,
-    DEX: number,
-    APP: number,
-    SIZ: number,
-    INT: number,
-    EDU: number
+    STR: number;
+    CON: number;
+    POW: number;
+    DEX: number;
+    APP: number;
+    SIZ: number;
+    INT: number;
+    EDU: number;
 };
-  
+
 type characterInfo = {
-    characterName: string,
-    HP: number,
-    MP: number,
-    SAN: number,
-    damageBonus: string,
-    job: string,
-    age: number,
-    sex: string,
-    height: number,
-    weight: number,
-    origin: string
+    characterName: string;
+    HP: number;
+    MP: number;
+    SAN: number;
+    damageBonus: string;
+    job: string;
+    age: number;
+    sex: string;
+    height: number;
+    weight: number;
+    origin: string;
 };
 
 type character = {
@@ -59,9 +65,10 @@ type character = {
     characterBackground: string | undefined;
     abilityValues: abilityValue;
     characterInfos: characterInfo;
-}
+};
 
-export type State = {    // ページ全体で保持しとくべき情報はTodoの配列くらい
+export type State = {
+    // ページ全体で保持しとくべき情報はTodoの配列くらい
     character: character;
 };
 
@@ -69,7 +76,7 @@ const init = (): State => {
     return {
         character: {
             skills: [],
-            characterBackground: "",
+            characterBackground: '',
             abilityValues: {
                 STR: 0,
                 CON: 0,
@@ -78,20 +85,20 @@ const init = (): State => {
                 APP: 0,
                 SIZ: 0,
                 INT: 0,
-                EDU: 0
+                EDU: 0,
             },
             characterInfos: {
-                characterName: "",
+                characterName: '',
                 HP: 0,
                 MP: 0,
                 SAN: 0,
-                damageBonus: "",
-                job: "",
+                damageBonus: '',
+                job: '',
                 age: 0,
-                sex: "",
+                sex: '',
                 height: 0,
                 weight: 0,
-                origin: ""
+                origin: '',
             },
         },
     };
@@ -102,89 +109,82 @@ export const reducer = (state: State = init(), action: Actions) => {
         case 'SET_CHARACTER':
             return Object.assign({}, state, {
                 character: action.payload.chara,
-              });
+            });
         case 'SET_SKILLS':
-            return{
+            return {
                 ...state,
-                character:{
+                character: {
                     ...state.character,
                     skills: action.payload.skills,
-                }
+                },
             };
         case 'SET_ABILITY_VALUES':
-            return{
+            return {
                 ...state,
-                character:
-                {
+                character: {
                     ...state.character,
                     abilityValues: action.payload.abilityValues,
-                }
+                },
             };
         case 'SET_CHARACTER_INFOS':
-            return{
+            return {
                 ...state,
-                character:
-                {
+                character: {
                     ...state.character,
                     characterInfos: action.payload.characterInfos,
-                }
+                },
             };
         case 'SET_CHARACTER_NAME':
-            return{
+            return {
                 ...state,
-                character:
-                {
+                character: {
                     ...state.character,
                     characterInfos: {
                         ...state.character.characterInfos,
                         characterName: action.payload.characterName,
-                    }
-                }
+                    },
+                },
             };
         case 'SET_HP':
-            return{
+            return {
                 ...state,
-                character:
-                {
+                character: {
                     ...state.character,
                     characterInfos: {
                         ...state.character.characterInfos,
                         HP: action.payload.hp,
-                    }
-                }
+                    },
+                },
             };
         case 'SET_MP':
-            return{
+            return {
                 ...state,
-                character:
-                {
+                character: {
                     ...state.character,
                     characterInfos: {
                         ...state.character.characterInfos,
                         MP: action.payload.mp,
-                    }
-                }
+                    },
+                },
             };
         case 'SET_SAN':
-            return{
+            return {
                 ...state,
-                character:
-                {
+                character: {
                     ...state.character,
                     characterInfos: {
                         ...state.character.characterInfos,
                         SAN: action.payload.san,
-                    }
-                }
+                    },
+                },
             };
         case 'SET_CHARACTER_BACKGROUND':
-            return{
+            return {
                 ...state,
-                character:
-                {
+                character: {
                     ...state.character,
                     characterBackground: action.payload.background,
-                }
+                },
             };
         default:
             return state;
@@ -200,5 +200,5 @@ export const actionCreator = {
     setHP,
     setMP,
     setSAN,
-    setCharacterBackground
+    setCharacterBackground,
 };

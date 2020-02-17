@@ -9,8 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ShakeNDNDice from '../modules/shakeNDNDice';
 
 interface ItemNDN {
-  count: number;
-  number: number;
+    count: number;
+    number: number;
 }
 
 interface Result {
@@ -21,47 +21,49 @@ interface Result {
 type Props = {
     open: boolean;
     item: ItemNDN;
-    setOpen(open :boolean) : void;
+    setOpen(open: boolean): void;
 };
 
 export default function AlertDialog(props: Props) {
-  let result :Result = {
-    ok: "",
-    result: "",
-  }
-  if(props.open){
-    result = ShakeNDNDice(props.item);
-  }
+    let result: Result = {
+        ok: '',
+        result: '',
+    };
+    if (props.open) {
+        result = ShakeNDNDice(props.item);
+    }
 
-  function handleClose() {
-    props.setOpen(false);
-  }
+    function handleClose() {
+        props.setOpen(false);
+    }
 
-  return (
+    return (
+        <div>
+            <Dialog
+                open={props.open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {'Dice Result'}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {result.ok}
+                    </DialogContentText>
+                    <br />
 
-    <div>
-      <Dialog
-        open={props.open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Dice Result"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            { result.ok }
-          </DialogContentText><br />
-          
-          <DialogContentText id="alert-dialog-description">
-            { result.result }
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+                    <DialogContentText id="alert-dialog-description">
+                        {result.result}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary" autoFocus>
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
 }

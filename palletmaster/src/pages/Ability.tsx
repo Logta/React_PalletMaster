@@ -23,135 +23,171 @@ import DiceDialog from '../components/DiceDialog';
 import sendBCDice from '../modules/sendDiscord';
 
 interface Item {
-  name: string;
-  url: string;
-  user: string;
-  value: string;
-};
+    name: string;
+    url: string;
+    user: string;
+    value: string;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '90%',
-      [theme.breakpoints.up('sm')]: {
-        width: 500,
-      },
-      margin: "auto"
-    },
-    dense: {
-      marginTop: 19,
-    },
-    numberAbilityField: {
-      marginLeft: 0,
-      marginRight: 6,
-      width: 78,
-    },
-    button: {
-      margin: theme.spacing(1),
-    },
-    paper: {
-      margin:'auto',
-      width: '90%',
-      [theme.breakpoints.up('sm')]: {
-        width: 600,
-      },
-      padding: theme.spacing(3, 2),
-    }
-  }),
+    createStyles({
+        root: {
+            width: '90%',
+            [theme.breakpoints.up('sm')]: {
+                width: 500,
+            },
+            margin: 'auto',
+        },
+        dense: {
+            marginTop: 19,
+        },
+        numberAbilityField: {
+            marginLeft: 0,
+            marginRight: 6,
+            width: 78,
+        },
+        button: {
+            margin: theme.spacing(1),
+        },
+        paper: {
+            margin: 'auto',
+            width: '90%',
+            [theme.breakpoints.up('sm')]: {
+                width: 600,
+            },
+            padding: theme.spacing(3, 2),
+        },
+    })
 );
 
 type Props = {
-  abilityValues: abilityValue;
-  discordUrl: string;
-  characterName: string;
+    abilityValues: abilityValue;
+    discordUrl: string;
+    characterName: string;
 };
 
 const Ability: React.SFC<Props> = (props: Props) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState("STR");
-  const [power, setPower] = React.useState(5);
-  const [open, setOpen] = React.useState(false);
-  
-  const [item, setItem] = React.useState({
-    name: "",
-    url: "",
-    user: "",
-    value: "",
-  });
+    const classes = useStyles();
+    const [value, setValue] = React.useState('STR');
+    const [power, setPower] = React.useState(5);
+    const [open, setOpen] = React.useState(false);
 
-  function handleOpen() {
-    (props.discordUrl !== "") ?
-    sendBCDice(item):
-    setOpen(true);
-  }
-
-  const setItems = (ability: string, value: string): void =>
-  {
-    setItem({
-      name: ability,
-      url: props.discordUrl,
-      user: props.characterName,
-      value: value,
+    const [item, setItem] = React.useState({
+        name: '',
+        url: '',
+        user: '',
+        value: '',
     });
-  }
 
-  return (
-    <div>
-      <h2>Ability Role</h2>
+    function handleOpen() {
+        props.discordUrl !== '' ? sendBCDice(item) : setOpen(true);
+    }
 
-      <Paper className = {classes.paper}>
-      ability
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-        className={classes.root}
-      >
-        <BottomNavigationAction value={"STR"} label="STR" icon={<STRIcon />} />
-        <BottomNavigationAction value={"CON"} label="CON" icon={<CONIcon />} />
-        <BottomNavigationAction value={"POW"} label="POW" icon={<POWIcon />} />
-        <BottomNavigationAction value={"DEX"} label="DEX" icon={<DEXIcon />} />
-      </BottomNavigation>
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-        className={classes.root}
-      >
-        <BottomNavigationAction value={"APP"} label="APP" icon={<APPIcon />} />
-        <BottomNavigationAction value={"SIZ"} label="SIZ" icon={<SIZIcon />} />
-        <BottomNavigationAction value={"INT"} label="INT" icon={<INTIcon />} />
-        <BottomNavigationAction value={"EDU"} label="EDU" icon={<EDUIcon />} />
-      </BottomNavigation>
+    const setItems = (ability: string, value: string): void => {
+        setItem({
+            name: ability,
+            url: props.discordUrl,
+            user: props.characterName,
+            value: value,
+        });
+    };
 
-      <TextField
-        id="power"
-        label="Power"
-        type="number"
-        defaultValue={power}
-        className={clsx(classes.numberAbilityField, classes.dense)}
-        onChange={
-          (event: React.ChangeEvent<HTMLInputElement>) => {setPower(+event.target.value);}}
-        placeholder="Power"
-        margin="normal"
-        />
-        </Paper>
+    return (
+        <div>
+            <h2>Ability Role</h2>
 
-        <br />
-        <Button variant="contained" color="primary" className={classes.button}
-        onClick = {():void =>{
-          setItems(value, getAbilityValue(value, props.abilityValues, power));
-          handleOpen();
-          }}>
-          Send
-        </Button>
+            <Paper className={classes.paper}>
+                ability
+                <BottomNavigation
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
+                    showLabels
+                    className={classes.root}
+                >
+                    <BottomNavigationAction
+                        value={'STR'}
+                        label="STR"
+                        icon={<STRIcon />}
+                    />
+                    <BottomNavigationAction
+                        value={'CON'}
+                        label="CON"
+                        icon={<CONIcon />}
+                    />
+                    <BottomNavigationAction
+                        value={'POW'}
+                        label="POW"
+                        icon={<POWIcon />}
+                    />
+                    <BottomNavigationAction
+                        value={'DEX'}
+                        label="DEX"
+                        icon={<DEXIcon />}
+                    />
+                </BottomNavigation>
+                <BottomNavigation
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
+                    showLabels
+                    className={classes.root}
+                >
+                    <BottomNavigationAction
+                        value={'APP'}
+                        label="APP"
+                        icon={<APPIcon />}
+                    />
+                    <BottomNavigationAction
+                        value={'SIZ'}
+                        label="SIZ"
+                        icon={<SIZIcon />}
+                    />
+                    <BottomNavigationAction
+                        value={'INT'}
+                        label="INT"
+                        icon={<INTIcon />}
+                    />
+                    <BottomNavigationAction
+                        value={'EDU'}
+                        label="EDU"
+                        icon={<EDUIcon />}
+                    />
+                </BottomNavigation>
+                <TextField
+                    id="power"
+                    label="Power"
+                    type="number"
+                    defaultValue={power}
+                    className={clsx(classes.numberAbilityField, classes.dense)}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setPower(+event.target.value);
+                    }}
+                    placeholder="Power"
+                    margin="normal"
+                />
+            </Paper>
 
-        <DiceDialog open={open} setOpen={setOpen} item={item} />
-    </div>
-  );
-}
+            <br />
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={(): void => {
+                    setItems(
+                        value,
+                        getAbilityValue(value, props.abilityValues, power)
+                    );
+                    handleOpen();
+                }}
+            >
+                Send
+            </Button>
+
+            <DiceDialog open={open} setOpen={setOpen} item={item} />
+        </div>
+    );
+};
 export default Ability;

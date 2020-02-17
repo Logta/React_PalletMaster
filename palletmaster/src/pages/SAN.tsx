@@ -16,251 +16,264 @@ import SnackBar from '../components/SnackBar';
 import sendBCDice from '../modules/sendDiscord';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-      margin:'auto',
-      padding: theme.spacing(3, 2),
-      width: '90%',
-      [theme.breakpoints.up('sm')]: {
-        width: 600,
-      },
-    },
-    dense: {
-      marginTop: 19,
-    },
-    numberInfoField: {
-      marginLeft: theme.spacing(3),
-      marginRight: 'auto',
-      width: '20%',
-      [theme.breakpoints.up('sm')]: {
-        width: 120,
-        marginLeft: theme.spacing(10),
-      },
-    },
-    fab: {
-      marginLeft: theme.spacing(5),
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-      },
-      margin: theme.spacing(1),
-    },
-    button: {
-      margin: theme.spacing(1),
-    },
-  }),
+    createStyles({
+        paper: {
+            margin: 'auto',
+            padding: theme.spacing(3, 2),
+            width: '90%',
+            [theme.breakpoints.up('sm')]: {
+                width: 600,
+            },
+        },
+        dense: {
+            marginTop: 19,
+        },
+        numberInfoField: {
+            marginLeft: theme.spacing(3),
+            marginRight: 'auto',
+            width: '20%',
+            [theme.breakpoints.up('sm')]: {
+                width: 120,
+                marginLeft: theme.spacing(10),
+            },
+        },
+        fab: {
+            marginLeft: theme.spacing(5),
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: theme.spacing(1),
+            },
+            margin: theme.spacing(1),
+        },
+        button: {
+            margin: theme.spacing(1),
+        },
+    })
 );
 
-type Props = {
-  skills: skill[],
-  SAN: number,
-  characterName: string,
-  setSAN: (san: number) => void,
-  discordUrl: string;
-};
+interface Props {
+    characterName: string;
+    discordUrl: string;
+}
 
-type PropsSAN = {
-  SAN: number,
-  characterName: string,
-  setSAN: (san: number) => void,
-  discordUrl: string;
-};
+interface PropsMain extends Props {
+    skills: skill[];
+    SAN: number;
+    setSAN: (san: number) => void;
+}
 
-type PropsIdea = {
-  skills: skill[],
-  discordUrl: string;
-  characterName: string,
-};
+interface PropsSAN extends Props {
+    SAN: number;
+    setSAN: (san: number) => void;
+}
+
+interface PropsIdea extends Props {
+    skills: skill[];
+}
 
 const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
-  const classes = useStyles();
-  const [diffSAN, setDiffSAN] = React.useState(1);
-  const [message, setMessage] = React.useState('');
+    const classes = useStyles();
+    const [diffSAN, setDiffSAN] = React.useState(1);
+    const [open, setOpen] = React.useState(false);
 
-  const [openDialog, setOpenDialog] = React.useState(false);
-  const [openSnack, setOpenSnack] = React.useState(false);
-  
-  const [item, setItem] = React.useState({
-    name: "",
-    url: "",
-    user: "",
-    value: "",
-  });
-
-  const setItems = (ability: string, value: string): void =>
-  {
-    setItem({
-      name: ability,
-      url: props.discordUrl,
-      user: props.characterName,
-      value: value,
+    const [item, setItem] = React.useState({
+        name: '',
+        url: '',
+        user: '',
+        value: '',
     });
-  }
 
-  const handleOpenDialog = () => {
-    (props.discordUrl !== "") ?
-    sendBCDice(item):
-    setOpenDialog(true);
-  }
+    const setItems = (ability: string, value: string): void => {
+        setItem({
+            name: ability,
+            url: props.discordUrl,
+            user: props.characterName,
+            value: value,
+        });
+    };
 
-  const handleOpenSnack = (str :string) => {
-    setMessage(str);
-    setOpenSnack(true);
-  }
-  
-  const changeSANValue = () => {
-    props.setSAN(props.SAN + diffSAN);
-    if (diffSAN / props.SAN <= -0.20) handleOpenSnack('不定の狂気です');
-    else if (diffSAN <= -5) handleOpenSnack('アイデアロールをしてください');
+    function handleOpen() {
+        props.discordUrl !== '' ? sendBCDice(item) : setOpen(true);
+    }
 
-  }
-
-  return (
-    <Paper className = {classes.paper}>
-      <Chip color="primary" label="SAN" /> {props.SAN}        
-      <TextField
-        id="san"
-        label="SAN"
-        type="number"
-        defaultValue={diffSAN}
-        className={classes.numberInfoField}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setDiffSAN(+event.target.value)}}
-        placeholder="SAN"
-        margin="normal"
-        />
-        <Fab color="primary" aria-label="add" className={classes.fab}>
-          <AddIcon onClick={changeSANValue}/>
-        </Fab>
-
-        <br />
-        <Button variant="contained" color="primary" className={classes.button}
-        onClick = {():void =>{
-          setItems("SANチェック", String(props.SAN));
-          handleOpenDialog();
-          }}>
-          SAN Check
-        </Button>
-
-        <DiceDialog open={openDialog} setOpen={setOpenDialog} item={item} />
-        <SnackBar open={openSnack} setOpen={setOpenSnack} message={message} />
-    </Paper>
-  );
-}
+    return (
+        <Paper className={classes.paper}>
+            <Chip color="primary" label="SAN" /> {props.SAN}
+            <TextField
+                id="san"
+                label="SAN"
+                type="number"
+                defaultValue={diffSAN}
+                className={classes.numberInfoField}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setDiffSAN(+event.target.value);
+                }}
+                placeholder="SAN"
+                margin="normal"
+            />
+            <Fab color="primary" aria-label="add" className={classes.fab}>
+                <AddIcon
+                    onClick={() => {
+                        props.setSAN(props.SAN + diffSAN);
+                    }}
+                />
+            </Fab>
+            <br />
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={(): void => {
+                    setItems('SANチェック', String(props.SAN));
+                    handleOpen();
+                }}
+            >
+                SAN Check
+            </Button>
+            <DiceDialog open={open} setOpen={setOpen} item={item} />
+        </Paper>
+    );
+};
 
 const SANFunc: React.SFC<PropsSAN> = (props: PropsSAN) => {
-  const classes = useStyles();
-  const [countDice, setCountDice] = React.useState(1);
-  const [numberDice, setNumberDice] = React.useState(2);
-  const [open, setOpen] = React.useState(false);
-  
-  const [item, setItem] = React.useState({
-    count: 0,
-    number: 0,
-  });
+    const classes = useStyles();
+    const [countDice, setCountDice] = React.useState(1);
+    const [numberDice, setNumberDice] = React.useState(2);
+    const [open, setOpen] = React.useState(false);
 
-  const setItems = (cou: number, num: number): void =>
-  {
-    setItem({
-      count: cou,
-      number: num,
+    const [item, setItem] = React.useState({
+        count: 0,
+        number: 0,
     });
-  }
 
-  function handleOpen() {
-    setOpen(true);
-  }
+    const setItems = (cou: number, num: number): void => {
+        setItem({
+            count: cou,
+            number: num,
+        });
+    };
 
-  return (
-    <Paper className = {clsx(classes.paper, classes.dense)}>       
-    <TextField
-      id="san"
-      label="Count"
-      type="number"
-      defaultValue={countDice}
-      className={classes.numberInfoField}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setCountDice(+event.target.value)}}
-      placeholder="SAN"
-      margin="normal"
-    />       
-    <TextField
-      id="san"
-      label="Number"
-      type="number"
-      defaultValue={numberDice}
-      className={classes.numberInfoField}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {setNumberDice(+event.target.value)}}
-      placeholder="SAN"
-      margin="normal"
-    />
+    function handleOpen() {
+        setOpen(true);
+    }
 
-    <br />
-      <Button variant="contained" color="primary" className={classes.button}
-      onClick = {():void =>{
-        setItems(countDice, numberDice);
-        handleOpen();
-        }}>
-        Judge
-      </Button>
+    return (
+        <Paper className={clsx(classes.paper, classes.dense)}>
+            <TextField
+                id="san"
+                label="Count"
+                type="number"
+                defaultValue={countDice}
+                className={classes.numberInfoField}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setCountDice(+event.target.value);
+                }}
+                placeholder="SAN"
+                margin="normal"
+            />
+            <TextField
+                id="san"
+                label="Number"
+                type="number"
+                defaultValue={numberDice}
+                className={classes.numberInfoField}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setNumberDice(+event.target.value);
+                }}
+                placeholder="SAN"
+                margin="normal"
+            />
 
-    <DiceNDNDialog open={open} setOpen={setOpen} item={item} />
-    </Paper>
-  );
-}
+            <br />
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={(): void => {
+                    setItems(countDice, numberDice);
+                    handleOpen();
+                }}
+            >
+                Judge
+            </Button>
+
+            <DiceNDNDialog open={open} setOpen={setOpen} item={item} />
+        </Paper>
+    );
+};
 
 const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  
-  const [item, setItem] = React.useState({
-    name: "",
-    url: "",
-    user: "",
-    value: "",
-  });
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
 
-  const setItems = (ability: string, value: string): void =>
-  {
-    setItem({
-      name: ability,
-      url: props.discordUrl,
-      user: props.characterName,
-      value: value,
+    const [item, setItem] = React.useState({
+        name: '',
+        url: '',
+        user: '',
+        value: '',
     });
-  }
 
-  function handleOpen() {
-    (props.discordUrl !== "") ?
-    sendBCDice(item):
-    setOpen(true);
-  }
+    const setItems = (ability: string, value: string): void => {
+        setItem({
+            name: ability,
+            url: props.discordUrl,
+            user: props.characterName,
+            value: value,
+        });
+    };
 
-  return (
-    <Paper className = {clsx(classes.paper, classes.dense)}>      
+    function handleOpen() {
+        props.discordUrl !== '' ? sendBCDice(item) : setOpen(true);
+    }
 
-    <br />
-    <Button variant="contained" color="primary" className={classes.button}
-    onClick = {():void =>{
-      let idea: skill | undefined = props.skills.find(s => s.skillName === 'アイデア');
-      if(idea == null) return;
+    return (
+        <Paper className={clsx(classes.paper, classes.dense)}>
+            <br />
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={(): void => {
+                    let idea: skill | undefined = props.skills.find(
+                        s => s.skillName === 'アイデア'
+                    );
+                    if (idea == null) return;
 
-      setItems("アイデア", String(idea.skillValue));
-      handleOpen();
-      }}>
-      Idea
-    </Button>
+                    setItems('アイデア', String(idea.skillValue));
+                    handleOpen();
+                }}
+            >
+                Idea
+            </Button>
 
-    <DiceDialog open={open} setOpen={setOpen} item={item} />
-    </Paper>
-  );
-}
+            <DiceDialog open={open} setOpen={setOpen} item={item} />
+        </Paper>
+    );
+};
 
-const SAN: React.SFC<Props> = (props: Props) => {
-  return (
-    <div>
-      <SANValue SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} discordUrl={props.discordUrl}/>
-      <SANFunc SAN={props.SAN} characterName={props.characterName} setSAN={props.setSAN} discordUrl={props.discordUrl} />
-      <SANIdea skills={props.skills} discordUrl={props.discordUrl} characterName={props.characterName}/>
-    </div>
-  );
-}
+const SAN: React.SFC<PropsMain> = (props: PropsMain) => {
+    const classes = useStyles();
+
+    return (
+        <div>
+            <SANValue
+                SAN={props.SAN}
+                characterName={props.characterName}
+                setSAN={props.setSAN}
+                discordUrl={props.discordUrl}
+            />
+            <SANFunc
+                SAN={props.SAN}
+                characterName={props.characterName}
+                setSAN={props.setSAN}
+                discordUrl={props.discordUrl}
+            />
+            <SANIdea
+                skills={props.skills}
+                discordUrl={props.discordUrl}
+                characterName={props.characterName}
+            />
+        </div>
+    );
+};
 
 export default SAN;

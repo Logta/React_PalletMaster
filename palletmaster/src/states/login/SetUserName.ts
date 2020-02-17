@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-export type SetUserNamePayload = {    // todoを追加する時に必要なのはtodoの内容くらい
+export type SetUserNamePayload = {
     userName: string;
 };
 
