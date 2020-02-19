@@ -10,8 +10,6 @@ services:
     command: sh -c "yarn start"
     ports:
       - "3000:3000"
-      # chmod +x node_modules/.bin/react-scripts
-      # node node_modules/react-scripts/scripts/start.js
       # docker-compose run front /bin/sh
       # docker-compose run --rm front yarn start
       # 0.0.0.0:3000で繋がる
