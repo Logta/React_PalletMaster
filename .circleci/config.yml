@@ -1,37 +1,75 @@
-# JavaScript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2
-jobs:
-  build:
+version: 2.1
+
+executors:
+  default:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:12.15.0
+working_directory: ~/repo/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+commands:
+  npm_install:
     steps:
-      - checkout
-
-      # Download and cache dependencies
       - restore_cache:
+          name: Restore Dependencies
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: yarn install
-
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn install
       - save_cache:
+          name: Save Dependencies
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+  firebase_install:
+    steps:
+      - run:
+          name: Install Firebase CLI
+          command: yarn add -D firebase-tools
 
-      # run tests!
-      - run: yarn test
+jobs:
+  build:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - npm_install
+
+  test:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - npm_install
+      - run:
+          name: Test Project
+          command: yarn test
+  deploy:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - firebase_install
+      - npm_install
+      - run:
+          name: Build Project
+          command: yarn build
+      - run:
+          name: Deploy to Firebase Hosting
+          command: node_modules/.bin/firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
