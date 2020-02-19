@@ -16,7 +16,7 @@ commands:
       - run:
           name: Install Dependencies
           command:
-            - cd "./palletmaster"
+            - cd ./palletmaster
             - yarn install
       - save_cache:
           name: Save Dependencies
@@ -28,7 +28,7 @@ commands:
       - run:
           name: Install Firebase CLI
           command:
-            - cd "./palletmaster"
+            - cd ./palletmaster
             - yarn add -D firebase-tools
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Test Project
           command:
-            - cd "./palletmaster"
+            - cd ./palletmaster
             - yarn test
   deploy:
     executor:
@@ -60,12 +60,12 @@ jobs:
       - run:
           name: Build Project
           command:
-            - cd "./palletmaster"
+            - cd ./palletmaster
             - yarn build
       - run:
           name: Deploy to Firebase Hosting
           command:
-            - cd "./palletmaster"
+            - cd ./palletmaster
             - node_modules/.bin/firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
 
 workflows:
