@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 
 import clsx from 'clsx';
 
@@ -7,9 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 
-import ShakeNDNDice from '../modules/shakeNDNDice';
-import Button from '@material-ui/core/Button';
-import Badge from '@material-ui/core/Badge';
 import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -67,7 +64,6 @@ type Props = {
 
 const Making: React.SFC<Props> = (props: Props) => {
     const classes = useStyles();
-    const [count, setCount] = React.useState(0);
 
     return (
         <Paper className={classes.paper}>

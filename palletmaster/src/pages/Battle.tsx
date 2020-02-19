@@ -17,7 +17,6 @@ import AddIcon from '@material-ui/icons/Add';
 import Hidden from '@material-ui/core/Hidden';
 
 import DiceDialog from '../components/DiceDialog';
-import SnackBar from '../components/SnackBar';
 import sendBCDice from '../modules/sendDiscord';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -282,32 +281,32 @@ export default function SimpleTable(props: Props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.skills.map(row => {
-                            if (row.skillType !== '戦闘') {
-                                return;
-                            }
-
-                            return (
-                                <TableRow
-                                    key={row.skillName}
-                                    onClick={_ => {
-                                        console.log('onclick');
-                                        handleClick(row.skillName);
-                                        handleOpen();
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.skillName}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.skillValue}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.skillType}
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
+                        {props.skills
+                            .filter(row => {
+                                return row.skillType === '戦闘';
+                            })
+                            .map(row => {
+                                return (
+                                    <TableRow
+                                        key={row.skillName}
+                                        onClick={_ => {
+                                            console.log('onclick');
+                                            handleClick(row.skillName);
+                                            handleOpen();
+                                        }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {row.skillName}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {row.skillValue}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {row.skillType}
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
                     </TableBody>
                 </Table>
 

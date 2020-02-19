@@ -1,5 +1,3 @@
-import sendBCDice from './sendDiscord';
-
 interface Item {
     name: string;
     url: string;

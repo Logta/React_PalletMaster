@@ -7,12 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
-import {
-    skill,
-    abilityValue,
-    characterInfo,
-    character,
-} from '../modules/commonType';
+import { skill, character } from '../modules/commonType';
 
 type Props = {
     skills: skill[];
@@ -91,7 +86,7 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                     value={skillWork}
                     className={classes.numberInfoField}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        if (event.target.value == '') {
+                        if (event.target.value === '') {
                             setSkillWork('');
                             return;
                         }
@@ -136,7 +131,7 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                     value={skillInterest}
                     className={classes.numberInfoField}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        if (event.target.value == '') {
+                        if (event.target.value === '') {
                             setSkillWork('');
                             return;
                         }
@@ -204,26 +199,33 @@ const SimpleList: React.SFC<Props> = (props: Props) => {
                     </TableRow>
                 </TableHead>
 
-                {props.skills.map(row => {
-                    if (row == null) return;
-
-                    return (
-                        <TableBody className={classes.body} key={row.skillName}>
-                            <TableRow>
-                                <SkillsTableRow
-                                    setSkillWorkValue={props.setSkillWorkValue}
-                                    setSkillInterestValue={
-                                        props.setSkillInterestValue
-                                    }
-                                    row={row}
-                                    checkSetSkillValue={
-                                        props.checkSetSkillValue
-                                    }
-                                />
-                            </TableRow>
-                        </TableBody>
-                    );
-                })}
+                {props.skills
+                    .filter(row => {
+                        return row != null;
+                    })
+                    .map(row => {
+                        return (
+                            <TableBody
+                                className={classes.body}
+                                key={row.skillName}
+                            >
+                                <TableRow>
+                                    <SkillsTableRow
+                                        setSkillWorkValue={
+                                            props.setSkillWorkValue
+                                        }
+                                        setSkillInterestValue={
+                                            props.setSkillInterestValue
+                                        }
+                                        row={row}
+                                        checkSetSkillValue={
+                                            props.checkSetSkillValue
+                                        }
+                                    />
+                                </TableRow>
+                            </TableBody>
+                        );
+                    })}
             </Table>
         </div>
     );

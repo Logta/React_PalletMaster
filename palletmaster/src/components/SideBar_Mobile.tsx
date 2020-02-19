@@ -16,7 +16,6 @@ import ExportIcon from '@material-ui/icons/CloudUpload';
 
 import ImportPMJ from './ImportPMJDialog';
 import Divider from '@material-ui/core/Divider';
-import Hidden from '@material-ui/core/Hidden';
 
 import { character } from '../modules/commonType';
 
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const charaDownload = (character: character) => {
     let data = character;
 
-    if (data.characterInfos.characterName != '') {
+    if (data.characterInfos.characterName !== '') {
         console.log('download start');
         const blob = new Blob([JSON.stringify(data)], {
             type: 'application/json',

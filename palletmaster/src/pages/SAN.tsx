@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 
 import DiceDialog from '../components/DiceDialog';
 import DiceNDNDialog from '../components/DiceNDNDialog';
-import SnackBar from '../components/SnackBar';
 
 import sendBCDice from '../modules/sendDiscord';
 
@@ -251,8 +250,6 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
 };
 
 const SAN: React.SFC<PropsMain> = (props: PropsMain) => {
-    const classes = useStyles();
-
     return (
         <div>
             <SANValue

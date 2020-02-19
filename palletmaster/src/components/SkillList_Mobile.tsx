@@ -193,26 +193,33 @@ export default function SimpleList(props: Props) {
                     </TableRow>
                 </TableHead>
 
-                {props.skills.map(row => {
-                    if (row == null) return;
-
-                    return (
-                        <TableBody className={classes.body} key={row.skillName}>
-                            <TableRow>
-                                <SkillsTableRow
-                                    setSkillWorkValue={props.setSkillWorkValue}
-                                    setSkillInterestValue={
-                                        props.setSkillInterestValue
-                                    }
-                                    row={row}
-                                    checkSetSkillValue={
-                                        props.checkSetSkillValue
-                                    }
-                                />
-                            </TableRow>
-                        </TableBody>
-                    );
-                })}
+                {props.skills
+                    .filter(row => {
+                        return row != null;
+                    })
+                    .map(row => {
+                        return (
+                            <TableBody
+                                className={classes.body}
+                                key={row.skillName}
+                            >
+                                <TableRow>
+                                    <SkillsTableRow
+                                        setSkillWorkValue={
+                                            props.setSkillWorkValue
+                                        }
+                                        setSkillInterestValue={
+                                            props.setSkillInterestValue
+                                        }
+                                        row={row}
+                                        checkSetSkillValue={
+                                            props.checkSetSkillValue
+                                        }
+                                    />
+                                </TableRow>
+                            </TableBody>
+                        );
+                    })}
             </Table>
         </div>
     );

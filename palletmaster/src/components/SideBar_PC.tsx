@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const charaDownload = (character: character) => {
     let data = character;
 
-    if (data.characterInfos.characterName != '') {
+    if (data.characterInfos.characterName !== '') {
         console.log('download start');
         const blob = new Blob([JSON.stringify(data)], {
             type: 'application/json',

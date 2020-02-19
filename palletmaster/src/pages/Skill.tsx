@@ -294,39 +294,38 @@ export default function SimpleTable(props: Props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.skills.map(row => {
-                            if (category === 'unique' && !row.skillUnique) {
-                                return;
-                            }
-                            if (
-                                category !== 'unique' &&
-                                category !== 'all' &&
-                                row.skillType !== category
-                            ) {
-                                return;
-                            }
-
-                            return (
-                                <TableRow
-                                    key={row.skillName}
-                                    onClick={_ => {
-                                        console.log('onclick');
-                                        handleClick(row.skillName);
-                                        handleDialogOpen();
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.skillName}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.skillValue}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.skillType}
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
+                        {props.skills
+                            .filter(row => {
+                                return (
+                                    (category === 'unique' &&
+                                        !row.skillUnique) ||
+                                    (category !== 'unique' &&
+                                        category !== 'all' &&
+                                        row.skillType !== category)
+                                );
+                            })
+                            .map(row => {
+                                return (
+                                    <TableRow
+                                        key={row.skillName}
+                                        onClick={_ => {
+                                            console.log('onclick');
+                                            handleClick(row.skillName);
+                                            handleDialogOpen();
+                                        }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {row.skillName}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {row.skillValue}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {row.skillType}
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
                     </TableBody>
                 </Table>
 

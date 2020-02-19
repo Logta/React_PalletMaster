@@ -1,7 +1,7 @@
 import React from 'react';
 import Hidden from '@material-ui/core/Hidden';
-import SkillList_PC from './SkillList_PC';
-import SkillList_Mobile from './SkillList_Mobile';
+import SkillListPC from './SkillList_PC';
+import SkillListMobile from './SkillList_Mobile';
 
 import { skill, character } from '../modules/commonType';
 
@@ -18,7 +18,7 @@ export default function SimpleList(props: Props) {
         <div>
             {/* タブレット以上なら隠す -- モバイル画面で表示 */}
             <Hidden smUp implementation="css">
-                <SkillList_Mobile
+                <SkillListMobile
                     skills={props.skills}
                     setCharacter={props.setCharacter}
                     setSkillInterestValue={props.setSkillInterestValue}
@@ -29,7 +29,7 @@ export default function SimpleList(props: Props) {
 
             {/* モバイル以下なら隠す -- モバイル画面以外で表示 */}
             <Hidden xsDown implementation="css">
-                <SkillList_PC
+                <SkillListPC
                     skills={props.skills}
                     setCharacter={props.setCharacter}
                     setSkillInterestValue={props.setSkillInterestValue}

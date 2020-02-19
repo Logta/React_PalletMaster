@@ -34,7 +34,6 @@ async function sendDice(func: (json: Result, item: Item) => void, item: Item) {
         .then(res => res.json())
         .then(response => {
             let json = response;
-            const jsonLog = JSON.stringify(json);
             if (response.ok) {
                 return func(json, item);
             }
