@@ -4,7 +4,7 @@ executors:
   default:
     docker:
       - image: circleci/node:12.15.0
-
+working_directory: ~/repo
 commands:
   npm_install:
     steps:
@@ -31,7 +31,7 @@ jobs:
   build:
     executor:
       name: default
-    working_directory: ~/project/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
+    paths: ./palletmaster
     steps:
       - checkout
       - npm_install
@@ -39,7 +39,7 @@ jobs:
   test:
     executor:
       name: default
-    working_directory: ~/project/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
+    paths: ./palletmaster
     steps:
       - checkout
       - npm_install
@@ -49,7 +49,7 @@ jobs:
   deploy:
     executor:
       name: default
-    working_directory: ~/project/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
+    paths: ./palletmaster
     steps:
       - checkout
       - firebase_install
