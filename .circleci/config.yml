@@ -31,7 +31,7 @@ jobs:
   build:
     executor:
       name: default
-    working_directory: ~/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
+    working_directory: ~/project/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
     steps:
       - checkout
       - npm_install
@@ -39,7 +39,7 @@ jobs:
   test:
     executor:
       name: default
-    working_directory: ~/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
+    working_directory: ~/project/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
     steps:
       - checkout
       - npm_install
@@ -49,7 +49,7 @@ jobs:
   deploy:
     executor:
       name: default
-    working_directory: ~/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
+    working_directory: ~/project/palletmaster # コード実行場所 以下のstepsはworking_directoryで実行される
     steps:
       - checkout
       - firebase_install
