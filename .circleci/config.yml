@@ -4,10 +4,13 @@ executors:
   default:
     docker:
       - image: circleci/node:12.15.0
-working_directory: ~/repo
+working_directory: ~/project
 commands:
   npm_install:
     steps:
+      - run:
+          name: Change Directory
+          command: cd "./palletmaster"
       - restore_cache:
           name: Restore Dependencies
           keys:
@@ -24,6 +27,9 @@ commands:
   firebase_install:
     steps:
       - run:
+          name: Change Directory
+          command: cd "./palletmaster"
+      - run:
           name: Install Firebase CLI
           command: yarn add -D firebase-tools
 
@@ -31,7 +37,6 @@ jobs:
   build:
     executor:
       name: default
-    paths: ./palletmaster
     steps:
       - checkout
       - npm_install
@@ -39,7 +44,6 @@ jobs:
   test:
     executor:
       name: default
-    paths: ./palletmaster
     steps:
       - checkout
       - npm_install
@@ -49,7 +53,6 @@ jobs:
   deploy:
     executor:
       name: default
-    paths: ./palletmaster
     steps:
       - checkout
       - firebase_install
