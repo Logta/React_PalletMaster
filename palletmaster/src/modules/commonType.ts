@@ -35,7 +35,7 @@ export type characterInfo = {
 
 export type character = {
     skills: skill[];
-    characterBackground: string;
+    characterBackground: string | undefined;
     abilityValues: abilityValue;
     characterInfos: characterInfo;
 };

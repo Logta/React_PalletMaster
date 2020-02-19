@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
-import { Action, Dispatch } from 'redux';
 
-import { actionCreator, RootState  } from '../states';
+import { RootState } from '../states';
 import Home from '../pages/Home';
 
 const mapStateToProps = (state: RootState) => {
@@ -10,6 +9,4 @@ const mapStateToProps = (state: RootState) => {
     };
 };
 
-export default connect(
-    mapStateToProps
-)(Home);
+export default connect(mapStateToProps)(Home);

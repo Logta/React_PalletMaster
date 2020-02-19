@@ -35,7 +35,7 @@ type characterInfo = {
 
 type character = {
     skills: skill[];
-    characterBackground: string | undefined;
+    characterBackground: string | unfined;
     abilityValues: abilityValue;
     characterInfos: characterInfo;
 };
