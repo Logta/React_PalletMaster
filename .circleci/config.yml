@@ -8,9 +8,6 @@ working_directory: ~/project
 commands:
   npm_install:
     steps:
-      - run:
-          name: Change Directory
-          command: cd "./palletmaster"
       - restore_cache:
           name: Restore Dependencies
           keys:
@@ -18,7 +15,9 @@ commands:
             - v1-dependencies
       - run:
           name: Install Dependencies
-          command: yarn install
+          command:
+            - cd "./palletmaster"
+            - yarn install
       - save_cache:
           name: Save Dependencies
           key: v1-dependencies-{{ checksum "yarn.lock" }}
@@ -27,11 +26,10 @@ commands:
   firebase_install:
     steps:
       - run:
-          name: Change Directory
-          command: cd "./palletmaster"
-      - run:
           name: Install Firebase CLI
-          command: yarn add -D firebase-tools
+          command:
+            - cd "./palletmaster"
+            - yarn add -D firebase-tools
 
 jobs:
   build:
@@ -49,7 +47,9 @@ jobs:
       - npm_install
       - run:
           name: Test Project
-          command: yarn test
+          command:
+            - cd "./palletmaster"
+            - yarn test
   deploy:
     executor:
       name: default
@@ -59,10 +59,14 @@ jobs:
       - npm_install
       - run:
           name: Build Project
-          command: yarn build
+          command:
+            - cd "./palletmaster"
+            - yarn build
       - run:
           name: Deploy to Firebase Hosting
-          command: node_modules/.bin/firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
+          command:
+            - cd "./palletmaster"
+            - node_modules/.bin/firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
 
 workflows:
   version: 2
