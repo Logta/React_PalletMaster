@@ -20,13 +20,17 @@ function ShakeNDNDice(item: ItemNDN): Result {
         diceResults.push(Math.round(Math.random() * item.number) + 1);
     }
 
-    result.result = String(
-        diceResults.reduce(function(total, data) {
-            return total + data;
-        })
-    );
+    result.result = IntSumToString(diceResults);
 
     return result;
 }
+
+export const IntSumToString = (results: number[]): string => {
+    return String(
+        results.reduce((total, data) => {
+            return total + data;
+        })
+    );
+};
 
 export default ShakeNDNDice;

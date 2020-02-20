@@ -20,7 +20,9 @@ function sendDiscordText(result: Result, item: Item) {
 
         const Hook = new webhook.Webhook(item.url);
         Hook.info(item.user, item.name + ' ' + result.result);
+        return true;
     }
+    return false;
 }
 
 async function sendDice(func: (json: Result, item: Item) => void, item: Item) {
@@ -39,8 +41,4 @@ async function sendDice(func: (json: Result, item: Item) => void, item: Item) {
             }
         })
         .catch(error => console.log(error));
-}
-
-export function goodbye(name: string) {
-    return `Goodbye ${name}`;
 }
