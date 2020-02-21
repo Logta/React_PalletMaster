@@ -35,15 +35,18 @@ export const getDiceResultAsync = async (info: HookInfo): Promise<Result> => {
     return result;
 };
 
-function sendDiscordText(result: Result, item: HookInfo): boolean {
-    if (result.ok) {
-        try {
-            const Hook = new webhook.Webhook(item.url);
-            Hook.info(item.user, item.name + ' ' + result.result);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-    return false;
+function sendDiscordText(result: Result, item: HookInfo) {
+    const obj = {
+        username: item.user,
+        content: item.name + ' ' + result.result,
+    };
+    const method = 'POST';
+    const body = JSON.stringify(obj);
+    const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    };
+    fetch(item.url, { method, headers, body })
+        .then(console.log)
+        .catch(console.error);
 }
