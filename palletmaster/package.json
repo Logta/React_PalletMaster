@@ -55,5 +55,22 @@
         "@typescript-eslint/parser": "^2.18.0",
         "eslint": "^6.8.0",
         "eslint-plugin-react": "^7.18.3"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+        },
+        "testMatch": [
+            "**/tests/**/*.test.tsx"
+        ],
+        "moduleFileExtensions": [
+            "tsx",
+            "js"
+        ],
+        "globals": {
+            "ts-jest": {
+                "tsConfig": "tsconfig.json"
+            }
+        }
     }
 }
