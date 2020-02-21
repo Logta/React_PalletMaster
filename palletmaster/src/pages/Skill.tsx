@@ -78,7 +78,6 @@ export default function SimpleTable(props: Props) {
     const [openDialog, setOpenDialog] = React.useState(false);
 
     const handleClick = (skillName: string): void => {
-        console.log('test1');
         var promise = (str: string): Promise<string> => {
             return new Promise(function(resolve, reject) {
                 const skillValue = getSkillValue(str);
@@ -107,6 +106,7 @@ export default function SimpleTable(props: Props) {
     function handleChange(event: React.ChangeEvent<{ value: unknown }>) {
         setCategory(event.target.value as string);
     }
+
     function handleClose() {
         setOpen(false);
     }

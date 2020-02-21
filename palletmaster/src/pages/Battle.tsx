@@ -78,11 +78,29 @@ export default function SimpleTable(props: Props) {
     const [openDialog, setOpenDialog] = React.useState<boolean>(false);
 
     const handleClick = (skillName: string): void => {
+        var promise = (str: string): Promise<string> => {
+            return new Promise(function(resolve, reject) {
+                const skillValue = getSkillValue(str);
+                resolve(skillValue);
+            });
+        };
+        promise(skillName)
+            .then(val => {
+                const info = getItem(skillName, val);
+                handleDialogOpen(info);
+                setItem(info);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    const getSkillValue = (skillName: string): string | undefined => {
         const skill: skill | undefined = props.skills.find(
             s => s.skillName === skillName
         );
-        if (skill == null) return;
-        setItems(skillName, String(skill.skillValue));
+        if (skill == null) return undefined;
+        return String(skill.skillValue);
     };
 
     const [item, setItem] = React.useState({
@@ -92,17 +110,17 @@ export default function SimpleTable(props: Props) {
         diceValue: '',
     });
 
-    const setItems = (ability: string, value: string): void => {
-        setItem({
+    const getItem = (ability: string, value: string): any => {
+        return {
             name: ability,
             url: props.discordUrl,
             user: props.characterName,
             diceValue: value,
-        });
+        };
     };
 
-    function handleOpen() {
-        props.discordUrl !== '' ? sendBCDice(item) : setOpenDialog(true);
+    function handleDialogOpen(info: any) {
+        props.discordUrl !== '' ? sendBCDice(info) : setOpenDialog(true);
     }
 
     const setSkills = (skill: string, value: number): void => {
@@ -292,7 +310,6 @@ export default function SimpleTable(props: Props) {
                                         onClick={_ => {
                                             console.log('onclick');
                                             handleClick(row.skillName);
-                                            handleOpen();
                                         }}
                                     >
                                         <TableCell component="th" scope="row">
