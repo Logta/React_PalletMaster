@@ -315,10 +315,10 @@ export default function SimpleTable(props: Props) {
                             .filter(row => {
                                 return (
                                     (category === 'unique' &&
-                                        !row.skillUnique) ||
+                                        row.skillUnique) ||
                                     (category !== 'unique' &&
-                                        category !== 'all' &&
-                                        row.skillType !== category)
+                                        row.skillType === category) ||
+                                    category === 'all'
                                 );
                             })
                             .map((row, index) => {
