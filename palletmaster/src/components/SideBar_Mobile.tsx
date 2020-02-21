@@ -60,38 +60,63 @@ const charaDownload = (character: character) => {
     }
 };
 
-export default function SimpleList(props: Props) {
+const SimpleList = (props: Props) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
     return (
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
-                <ListItem button component={Link} to="/home/skill">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/skill"
+                    title="技能管理画面"
+                >
                     <ListItemIcon>
                         <SkillIcon />
                     </ListItemIcon>
                     <ListItemText primary="Skill" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/character">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/character"
+                    title="キャラクター管理画面"
+                >
                     <ListItemIcon>
                         <CharacterIcon />
                     </ListItemIcon>
                     <ListItemText primary="Character" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/abillity">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/abillity"
+                    title="能力値ロール画面"
+                >
                     <ListItemIcon>
                         <AbillityIcon />
                     </ListItemIcon>
                     <ListItemText primary="Abillity" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/san">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/san"
+                    title="SAN値管理画面"
+                >
                     <ListItemIcon>
                         <SANIcon />
                     </ListItemIcon>
                     <ListItemText primary="SAN" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/battle">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/battle"
+                    title="戦闘管理画面"
+                >
                     <ListItemIcon>
                         <BattleIcon />
                     </ListItemIcon>
@@ -105,6 +130,7 @@ export default function SimpleList(props: Props) {
                     onClick={() => {
                         setOpen(true);
                     }}
+                    title="キャラクター情報インポート"
                 >
                     <ListItemIcon>
                         <ImportIcon />
@@ -117,6 +143,7 @@ export default function SimpleList(props: Props) {
                     onClick={() => {
                         charaDownload(props.character);
                     }}
+                    title="キャラクター情報エクスポート"
                 >
                     <ListItemIcon>
                         <ExportIcon />
@@ -132,4 +159,6 @@ export default function SimpleList(props: Props) {
             />
         </div>
     );
-}
+};
+
+export default SimpleList;

@@ -73,6 +73,7 @@ const NavBar: React.SFC<Props> = (props: Props) => {
                     value={value}
                     onChange={handleChange}
                     className={classes.navBar}
+                    showLabels
                 >
                     <BottomNavigationAction
                         className={classes.navBarAction}
@@ -80,6 +81,7 @@ const NavBar: React.SFC<Props> = (props: Props) => {
                         to="/home"
                         label="Pallet"
                         value="pallet"
+                        title="セッションのデータ管理"
                         icon={<PalletIcon />}
                     />
                     <BottomNavigationAction
@@ -88,6 +90,7 @@ const NavBar: React.SFC<Props> = (props: Props) => {
                         to="/login"
                         label="Login"
                         value="login"
+                        title="ログイン画面"
                         icon={<FavoriteIcon />}
                     />
                     <BottomNavigationAction
@@ -96,6 +99,7 @@ const NavBar: React.SFC<Props> = (props: Props) => {
                         to="/setting"
                         label="Setting"
                         value="setting"
+                        title="ダイスとDiscordの設定"
                         icon={<SettingIcon />}
                     />
                     <BottomNavigationAction
@@ -104,6 +108,7 @@ const NavBar: React.SFC<Props> = (props: Props) => {
                         to="/making"
                         label="Create"
                         value="create"
+                        title="キャラクターの作成"
                         icon={<CreateIcon />}
                     />
                 </BottomNavigation>
