@@ -1,3 +1,5 @@
+import webhook from 'webhook-discord';
+
 interface HookInfo {
     name: string;
     url: string;
@@ -36,8 +38,6 @@ export const getDiceResultAsync = async (info: HookInfo): Promise<Result> => {
 function sendDiscordText(result: Result, item: HookInfo): boolean {
     if (result.ok) {
         try {
-            const webhook = require('webhook-discord');
-
             const Hook = new webhook.Webhook(item.url);
             Hook.info(item.user, item.name + ' ' + result.result);
             return true;
