@@ -14,7 +14,8 @@
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "preserve",
-        "types": ["jest"]
+        "types": ["jest"],
+        "typeRoots": ["./types"]
     },
-    "include": ["src"]
+    "include": ["src", "character.d.ts"]
 }
