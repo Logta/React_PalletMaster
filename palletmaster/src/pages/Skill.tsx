@@ -166,7 +166,7 @@ export default function SimpleTable(props: Props) {
     };
 
     return (
-        <div>
+        <React.Fragment>
             <Paper className={clsx(classes.root)}>
                 <br />
                 {/* タブレット以上なら隠す -- モバイル画面で表示 */}
@@ -351,6 +351,6 @@ export default function SimpleTable(props: Props) {
                     item={item}
                 />
             </Paper>
-        </div>
+        </React.Fragment>
     );
 }
