@@ -105,6 +105,7 @@ export default function SimpleList(props: Props) {
                     onClick={() => {
                         setOpen(true);
                     }}
+                    title="キャラクター情報インポート"
                 >
                     <ListItemIcon>
                         <ImportIcon />
@@ -117,6 +118,7 @@ export default function SimpleList(props: Props) {
                     onClick={() => {
                         charaDownload(props.character);
                     }}
+                    title="キャラクター情報エクスポート"
                 >
                     <ListItemIcon>
                         <ExportIcon />
