@@ -78,11 +78,30 @@ export default function SimpleTable(props: Props) {
     const [openDialog, setOpenDialog] = React.useState(false);
 
     const handleClick = (skillName: string): void => {
+        console.log('test1');
+        var promise = (str: string): Promise<string> => {
+            return new Promise(function(resolve, reject) {
+                const skillValue = getSkillValue(str);
+                resolve(skillValue);
+            });
+        };
+        promise(skillName)
+            .then(val => {
+                const info = getItem(skillName, val);
+                handleDialogOpen(info);
+                setItem(info);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    const getSkillValue = (skillName: string): string | undefined => {
         const skill: skill | undefined = props.skills.find(
             s => s.skillName === skillName
         );
-        if (skill == null) return;
-        setItems(skillName, String(skill.skillValue));
+        if (skill == null) return undefined;
+        return String(skill.skillValue);
     };
 
     function handleChange(event: React.ChangeEvent<{ value: unknown }>) {
@@ -96,26 +115,24 @@ export default function SimpleTable(props: Props) {
         setOpen(true);
     }
 
-    function handleDialogOpen() {
-        console.log(props.discordUrl);
-        console.log();
-        props.discordUrl !== '' ? sendBCDice(item) : setOpenDialog(true);
+    function handleDialogOpen(info: any) {
+        props.discordUrl !== '' ? sendBCDice(info) : setOpenDialog(true);
     }
 
     const [item, setItem] = React.useState({
         name: '',
         url: '',
         user: '',
-        value: '',
+        diceValue: '',
     });
 
-    const setItems = (ability: string, value: string): void => {
-        setItem({
+    const getItem = (ability: string, value: string): any => {
+        return {
             name: ability,
             url: props.discordUrl,
             user: props.characterName,
-            value: value,
-        });
+            diceValue: value,
+        };
     };
 
     const setSkills = (skill: string, value: number): void => {
@@ -304,14 +321,13 @@ export default function SimpleTable(props: Props) {
                                         row.skillType !== category)
                                 );
                             })
-                            .map(row => {
+                            .map((row, index) => {
                                 return (
                                     <TableRow
-                                        key={row.skillName}
+                                        key={row.skillName + index}
                                         onClick={_ => {
                                             console.log('onclick');
                                             handleClick(row.skillName);
-                                            handleDialogOpen();
                                         }}
                                     >
                                         <TableCell component="th" scope="row">

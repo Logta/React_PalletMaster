@@ -1,8 +1,8 @@
-interface Item {
+interface HookInfo {
     name: string;
     url: string;
     user: string;
-    value: string;
+    diceValue: string;
 }
 
 interface Result {
@@ -10,35 +10,40 @@ interface Result {
     result: string;
 }
 
-export default function sendBCDice(item: Item) {
-    sendDice(sendDiscordText, item);
+export default function sendBCDice(info: HookInfo) {
+    getDiceResultAsync(info).then((result: Result) => {
+        sendDiscordText(result, info);
+    });
 }
 
-function sendDiscordText(result: Result, item: Item) {
-    if (result.ok) {
-        const webhook = require('webhook-discord');
-
-        const Hook = new webhook.Webhook(item.url);
-        Hook.info(item.user, item.name + ' ' + result.result);
-        return true;
-    }
-    return false;
-}
-
-async function sendDice(func: (json: Result, item: Item) => void, item: Item) {
+export const getDiceResult = async (diceValue: string): Promise<any> => {
     const url =
         'https://www.taruki.com/bcdice-api' +
         '/v1/diceroll?system=Cthulhu&command=' +
         'CCB<=' +
-        item.value; // リクエスト先URL
+        diceValue; // リクエスト先URL
+    return await fetch(url, {
+        method: 'GET',
+    });
+};
 
-    fetch(url)
-        .then(res => res.json())
-        .then(response => {
-            let json = response;
-            if (response.ok) {
-                return func(json, item);
-            }
-        })
-        .catch(error => console.log(error));
+export const getDiceResultAsync = async (info: HookInfo): Promise<Result> => {
+    const response = await getDiceResult(info.diceValue).catch(error => error);
+    const result = response.json();
+    return result;
+};
+
+function sendDiscordText(result: Result, item: HookInfo): boolean {
+    if (result.ok) {
+        try {
+            const webhook = require('webhook-discord');
+
+            const Hook = new webhook.Webhook(item.url);
+            Hook.info(item.user, item.name + ' ' + result.result);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+    return false;
 }
