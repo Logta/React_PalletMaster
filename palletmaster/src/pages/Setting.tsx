@@ -66,7 +66,7 @@ const Setting: React.SFC<Props> = (props: Props) => {
     };
 
     return (
-        <div>
+        <React.Fragment>
             <Hidden smUp implementation="css">
                 <br className={classes.mobile} />
             </Hidden>
@@ -105,7 +105,7 @@ const Setting: React.SFC<Props> = (props: Props) => {
                     SET
                 </Button>
             </Paper>
-        </div>
+        </React.Fragment>
     );
 };
 

@@ -17,7 +17,7 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import { Paper } from '@material-ui/core/';
 
-import getAbilityValue from '../modules/getAbilityValue';
+import { getAbilityValue } from '../modules/getAbilityValue';
 import DiceDialog from '../components/DiceDialog';
 
 import sendBCDice from '../modules/sendDiscord';

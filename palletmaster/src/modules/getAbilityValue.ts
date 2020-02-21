@@ -1,12 +1,15 @@
-function getAbilityValue(
+export const getAbilityValue = (
     item: string,
     abilityValue: abilityValue,
     power: number
-): string {
+): string => {
     return String(getAbility(item, abilityValue) * power);
-}
+};
 
-function getAbility(item: string, abilityValue: abilityValue): number {
+export const getAbility = (
+    item: string,
+    abilityValue: abilityValue
+): number => {
     const eq = <T>(val1: T) => (val2: T) => val1 === val2;
 
     const result = when(item)
@@ -21,7 +24,7 @@ function getAbility(item: string, abilityValue: abilityValue): number {
         .otherwise(() => -1);
 
     return result;
-}
+};
 
 type ChainedWhen<T, R> = {
     on: <A>(pred: (v: T) => boolean, fn: () => A) => ChainedWhen<T, R | A>;
@@ -43,5 +46,3 @@ const when = <T>(val: T) => ({
     on: <A>(pred: (v: T) => boolean, fn: () => A) =>
         pred(val) ? match<T, A>(fn()) : chain<T, A>(val),
 });
-
-export default getAbilityValue;

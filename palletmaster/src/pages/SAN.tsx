@@ -251,7 +251,7 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
 
 const SAN: React.SFC<PropsMain> = (props: PropsMain) => {
     return (
-        <div>
+        <React.Fragment>
             <SANValue
                 SAN={props.SAN}
                 characterName={props.characterName}
@@ -269,7 +269,7 @@ const SAN: React.SFC<PropsMain> = (props: PropsMain) => {
                 discordUrl={props.discordUrl}
                 characterName={props.characterName}
             />
-        </div>
+        </React.Fragment>
     );
 };
 
