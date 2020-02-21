@@ -89,7 +89,7 @@ export default function SimpleTable(props: Props) {
         name: '',
         url: '',
         user: '',
-        value: '',
+        diceValue: '',
     });
 
     const setItems = (ability: string, value: string): void => {
@@ -97,7 +97,7 @@ export default function SimpleTable(props: Props) {
             name: ability,
             url: props.discordUrl,
             user: props.characterName,
-            value: value,
+            diceValue: value,
         });
     };
 

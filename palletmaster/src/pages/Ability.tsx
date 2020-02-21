@@ -22,13 +22,6 @@ import DiceDialog from '../components/DiceDialog';
 
 import sendBCDice from '../modules/sendDiscord';
 
-interface Item {
-    name: string;
-    url: string;
-    user: string;
-    value: string;
-}
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -76,7 +69,7 @@ const Ability: React.SFC<Props> = (props: Props) => {
         name: '',
         url: '',
         user: '',
-        value: '',
+        diceValue: '',
     });
 
     function handleOpen() {
@@ -88,7 +81,7 @@ const Ability: React.SFC<Props> = (props: Props) => {
             name: ability,
             url: props.discordUrl,
             user: props.characterName,
-            value: value,
+            diceValue: value,
         });
     };
 

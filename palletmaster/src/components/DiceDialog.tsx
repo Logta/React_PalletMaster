@@ -23,7 +23,7 @@ interface Item {
     name: string;
     url: string;
     user: string;
-    value: string;
+    diceValue: string;
 }
 
 interface Result {

@@ -78,7 +78,7 @@ const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
         name: '',
         url: '',
         user: '',
-        value: '',
+        diceValue: '',
     });
 
     const setItems = (ability: string, value: string): void => {
@@ -86,7 +86,7 @@ const SANValue: React.SFC<PropsSAN> = (props: PropsSAN) => {
             name: ability,
             url: props.discordUrl,
             user: props.characterName,
-            value: value,
+            diceValue: value,
         });
     };
 
@@ -208,7 +208,7 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
         name: '',
         url: '',
         user: '',
-        value: '',
+        diceValue: '',
     });
 
     const setItems = (ability: string, value: string): void => {
@@ -216,7 +216,7 @@ const SANIdea: React.SFC<PropsIdea> = (props: PropsIdea) => {
             name: ability,
             url: props.discordUrl,
             user: props.characterName,
-            value: value,
+            diceValue: value,
         });
     };
 

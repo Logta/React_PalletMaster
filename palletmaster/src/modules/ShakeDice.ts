@@ -2,7 +2,7 @@ interface Item {
     name: string;
     url: string;
     user: string;
-    value: string;
+    diceValue: string;
 }
 
 interface Result {
@@ -20,14 +20,14 @@ function ShakeDice(item: Item): Result {
 
     if (_1d100Value <= 5) {
         result.ok = 'クリティカル';
-    } else if (_1d100Value <= +item.value) {
+    } else if (_1d100Value <= +item.diceValue) {
         result.ok = '成功';
     } else {
         result.ok = '失敗';
     }
 
     result.result =
-        '技能:' + item.name + ' ' + _1d100Value + ' <= ' + item.value;
+        '技能:' + item.name + ' ' + _1d100Value + ' <= ' + item.diceValue;
 
     return result;
 }
