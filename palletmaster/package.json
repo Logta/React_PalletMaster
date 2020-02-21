@@ -30,7 +30,7 @@
         "redux": "^4.0.4",
         "ts-jest": "^25.2.1",
         "typescript": "3.5.3",
-        "webhook-discord": "^3.2.0"
+        "webhook-discord": "^3.5.1"
     },
     "scripts": {
         "start": "react-scripts start",
