@@ -78,7 +78,6 @@ export default function SimpleTable(props: Props) {
     const [openDialog, setOpenDialog] = React.useState(false);
 
     const handleClick = (skillName: string): void => {
-        console.log('handelClick');
         var promise = (str: string): Promise<string> => {
             return new Promise(function(resolve, reject) {
                 const skillValue = getSkillValue(str);
@@ -88,7 +87,6 @@ export default function SimpleTable(props: Props) {
         promise(skillName)
             .then(val => {
                 const info = getItem(skillName, val);
-                console.log(info);
                 handleDialogOpen(info);
                 setItem(info);
             })
