@@ -2,9 +2,9 @@ export default function onSubmit(func, item) {
     if (item == null) return;
     let reader = new FileReader();
 
-    // CSVファイル以外は処理を止める
+    // jsonファイル,pmjファイル以外は処理を止める
     if (!item.name.match('.json$') && !item.name.match('.pmj$')) {
-        alert('jsonファイル、またはchpファイルを選択してください');
+        alert('jsonファイル、またはpmjファイルを選択してください');
         return;
     }
 
@@ -15,11 +15,6 @@ export default function onSubmit(func, item) {
     //読み込んだファイルの中身を取得する
     reader.readAsText(item, 'UTF-8');
 
-    // PMJファイル以外は処理を止める
-    if (!item.name.match('.json$') && !item.name.match('.pmj$')) {
-        alert('jsonファイル、またはchpファイルを選択してください');
-        return;
-    }
     //ファイルの中身を取得後に処理を行う
     if (item != null) {
         reader.addEventListener('load', function() {
