@@ -1,3 +1,5 @@
+import { ShakeOneDice } from './ShakeDice';
+
 interface ItemNDN {
     count: number;
     number: number;
@@ -17,7 +19,7 @@ function ShakeNDNDice(item: ItemNDN): Result {
     };
 
     for (var i = 0; i < item.count; i++) {
-        diceResults.push(Math.round(Math.random() * item.number) + 1);
+        diceResults.push(ShakeOneDice(item.number));
     }
 
     result.result = IntSumToString(diceResults);

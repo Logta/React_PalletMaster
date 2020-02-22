@@ -12,14 +12,11 @@ interface Result {
 
 export default function sendBCDice(info: HookInfo) {
     getDiceResultAsync(info).then((result: Result) => {
-        console.log('getDiceResult_OK');
-        console.log(result);
         sendDiscordText(result, info);
     });
 }
 
 export const getDiceResult = async (diceValue: string): Promise<any> => {
-    console.log('getDiceResult');
     const url =
         'https://www.taruki.com/bcdice-api' +
         '/v1/diceroll?system=Cthulhu&command=' +
@@ -54,9 +51,6 @@ function sendDiscordText(result: Result, item: HookInfo) {
             },
         ],
     };
-    console.log('sendDiscordText');
-    console.log(result);
-    console.log(obj);
     const method = 'POST';
     const body = JSON.stringify(obj);
     const headers = {
