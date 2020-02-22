@@ -1,5 +1,3 @@
-import webhook from 'webhook-discord';
-
 interface HookInfo {
     name: string;
     url: string;
@@ -39,6 +37,19 @@ function sendDiscordText(result: Result, item: HookInfo) {
     const obj = {
         username: item.user,
         content: item.name + ' ' + result.result,
+        embeds: [
+            {
+                title: item.name + ' ダイスロール',
+                description: result.result,
+                color: 5620992,
+                footer: {
+                    text: '© 2020 Palletmaster',
+                },
+                author: {
+                    name: 'ダイスロール結果',
+                },
+            },
+        ],
     };
     const method = 'POST';
     const body = JSON.stringify(obj);
