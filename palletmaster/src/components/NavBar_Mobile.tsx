@@ -6,7 +6,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
 import DehazeIcon from '@material-ui/icons/Dehaze';
 import PalletIcon from '@material-ui/icons/ColorLens';
-import FavoriteIcon from '@material-ui/icons/OfflinePin';
+//import FavoriteIcon from '@material-ui/icons/OfflinePin';
 import SettingIcon from '@material-ui/icons/Settings';
 import CreateIcon from '@material-ui/icons/Create';
 
@@ -83,15 +83,6 @@ const NavBar: React.SFC<Props> = (props: Props) => {
                         value="pallet"
                         title="セッションのデータ管理"
                         icon={<PalletIcon />}
-                    />
-                    <BottomNavigationAction
-                        className={classes.navBarAction}
-                        component={Link}
-                        to="/login"
-                        label="Login"
-                        value="login"
-                        title="ログイン画面"
-                        icon={<FavoriteIcon />}
                     />
                     <BottomNavigationAction
                         className={classes.navBarAction}
