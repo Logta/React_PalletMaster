@@ -15,6 +15,7 @@
 - Firebase
 
 
+
 # 環境構築に必要な手順
 
 docker-compose を利用して Docker をビルドする
@@ -41,6 +42,9 @@ http://localhost:8000 にアクセスする
 
 - Firebase
   - 複雑な DB テーブルが必要ないアプリケーションであるため
+  
+- CircleCI
+  - GitHubと連携することによって、masterに対するmergeをした後自動的にデプロイが実行されるようにするため
 
 ## フロント
 
