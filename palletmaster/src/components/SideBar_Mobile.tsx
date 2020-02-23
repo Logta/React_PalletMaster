@@ -13,11 +13,13 @@ import SANIcon from '@material-ui/icons/OfflineBolt';
 import BattleIcon from '@material-ui/icons/Security';
 import ImportIcon from '@material-ui/icons/CloudDownload';
 import ExportIcon from '@material-ui/icons/CloudUpload';
+import SampleIcon from '@material-ui/icons/Person';
 
 import ImportPMJ from './ImportPMJDialog';
 import Divider from '@material-ui/core/Divider';
 
 import { character } from '../modules/commonType';
+import sampleCharaData from '../SampleCharacterData.json';
 
 type Props = {
     setCharacter: (character: any) => void;
@@ -149,6 +151,19 @@ const SimpleList = (props: Props) => {
                         <ExportIcon />
                     </ListItemIcon>
                     <ListItemText primary="Export" />
+                </ListItem>
+
+                <ListItem
+                    button
+                    onClick={() => {
+                        props.setCharacter(sampleCharaData);
+                    }}
+                    title="サンプル情報の設定"
+                >
+                    <ListItemIcon>
+                        <SampleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Sample" />
                 </ListItem>
             </List>
 
