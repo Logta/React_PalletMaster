@@ -16,6 +16,7 @@ import Abillity from '../containers/Ability';
 import SAN from '../containers/SAN';
 import Battle from '../containers/Battle';
 import SideBar from '../containers/SideBar';
+import Manual from './Manual';
 import Hidden from '@material-ui/core/Hidden';
 import { character } from '../modules/commonType';
 
@@ -26,9 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
             position: 'relative',
             display: 'flex',
             zIndex: 0,
-            [theme.breakpoints.up('sm')]: {
-                paddingTop: '100px',
-            },
         },
         drawer: {
             [theme.breakpoints.up('sm')]: {
@@ -121,6 +119,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
                         component={Skill}
                         container={document.getElementById('app-main')}
                     />
+                    <Route exact path="/home" component={Manual} />
                     <Route path="/home/character" component={Character} />
                     <Route path="/home/abillity" component={Abillity} />
                     <Route path="/home/san" component={SAN} />
