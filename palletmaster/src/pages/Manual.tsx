@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         list: {
             width: '100%',
-            maxWidth: 360,
             backgroundColor: theme.palette.background.paper,
         },
     })
@@ -132,7 +131,7 @@ const Manual: React.SFC = () => {
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                            primary="手軽い使用いただくためのサンプルデータをセットします"
+                            primary="手軽に使用いただくためのサンプルデータをセットします"
                             secondary="Sample"
                         />
                     </ListItem>
