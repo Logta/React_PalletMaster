@@ -13,7 +13,7 @@
 ## インフラ
 
 - Firebase
-
+- CircleCI
 
 
 # 環境構築に必要な手順
