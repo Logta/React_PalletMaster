@@ -95,7 +95,7 @@ const Manual: React.SFC = () => {
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar>
-                                <SANIcon />
+                                <BattleIcon />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText
