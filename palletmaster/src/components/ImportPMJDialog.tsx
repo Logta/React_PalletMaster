@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
             appearance: 'none',
             position: 'absolute',
         },
+        inputButton: {
+            textTransform: 'none',
+        },
     })
 );
 export default function FormDialog(props: Props) {
@@ -43,11 +46,15 @@ export default function FormDialog(props: Props) {
         if (target == null) return;
         if (target.files == null) return;
 
-        const file: File | null = target.files.item(0);
-        if (file == null) return;
-        setFile(file);
-        setFileName(file.name);
+        const targetFile: File | null = target.files.item(0);
+        if (targetFile == null) return;
+        setTimeout(setCharaDatas, 500, targetFile, targetFile.name);
     }
+
+    const setCharaDatas = (targetFile: File, targetFileName: string) => {
+        setFile(targetFile);
+        setFileName(targetFileName);
+    };
 
     function setChara(character: any) {
         let chara: character = {
@@ -57,7 +64,6 @@ export default function FormDialog(props: Props) {
             characterInfos: character.characterInfos,
         };
 
-        console.log(chara);
         props.setCharacter(chara);
     }
 
@@ -79,8 +85,13 @@ export default function FormDialog(props: Props) {
                     <DialogContentText>
                         Please select and set .pmj file
                     </DialogContentText>
-                    <Button color="primary" component="label">
-                        Select
+                    <Button
+                        color="primary"
+                        component="label"
+                        variant="outlined"
+                        className={classes.inputButton}
+                    >
+                        {fileName}
                         <input
                             type="file"
                             className={classes.nputFileBtnHide}
