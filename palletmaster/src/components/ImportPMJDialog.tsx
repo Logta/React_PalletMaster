@@ -39,7 +39,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function FormDialog(props: Props) {
     const classes = useStyles();
     const [file, setFile] = React.useState<File>(new File([], ''));
-    const [fileName, setFileName] = React.useState<string>('No Select');
+    const [fileName, setFileName] = React.useState<string>(
+        'Select or Drop File Here'
+    );
 
     function handleChangeFile(e: any) {
         const target: HTMLInputElement = e.target as HTMLInputElement;
@@ -100,7 +102,6 @@ export default function FormDialog(props: Props) {
                             }}
                         />
                     </Button>
-                    {fileName}
                     <br />
                     <br />
                     <Button
@@ -111,7 +112,7 @@ export default function FormDialog(props: Props) {
                             handleClose();
                         }}
                     >
-                        set
+                        ok
                     </Button>
                 </DialogContent>
                 <DialogActions>
