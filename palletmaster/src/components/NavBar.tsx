@@ -1,8 +1,8 @@
 import React from 'react';
 import Hidden from '@material-ui/core/Hidden';
 
-import NavBarPC from './NavBar_PC';
-import NavBarMobile from './NavBar_Mobile';
+import NavBarPC from './PC/NavBar_PC';
+import NavBarMobile from './Mobile/NavBar_Mobile';
 
 type Props = {
     open: boolean;

@@ -15,11 +15,11 @@ import ImportIcon from '@material-ui/icons/CloudDownload';
 import ExportIcon from '@material-ui/icons/CloudUpload';
 import SampleIcon from '@material-ui/icons/Person';
 
-import ImportPMJ from './ImportPMJDialog';
+import ImportPMJ from '../ImportPMJDialog';
 import Divider from '@material-ui/core/Divider';
 
-import { character } from '../modules/commonType';
-import sampleCharaData from '../SampleCharacterData.json';
+import { character } from '../../modules/commonType';
+import sampleCharaData from '../../SampleCharacterData.json';
 
 type Props = {
     setCharacter: (character: any) => void;
@@ -62,38 +62,63 @@ const charaDownload = (character: character) => {
     }
 };
 
-export default function SimpleList(props: Props) {
+const SimpleList = (props: Props) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
     return (
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
-                <ListItem button component={Link} to="/home/skill">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/skill"
+                    title="技能管理画面"
+                >
                     <ListItemIcon>
                         <SkillIcon />
                     </ListItemIcon>
                     <ListItemText primary="Skill" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/character">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/character"
+                    title="キャラクター管理画面"
+                >
                     <ListItemIcon>
                         <CharacterIcon />
                     </ListItemIcon>
                     <ListItemText primary="Character" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/abillity">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/abillity"
+                    title="能力値ロール画面"
+                >
                     <ListItemIcon>
                         <AbillityIcon />
                     </ListItemIcon>
                     <ListItemText primary="Abillity" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/san">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/san"
+                    title="SAN値管理画面"
+                >
                     <ListItemIcon>
                         <SANIcon />
                     </ListItemIcon>
                     <ListItemText primary="SAN" />
                 </ListItem>
-                <ListItem button component={Link} to="/home/battle">
+                <ListItem
+                    button
+                    component={Link}
+                    to="/home/battle"
+                    title="戦闘管理画面"
+                >
                     <ListItemIcon>
                         <BattleIcon />
                     </ListItemIcon>
@@ -149,4 +174,6 @@ export default function SimpleList(props: Props) {
             />
         </div>
     );
-}
+};
+
+export default SimpleList;

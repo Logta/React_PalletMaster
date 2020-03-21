@@ -32,8 +32,12 @@ export default function onSubmit(func: any, item: any) {
 
 export const checkFileTypeJSONorPMJ = (fileName: string): boolean => {
     // jsonファイル,pmjファイル以外は処理を止める
-    if (!fileName.match('.json$') && !fileName.match('.pmj$')) {
-        return false;
+    if (
+        fileName.match('.json$') == null &&
+        fileName.match('.pmj$') == null &&
+        fileName.match('.PMJ$') == null
+    ) {
+        return true;
     }
-    return true;
+    return false;
 };

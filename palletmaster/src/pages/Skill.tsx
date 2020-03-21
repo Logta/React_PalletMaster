@@ -16,10 +16,14 @@ import clsx from 'clsx';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Hidden from '@material-ui/core/Hidden';
 
 import sendBCDice from '../modules/sendDiscord';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -33,17 +37,30 @@ const useStyles = makeStyles((theme: Theme) =>
             overflowX: 'auto',
         },
         table: {
-            width: '90%',
+            width: '100%',
             [theme.breakpoints.up('sm')]: {
                 minWidth: 500,
             },
+            textOverflow: 'ellipsis',
         },
         numberInfoField: {
-            marginLeft: theme.spacing(5),
+            marginLeft: 'auto',
             marginRight: 'auto',
-            width: 120,
+            width: '75%',
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: theme.spacing(5),
+                width: 120,
+            },
         },
         fab: {
+            marginLeft: '5px',
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: theme.spacing(5),
+                margin: theme.spacing(1),
+            },
+        },
+        button: {
+            marginTop: '15px',
             marginLeft: '5px',
             [theme.breakpoints.up('sm')]: {
                 marginLeft: theme.spacing(5),
@@ -58,6 +75,9 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down('xs')]: {
                 textAlign: 'left',
             },
+        },
+        deleteButton: {
+            margin: theme.spacing(1),
         },
     })
 );
@@ -165,13 +185,20 @@ export default function SimpleTable(props: Props) {
         }
     };
 
+    const deleteSkills = (skill: string): void => {
+        props.setSkills(
+            props.skills.filter(s => {
+                return skill !== s.skillName;
+            })
+        );
+    };
+
     return (
         <React.Fragment>
             <Paper className={clsx(classes.root)}>
                 <br />
                 {/* タブレット以上なら隠す -- モバイル画面で表示 */}
                 <Hidden smUp implementation="css">
-                    <Chip color="primary" label="Skill" />
                     <TextField
                         id="san"
                         label="Skill"
@@ -187,11 +214,6 @@ export default function SimpleTable(props: Props) {
                         margin="normal"
                     />
                     <br />
-                    <Chip
-                        color="primary"
-                        label="Value"
-                        className={classes.chip}
-                    />
                     <TextField
                         id="san"
                         label="Value"
@@ -208,17 +230,16 @@ export default function SimpleTable(props: Props) {
                     />
 
                     <br />
-                    <Fab
+                    <Button
                         color="primary"
-                        aria-label="add"
-                        className={classes.fab}
+                        variant="contained"
+                        className={classes.button}
+                        onClick={() => {
+                            setSkills(skill, value);
+                        }}
                     >
-                        <AddIcon
-                            onClick={() => {
-                                setSkills(skill, value);
-                            }}
-                        />
-                    </Fab>
+                        add skill
+                    </Button>
                 </Hidden>
 
                 {/* モバイル以下なら隠す -- モバイル画面以外で表示 */}
@@ -271,7 +292,6 @@ export default function SimpleTable(props: Props) {
                 </Hidden>
 
                 <br />
-                <br />
 
                 <InputLabel htmlFor="demo-controlled-open-select">
                     Category
@@ -323,22 +343,46 @@ export default function SimpleTable(props: Props) {
                             })
                             .map((row, index) => {
                                 return (
-                                    <TableRow
-                                        key={row.skillName + index}
-                                        onClick={_ => {
-                                            handleClick(row.skillName);
-                                        }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {row.skillName}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {row.skillValue}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {row.skillType}
-                                        </TableCell>
-                                    </TableRow>
+                                    <React.Fragment>
+                                        <TableRow key={row.skillName + index}>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                onClick={() => {
+                                                    handleClick(row.skillName);
+                                                }}
+                                                title={row.skillName}
+                                            >
+                                                {row.skillName}
+                                            </TableCell>
+                                            <TableCell
+                                                align="right"
+                                                onClick={() => {
+                                                    handleClick(row.skillName);
+                                                }}
+                                            >
+                                                {row.skillValue}
+                                            </TableCell>
+                                            <TableCell
+                                                align="right"
+                                                onClick={() => {
+                                                    handleClick(row.skillName);
+                                                }}
+                                            >
+                                                {row.skillType}
+                                            </TableCell>
+                                            <IconButton
+                                                aria-label="delete"
+                                                color="primary"
+                                                className={classes.deleteButton}
+                                                onClick={_ => {
+                                                    deleteSkills(row.skillName);
+                                                }}
+                                            >
+                                                <DeleteIcon fontSize="small" />
+                                            </IconButton>
+                                        </TableRow>
+                                    </React.Fragment>
                                 );
                             })}
                     </TableBody>

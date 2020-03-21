@@ -1,7 +1,7 @@
 import React from 'react';
 import Hidden from '@material-ui/core/Hidden';
-import SkillListPC from './SkillList_PC';
-import SkillListMobile from './SkillList_Mobile';
+import SkillListPC from './PC/SkillList_PC';
+import SkillListMobile from './Mobile/SkillList_Mobile';
 
 import { skill, character } from '../modules/commonType';
 
