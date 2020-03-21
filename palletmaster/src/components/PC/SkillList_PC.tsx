@@ -7,8 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
-
-import { skill, character } from '../modules/commonType';
+import { skill, character } from '../../modules/commonType';
 
 type Props = {
     skills: skill[];
@@ -53,12 +52,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     })
 );
+
 const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
     const classes = useStyles();
-    const [skillWork, setSkillWork] = React.useState<number | undefined>(
+    const [skillWork, setSkillWork] = React.useState<number | string>(
         props.row.skillWorkValue
     );
-    const [skillInterest, setSkillInterest] = React.useState<number>(
+    const [skillInterest, setSkillInterest] = React.useState<number | string>(
         props.row.skillInterestValue
     );
 
@@ -86,6 +86,10 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                     value={skillWork}
                     className={classes.numberInfoField}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        if (event.target.value === '') {
+                            setSkillWork('');
+                            return;
+                        }
                         if (
                             props.checkSetSkillValue(
                                 props.row.defaultValue +
@@ -127,6 +131,10 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                     value={skillInterest}
                     className={classes.numberInfoField}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        if (event.target.value === '') {
+                            setSkillWork('');
+                            return;
+                        }
                         if (
                             props.checkSetSkillValue(
                                 props.row.defaultValue +
@@ -165,7 +173,7 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
     );
 };
 
-export default function SimpleList(props: Props) {
+const SimpleList: React.SFC<Props> = (props: Props) => {
     const classes = useStyles();
 
     return (
@@ -182,8 +190,6 @@ export default function SimpleList(props: Props) {
                         <TableCell className={classes.number} align="right">
                             Type
                         </TableCell>
-                    </TableRow>
-                    <TableRow>
                         <TableCell className={classes.number} align="right">
                             Work
                         </TableCell>
@@ -223,4 +229,6 @@ export default function SimpleList(props: Props) {
             </Table>
         </div>
     );
-}
+};
+
+export default SimpleList;
