@@ -1,8 +1,8 @@
 import React from 'react';
 import Hidden from '@material-ui/core/Hidden';
 
-import SideBarPC from './SideBar_PC';
-import SideBarMobile from './SideBar_Mobile';
+import SideBarPC from './PC/SideBar_PC';
+import SideBarMobile from './Mobile/SideBar_Mobile';
 
 import { character } from '../modules/commonType';
 
