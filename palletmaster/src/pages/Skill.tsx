@@ -23,7 +23,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Hidden from '@material-ui/core/Hidden';
 
 import sendBCDice from '../modules/sendDiscord';
-import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
