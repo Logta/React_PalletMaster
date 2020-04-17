@@ -125,10 +125,18 @@ const Making: React.SFC<Props> = (props: Props) => {
         })
     );
 
-    const checkSetSkillValue = (skillValue: number, isWork: boolean) => {
+    const checkSetSkillValue = (
+        skillValue: number,
+        isWork: boolean,
+        diffPoint: number
+    ) => {
         if (skillValue < 0 || skillValue > 100) return false;
-        if (isWork && getRemainingWorkPoint() <= 0) return false;
-        if (!isWork && getRemainingInterestPoint() <= 0) return false;
+        if (
+            (isWork ? getRemainingWorkPoint() : getRemainingInterestPoint()) -
+                diffPoint <=
+            0
+        )
+            return false;
         return true;
     };
 
