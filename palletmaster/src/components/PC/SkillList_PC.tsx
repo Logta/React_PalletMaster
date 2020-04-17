@@ -14,14 +14,22 @@ type Props = {
     setCharacter: (character: character) => void;
     setSkillWorkValue: (name: string, work: number) => void;
     setSkillInterestValue: (name: string, interest: number) => void;
-    checkSetSkillValue: (value: number, isWork: boolean) => boolean;
+    checkSetSkillValue: (
+        value: number,
+        isWork: boolean,
+        diff: number
+    ) => boolean;
 };
 
 type PropsRow = {
     row: skill;
     setSkillWorkValue: (name: string, work: number) => void;
     setSkillInterestValue: (name: string, interest: number) => void;
-    checkSetSkillValue: (value: number, isWork: boolean) => boolean;
+    checkSetSkillValue: (
+        value: number,
+        isWork: boolean,
+        diff: number
+    ) => boolean;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -95,7 +103,8 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                                 props.row.defaultValue +
                                     props.row.skillInterestValue +
                                     +event.target.value,
-                                true
+                                true,
+                                +event.target.value
                             ) &&
                             +event.target.value >= 0
                         )
@@ -111,7 +120,8 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                                 props.row.defaultValue +
                                     props.row.skillInterestValue +
                                     +event.target.value,
-                                true
+                                true,
+                                +event.target.value
                             )
                         )
                             props.setSkillWorkValue(
@@ -140,7 +150,8 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                                 props.row.defaultValue +
                                     props.row.skillWorkValue +
                                     +event.target.value,
-                                false
+                                false,
+                                +event.target.value
                             ) &&
                             +event.target.value >= 0
                         )
@@ -156,7 +167,8 @@ const SkillsTableRow: React.SFC<PropsRow> = (props: PropsRow) => {
                                 props.row.defaultValue +
                                     props.row.skillWorkValue +
                                     +event.target.value,
-                                false
+                                false,
+                                +event.target.value
                             ) &&
                             +event.target.value >= 0
                         )
