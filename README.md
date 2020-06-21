@@ -34,7 +34,7 @@ yarn install
 もしくは `docker-compose run --rm front yarn install`
 
 上記実行後、`docker-compose up -d`で Docker を起動後
-http://localhost:8000 にアクセスする
+http://localhost:3000 にアクセスする
 
 # インフラ・フロントそれぞれの技術選定
 
