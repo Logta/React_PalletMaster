@@ -63,3 +63,6 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# production build（API キー等の設定値が埋め込まれるためコミットしない）
+/build
